@@ -1,0 +1,17 @@
+.navbar-bg {
+  background-color: #1f4f16;
+}
+.nav-item-color {
+  color: #e7ffde !important;
+}
+
+.toggle-button {
+  border-color: #e7ffde !important;
+}
+
+.hamburger {
+  width: 35px;
+  height: 3px;
+  background-color: #e7ffde;
+  margin: 6px 0;
+}
