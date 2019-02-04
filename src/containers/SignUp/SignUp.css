@@ -16,7 +16,12 @@
     color : #1f4f16;
     font-weight: bold;
     font-size: 17px;
+}
 
+.auth-button{
+    background-color : #1f4f16 !important;
+    color : white !important;
+    margin-bottom: 10px !important;
 }
 
 .type-para{

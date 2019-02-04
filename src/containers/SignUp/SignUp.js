@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { connect } from "react-redux";
 
-import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
+import * as actions from "../../store/actions/authActions";
 import Card from "../../hoc/Card";
+import SignUpFields from "./../../components/Auth/SignUpForm";
 import authValidations from "../../validations/authValidations";
 import "./SignUp.css";
 
@@ -20,8 +21,8 @@ const styles = theme => {
     },
     button: {
       margin: theme.spacing.unit,
-      marginBottom: "15px",
-      backgroundColor: "#374F6B",
+      marginBottom: "10px",
+      backgroundColor: "#1f4f16",
       color: "white"
     },
     authMessage: {
@@ -32,211 +33,46 @@ const styles = theme => {
 };
 
 class SignUp extends Component {
-  state = { type: "std" };
   componentDidMount() {
     authValidations();
   }
 
   handleChange = event => {
-    // const {name, value} = event.target
-    // this.props.setAuthValue(name,value)
-    this.setState({ [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    this.props.onInputChange({
+      name,
+      value
+    });
   };
 
   handleSubmit = () => {
-    // this.props.onSignUp();
-    // this.setState({ loading: true });
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(this.state.email, this.state.pass)
-    //   .then(res => {
-    //     const uid = res.user.uid;
-    //     this.setState({ loading: false });
-    //     this.props.onLogin(uid);
-    //     this.props.history.replace("/register");
-    //   })
-    //   .catch(error => {
-    //     this.setState({ loading: false });
-    //     let errorMessage = "";
-    //     if (error.code === "auth/email-already-in-use")
-    //       errorMessage = "Account For This Email is Already Registered";
-    //     else if (error.code === "auth/invalid-email")
-    //       errorMessage = "Invalid Email";
-    //     else errorMessage = error.message;
-    //     this.setState({ error: errorMessage });
-    //   });
+    this.props.onSignUp();
   };
+
   render() {
-    const {
-      type,
-      name,
-      email,
-      enrollNo,
-      phone,
-      address,
-      password,
-      rePassword,
-      loading,
-      error,
-      classes
-    } = this.props;
-    let formFields = "";
-    if (this.state.type === "std") {
-      formFields = (
-        <ValidatorForm
-          ref="form"
-          onSubmit={this.handleSubmit}
-          onError={errors => console.log(errors)}
-        >
-          <TextValidator
-            className={classes.TextFields}
-            label="Name"
-            onChange={this.handleChange}
-            name="name"
-            value={name}
-            validators={["required"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-          <TextValidator
-            className={classes.TextFields}
-            label="Enrollment Number"
-            onChange={this.handleChange}
-            name="enrollNo"
-            value={enrollNo}
-            validators={["required"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
+    const { classes, auth } = this.props;
+    const { errorSignup, loading, type } = auth;
+    const formFields = (
+      <SignUpFields
+        auth={auth}
+        classes={classes}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+      />
+    );
 
-          <TextValidator
-            className={classes.TextFields}
-            label="Email"
-            onChange={this.handleChange}
-            name="email"
-            value={email}
-            validators={["required", "isEmail"]}
-            errorMessages={["This field is required", "Invalid Email"]}
-          />
-          <br />
-          <TextValidator
-            className={classes.TextFields}
-            label="Password"
-            type="password"
-            onChange={this.handleChange}
-            name="password"
-            value={password}
-            validators={["required", "isLongEnough"]}
-            errorMessages={[
-              "This field is required",
-              "Password must be longer than 6 characters"
-            ]}
-          />
-          <br />
-          <TextValidator
-            className={classes.TextFields}
-            label="Confirm Password"
-            type="password"
-            onChange={this.handleChange}
-            name="rePassword"
-            value={rePassword}
-            validators={["required", "isLongEnough"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-        </ValidatorForm>
-      );
-    } else {
-      formFields = (
-        <ValidatorForm
-          ref="form"
-          onSubmit={this.handleSubmit}
-          onError={errors => console.log(errors)}
-        >
-          <TextValidator
-            className={classes.TextFields}
-            label="Name"
-            onChange={this.handleChange}
-            name="name"
-            value={name}
-            validators={["required"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-
-          <TextValidator
-            className={classes.TextFields}
-            label="Email"
-            onChange={this.handleChange}
-            name="email"
-            value={email}
-            validators={["required", "isEmail"]}
-            errorMessages={["This field is required", "Invalid Email"]}
-          />
-          <br />
-
-          <TextValidator
-            className={classes.TextFields}
-            label="Address"
-            onChange={this.handleChange}
-            name="address"
-            value={address}
-            validators={["required"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-
-          <TextValidator
-            className={classes.TextFields}
-            label="Phone Number"
-            onChange={this.handleChange}
-            name="phoneNo"
-            value={address}
-            validators={["required"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-
-          <TextValidator
-            className={classes.TextFields}
-            label="Password"
-            type="password"
-            onChange={this.handleChange}
-            name="password"
-            value={password}
-            validators={["required", "isLongEnough"]}
-            errorMessages={[
-              "This field is required",
-              "Password must be longer than 6 characters"
-            ]}
-          />
-          <br />
-          <TextValidator
-            className={classes.TextFields}
-            label="Confirm Password"
-            type="password"
-            onChange={this.handleChange}
-            name="rePassword"
-            value={rePassword}
-            validators={["required", "isLongEnough"]}
-            errorMessages={["This field is required"]}
-          />
-          <br />
-        </ValidatorForm>
-      );
-    }
     return (
       <div style={{ marginTop: 50 }}>
         <h1 className="main-heading-signup">Campus Recruitment System</h1>
         <div className="signup-card-container">
           {!loading ? (
             <Card>
-              <h2 className="singin-heading">Sign Up</h2>
+              <h2 className="singin-heading">Sign up</h2>
               <p className="type-para">
-                <span className="type-text">Create Account As{"   "}</span>
+                <span className="type-text">Create Account As{"    "}</span>
                 <FormControl className={classes.formControl}>
                   <Select
-                    value={this.state.type}
+                    value={type}
                     onChange={this.handleChange}
                     inputProps={{
                       name: "type",
@@ -249,17 +85,13 @@ class SignUp extends Component {
                 </FormControl>
               </p>
               <hr />
-              <p className="Error">{error ? error : null}</p>
+              <p className="Error">{errorSignup ? errorSignup : null}</p>
               {formFields}
-              <Button
-                type="submit"
-                variant="contained"
-                className="btn btn-info my-reports-button login-button"
-              >
-                Sign Up
-              </Button>
               <p>
-                Already Have an Account? <Link to="/signin">Sign In</Link>
+                Already Have an Account?{" "}
+                <Link to="/signin" className="auth-type">
+                  Sign In
+                </Link>
               </p>
             </Card>
           ) : (
@@ -271,5 +103,20 @@ class SignUp extends Component {
   }
 }
 
-export default withStyles(styles)(SignUp);
-// export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(SignUp));
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onInputChange: payload => dispatch(actions.changeInput(payload)),
+    onSignUp: () => dispatch(actions.signup())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SignUp));
