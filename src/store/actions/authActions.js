@@ -1,68 +1,126 @@
-import { database } from "firebase";
+import { database, auth } from "firebase";
 import * as actionTypes from "./actionTypes";
 import dispatcher from "../dispater";
 
+// helper functions
+const loginSuccessful = (dispatch, uid, name, status) => {
+  dispatch(dispatcher(actionTypes.LOGIN_SUCCESSFUL), {
+    uid,
+    name,
+    status
+  });
+};
+
+const loginFailed = dispatch => {
+  dispatch(dispatcher(actionTypes.STOP_LOADING));
+  console.log("error in sign in after authenticating");
+};
+
+// actions
 export const changeInput = payload =>
   dispatcher(actionTypes.CHANGE_INPUT, payload);
 
 export const signup = () => (dispatch, getState) => {
-  console.log("in action", getState().auth);
-  // this.setState({ loading: true });
-  // firebase
-  //   .auth()
-  //   .createUserWithEmailAndPassword(this.state.email, this.state.pass)
-  //   .then(res => {
-  //     const uid = res.user.uid;
-  //     this.setState({ loading: false });
-  //     this.props.onLogin(uid);
-  //     this.props.history.replace("/register");
-  //   })
-  //   .catch(error => {
-  //     this.setState({ loading: false });
-  //     let errorMessage = "";
-  //     if (error.code === "auth/email-already-in-use")
-  //       errorMessage = "Account For This Email is Already Registered";
-  //     else if (error.code === "auth/invalid-email")
-  //       errorMessage = "Invalid Email";
-  //     else errorMessage = error.message;
-  //     this.setState({ error: errorMessage });
-  //   });
+  console.log("inside sign up");
+  const {
+    type,
+    name,
+    email,
+    enrollNo,
+    phoneNo,
+    address,
+    password
+  } = getState().auth;
+
+  const newUser = { name, email };
+  if (type === "students") {
+    console.log("inside students");
+    newUser.enrollNo = enrollNo;
+  } else if (type === "companies") {
+    console.log("inside companies");
+    newUser.phoneNo = phoneNo;
+    newUser.address = address;
+  }
+  console.log("creating new");
+  dispatch(dispatcher(actionTypes.START_LOADING));
+  auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(res => {
+      const uid = res.user.uid;
+      database()
+        .ref(`${type}/${uid}`)
+        .set(newUser)
+        .then(res => {
+          console.log("new user added");
+          loginSuccessful(dispatch, uid, name, type === "students" ? 2 : 3);
+        });
+
+      // this.props.onLogin(uid);
+      // this.props.history.replace("/register");
+    })
+    .catch(error => {
+      dispatch(dispatcher(actionTypes.STOP_LOADING));
+      let errorMessage = "";
+      if (error.code === "auth/email-already-in-use")
+        errorMessage = "Account For This Email is Already Registered";
+      else if (error.code === "auth/invalid-email")
+        errorMessage = "Invalid Email";
+      else errorMessage = error.message;
+      dispatch(dispatcher(actionTypes.SIGNUP_ERROR, { error: errorMessage }));
+    });
 };
 
 export const signin = () => (dispatch, getState) => {
-  // this.setState({ loading: true });
-  // firebase
-  //   .auth()
-  //   .signInWithEmailAndPassword(this.state.email, this.state.pass)
-  //   .then(res => {
-  //     const uid = res.user.uid;
-  //     if (uid === "RkpPKqNLeaTeHS5poTCWTJd70fK2") {
-  //       this.props.setAdmin();
-  //       this.props.onLogin(uid);
-  //       this.props.history.replace("/crimes");
-  //     } else {
-  //       firebase
-  //         .database()
-  //         .ref(`reporters/${uid}`)
-  //         .once("value")
-  //         .then(res => {
-  //           this.props.onLogin(uid);
-  //           if (res.val()) this.props.onSetRegistered(res.val().name);
-  //           this.props.history.replace("/register");
-  //         })
-  //         .catch(err => {
-  //           this.setState({ error: err, loading: false });
-  //         });
-  //     }
-  //   })
-  //   .catch(error => {
-  //     this.setState({ loading: false });
-  //     let errorMessage = "";
-  //     if (error.code === "auth/wrong-password")
-  //       errorMessage = "Wrong Password";
-  //     else if (error.code === "auth/user-not-found")
-  //       errorMessage = "User Doesn't Exist";
-  //     else errorMessage = error.message;
-  //     this.setState({ error: errorMessage });
-  //   });
+  const { emailSignin, passwordSignin } = getState().auth;
+  dispatch(dispatcher(actionTypes.START_LOADING));
+  console.log("inside signin");
+  auth()
+    .signInWithEmailAndPassword(emailSignin, passwordSignin)
+    .then(res => {
+      console.log("signed in");
+      const uid = res.user.uid;
+      if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
+        loginSuccessful(dispatch, uid, "Admin", 1);
+        console.log("login successful with admin");
+        // login for admin here
+        // this.props.setAdmin();
+        // this.props.onLogin(uid);
+      } else {
+        database()
+          .ref(`students/${uid}`)
+          .once("value")
+          .then(res => {
+            if (res.val()) {
+              console.log("login successful with student");
+              loginSuccessful(dispatch, uid, res.val().name, 2);
+            } else {
+              database()
+                .ref(`companies/${uid}`)
+                .once("value")
+                .then(res => {
+                  if (res.val()) {
+                    console.log("login successful with companies");
+                    loginSuccessful(dispatch, uid, res.val().name, 3);
+                  }
+                })
+                .catch(err => {
+                  loginFailed(dispatch);
+                });
+            }
+          })
+          .catch(err => {
+            loginFailed(dispatch);
+          });
+      }
+    })
+    .catch(error => {
+      console.log("not signed in");
+      dispatch(dispatcher(actionTypes.STOP_LOADING));
+      let errorMessage = "";
+      if (error.code === "auth/wrong-password") errorMessage = "Wrong Password";
+      else if (error.code === "auth/user-not-found")
+        errorMessage = "User Doesn't Exist";
+      else errorMessage = error.message;
+      dispatch(dispatcher(actionTypes.SIGNIN_ERROR, { error: errorMessage }));
+    });
 };

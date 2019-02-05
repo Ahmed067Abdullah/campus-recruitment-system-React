@@ -4,7 +4,10 @@ import {Provider} from 'react-redux';
 
 import App from './App';
 import initializeStore from './store/store';
+import initializeFirebase from './firebase';
 import './index.css';
+
+initializeFirebase();
 
 const store = initializeStore();
 

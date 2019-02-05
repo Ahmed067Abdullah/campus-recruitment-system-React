@@ -36,7 +36,7 @@ class CreateForm extends Component {
           ]}
         />
         <br />
-        {type === "std" ? (
+        {type === "students" ? (
           <Aux>
             <TextValidator
               className={classes.TextFields}
@@ -112,10 +112,10 @@ class CreateForm extends Component {
           onChange={handleChange}
           name="rePassword"
           value={rePassword}
-          validators={["required", "isPasswordLongEnough"]}
+          validators={["required", "doPasswordsMatch"]}
           errorMessages={[
             "This field is required",
-            "Password must be longer than 6 characters"
+            "Passwords doesn't match"
           ]}
         />
         <br />

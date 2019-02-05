@@ -20,12 +20,13 @@
 
 .auth-button{
     background-color : #1f4f16 !important;
-    color : white !important;
-    margin-bottom: 10px !important;
+    color : #e7ffde !important;
+    margin-bottom: 10px !important; 
 }
 
 .type-para{
     margin-top: 10px;
+    margin-bottom: -20px;
 }
 
 @media(min-width : 500px){

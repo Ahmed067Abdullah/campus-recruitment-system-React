@@ -1,3 +1,3 @@
-const dispatcher = (type, payload) =>  ({type,payload});
+const dispatcher = (type, payload={}) =>  ({type,payload});
 
 export default dispatcher;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { ValidatorForm } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -35,14 +36,15 @@ const styles = theme => {
 class SignUp extends Component {
   componentDidMount() {
     authValidations();
+    ValidatorForm.addValidationRule("doPasswordsMatch", value => {
+      if (value !== this.props.auth.password) return false;
+      return true;
+    });
   }
 
   handleChange = event => {
     const { name, value } = event.target;
-    this.props.onInputChange({
-      name,
-      value
-    });
+    this.props.onInputChange({ key: name, value });
   };
 
   handleSubmit = () => {
@@ -68,7 +70,7 @@ class SignUp extends Component {
           {!loading ? (
             <Card>
               <h2 className="singin-heading">Sign up</h2>
-              <p className="type-para">
+              <div className="type-para">
                 <span className="type-text">Create Account As{"    "}</span>
                 <FormControl className={classes.formControl}>
                   <Select
@@ -79,12 +81,11 @@ class SignUp extends Component {
                       id: "type-simple"
                     }}
                   >
-                    <MenuItem value="std">Student</MenuItem>
-                    <MenuItem value="cmp">Company</MenuItem>
+                    <MenuItem value="students">Student</MenuItem>
+                    <MenuItem value="companies">Company</MenuItem>
                   </Select>
                 </FormControl>
-              </p>
-              <hr />
+              </div>
               <p className="Error">{errorSignup ? errorSignup : null}</p>
               {formFields}
               <p>

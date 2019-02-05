@@ -1,21 +1,19 @@
 import React, { Component } from "react";
 // import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 import Aux from "../../hoc/Auxiliary";
 import "./Navbar.css";
 
 class Navbar extends Component {
   render() {
-    let links = "";
+    // let links = "";
     let navbarContent = "";
     const isAthenticated = false;
     if (isAthenticated) {
       navbarContent = (
         <Aux>
-          <a className="navbar-brand  nav-item-color" href="#">
-            Recruitment Portal
-          </a>
+          <p className="navbar-brand  nav-item-color">Recruitment Portal</p>
           <button
             className="navbar-toggler toggle-button"
             type="button"
@@ -32,19 +30,15 @@ class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <a className="nav-link nav-item-color" href="/home">
+                <p className="nav-link nav-item-color">
                   Home <span className="sr-only">(current)</span>
-                </a>
+                </p>
               </li>
               <li className="nav-item">
-                <a className="nav-link nav-item-color" href="/homeas">
-                  Features
-                </a>
+                <p className="nav-link nav-item-color">Features</p>
               </li>
               <li className="nav-item">
-                <a className="nav-link nav-item-color" href="/homez">
-                  Pricing
-                </a>
+                <p className="nav-link nav-item-color">Pricing</p>
               </li>
             </ul>
           </div>
@@ -52,14 +46,17 @@ class Navbar extends Component {
       );
     }
     return (
-      <nav className="navbar navbar-expand-lg navbar-light navbar-bg" style={{height : 55}}>
+      <nav
+        className="navbar navbar-expand-lg navbar-light navbar-bg"
+        style={{ height: 55 }}
+      >
         {navbarContent}
       </nav>
     );
   }
 }
 
-{
+
   /* <ul className="navbar-nav">
             <li className="nav-item active">
               <NavLink className="nav-link nav-item-color" to="/home">
@@ -77,6 +74,5 @@ class Navbar extends Component {
               </NavLink>
             </li>
           </ul> */
-}
 
 export default Navbar;

@@ -30,15 +30,16 @@ class SignIn extends Component {
   }
 
   handleChange = event => {
-    const {name, value} = event.target
-    this.props.setAuthValue(name,value)
+    const { name, value } = event.target;
+    this.props.onInputChange({ key: name, value });
   };
 
   handleSubmit = () => {
-      this.props.onSignIn();
-    };
+    this.props.onSignIn();
+  };
   render() {
-    const { email, passwordSignin, loading, errorSignin, classes } = this.props;
+    const { auth, classes } = this.props;
+    const { emailSignin, passwordSignin, loading, errorSignin } = auth;
     return (
       <div style={{ marginTop: 50 }}>
         <h1 className="main-heading">Campus Recruitment System</h1>
@@ -56,8 +57,8 @@ class SignIn extends Component {
                   className={classes.TextFields}
                   label="Email"
                   onChange={this.handleChange}
-                  name="email"
-                  value={email}
+                  name="emailSignin"
+                  value={emailSignin}
                   validators={["required", "isEmail"]}
                   errorMessages={["This field is required", "Invalid Email"]}
                 />
@@ -67,9 +68,9 @@ class SignIn extends Component {
                   label="Password"
                   type="password"
                   onChange={this.handleChange}
-                  name="password"
+                  name="passwordSignin"
                   value={passwordSignin}
-                  validators={["required", "isLongEnough"]}
+                  validators={["required", "isPasswordLongEnough"]}
                   errorMessages={[
                     "This field is required",
                     "Password must be longer than 6 characters"
@@ -85,7 +86,10 @@ class SignIn extends Component {
                 </Button>
               </ValidatorForm>
               <p>
-                Don't Have an Account? <Link to="/signup"  className="auth-type">Sign Up</Link>
+                Don't Have an Account?{" "}
+                <Link to="/signup" className="auth-type">
+                  Sign Up
+                </Link>
               </p>
             </Card>
           ) : (
@@ -106,8 +110,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onInputChange: payload => dispatch(actions.changeInput(payload)),
-    onSignUp: () => dispatch(actions.signup())
+    onSignIn: () => dispatch(actions.signin())
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(SignIn));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SignIn));

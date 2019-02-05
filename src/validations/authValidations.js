@@ -22,4 +22,11 @@ const authValidations = () => {
   });
 };
 
+export const signinValidations = () => {
+  ValidatorForm.addValidationRule("isPasswordLongEnough", value => {
+    if (value.trim().length < 6) return false;
+    return true;
+  });
+} 
+
 export default authValidations;
