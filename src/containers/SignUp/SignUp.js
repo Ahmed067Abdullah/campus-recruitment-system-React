@@ -11,6 +11,7 @@ import Select from "@material-ui/core/Select";
 import * as actions from "../../store/actions/authActions";
 import Card from "../../hoc/Card";
 import SignUpFields from "./../../components/Auth/SignUpForm";
+import Spinner from "./../../components/Spinner/Spinner";
 import authValidations from "../../validations/authValidations";
 import "./SignUp.css";
 
@@ -96,7 +97,9 @@ class SignUp extends Component {
               </p>
             </Card>
           ) : (
-            <div className="auth-spinner" />
+            <div className="auth-spinner">
+              <Spinner />
+            </div>
           )}
         </div>
       </div>

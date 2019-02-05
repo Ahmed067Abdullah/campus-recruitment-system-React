@@ -9,6 +9,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import * as actions from "../../store/actions/authActions";
 import Card from "../../hoc/Card";
 import authValidations from "../../validations/authValidations";
+import Spinner from "./../../components/Spinner/Spinner";
 import "./SignIn.css";
 
 const styles = theme => {
@@ -93,7 +94,9 @@ class SignIn extends Component {
               </p>
             </Card>
           ) : (
-            <div className="auth-spinner" />
+            <div className="auth-spinner">
+              <Spinner />
+            </div>
           )}
         </div>
       </div>

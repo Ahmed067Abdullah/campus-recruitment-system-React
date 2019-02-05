@@ -71,9 +71,10 @@ class CreateForm extends Component {
               onChange={handleChange}
               name="phoneNo"
               value={phoneNo}
-              validators={["required", "isPhoneLengthOk"]}
+              validators={["required", "isNumber","isPhoneLengthOk"]}
               errorMessages={[
                 "This field is required",
+                "Phone number must contain only digits",
                 "Phone number must contain 11 digits"
               ]}
             />
