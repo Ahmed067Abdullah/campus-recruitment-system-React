@@ -15,9 +15,12 @@ import CompanyProfile from "./containers/Company/Profile/Profile";
 const getRoutes = status => {
   let routes = (
     <Switch>
-      <Route path="/signin" exact component={Signin} />
+      <Route path="/profile" component={StudentProfile} />
+      <Route path="/logout" component={Logout} />
+      <Redirect to="/profile" />
+      {/* <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
-      <Redirect to="/signin" />
+      <Redirect to="/signin" /> */}
     </Switch>
   );
 
@@ -32,13 +35,15 @@ const getRoutes = status => {
   //     </Switch>
   //   );
   // }
-
+  console.log("status", status);
   // routes for students
   if (status === 2) {
+    console.log("status", status);
     routes = (
       <Switch>
         <Route path="/profile" component={StudentProfile} />
         <Route path="/logout" component={Logout} />
+        <Redirect to="/profile" />
         {/* <Route path="/companies" component={Auth} />
         <Route path="/vacancies" component={Donors} />
         <Route path="/" exact component={Auth} /> */}

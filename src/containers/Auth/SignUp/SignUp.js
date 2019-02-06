@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { ValidatorForm } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 
+import { ValidatorForm } from "react-material-ui-form-validator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import * as actions from "../../../store/actions/authActions";
 import Card from "../../../hoc/Card";
 import SignUpFields from "../../../components/Auth/SignUpForm";
 import Spinner from "../../../components/Spinner/Spinner";
-import authValidations from "../../../validations/authValidations";
+
+import * as actions from "../../../store/actions/authActions";
+import validations from "../../../validation/Validation";
+
 import "./SignUp.css";
 
 const styles = theme => {
@@ -36,7 +38,7 @@ const styles = theme => {
 
 class SignUp extends Component {
   componentDidMount() {
-    authValidations();
+    validations();
     ValidatorForm.addValidationRule("doPasswordsMatch", value => {
       if (value !== this.props.auth.password) return false;
       return true;

@@ -1,10 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  uid: "",
+  uid: "N8ngiSVUDgeGJYJeX9HysdThWw52",
   type: "students",
-  status: "",
-  name: "",
+  status: "2",
+  name: "Ahmed Abdullah",
   email: "",
   enrollNo: "",
   phoneNo: "",
@@ -14,7 +14,7 @@ const initialState = {
   loading: "",
   errorSignup: "",
   errorSignin: "",
-  emailSignin: "",
+  emailSignin: "test1@test.com",
   passwordSignin: ""
 };
 

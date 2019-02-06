@@ -6,10 +6,12 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-import * as actions from "../../../store/actions/authActions";
 import Card from "../../../hoc/Card";
-import authValidations from "../../../validations/authValidations";
 import Spinner from "./../../../components/Spinner/Spinner";
+
+import validations from "../../../validation/Validation";
+import * as actions from "../../../store/actions/authActions";
+
 import "./SignIn.css";
 
 const styles = theme => {
@@ -27,7 +29,7 @@ const styles = theme => {
 
 class SignIn extends Component {
   componentDidMount() {
-    authValidations();
+    validations();
   }
 
   handleChange = event => {
