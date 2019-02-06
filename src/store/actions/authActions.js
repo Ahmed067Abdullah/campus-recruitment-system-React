@@ -4,11 +4,13 @@ import dispatcher from "../dispater";
 
 // helper functions
 const loginSuccessful = (dispatch, uid, name, status) => {
-  dispatch(dispatcher(actionTypes.LOGIN_SUCCESSFUL), {
-    uid,
-    name,
-    status
-  });
+  dispatch(
+    dispatcher(actionTypes.SIGNIN_SUCCESSFUL, {
+      uid,
+      name,
+      status
+    })
+  );
 };
 
 const loginFailed = dispatch => {
@@ -20,7 +22,7 @@ const loginFailed = dispatch => {
 export const changeInput = payload =>
   dispatcher(actionTypes.CHANGE_INPUT, payload);
 
-export const signup = () => (dispatch, getState) => {
+export const signup = history => (dispatch, getState) => {
   console.log("inside sign up");
   const {
     type,
@@ -53,10 +55,8 @@ export const signup = () => (dispatch, getState) => {
         .then(res => {
           console.log("new user added");
           loginSuccessful(dispatch, uid, name, type === "students" ? 2 : 3);
+          history.replace("/profile");
         });
-
-      // this.props.onLogin(uid);
-      // this.props.history.replace("/register");
     })
     .catch(error => {
       dispatch(dispatcher(actionTypes.STOP_LOADING));
@@ -70,7 +70,7 @@ export const signup = () => (dispatch, getState) => {
     });
 };
 
-export const signin = () => (dispatch, getState) => {
+export const signin = history => (dispatch, getState) => {
   const { emailSignin, passwordSignin } = getState().auth;
   dispatch(dispatcher(actionTypes.START_LOADING));
   console.log("inside signin");
@@ -83,16 +83,16 @@ export const signin = () => (dispatch, getState) => {
         loginSuccessful(dispatch, uid, "Admin", 1);
         console.log("login successful with admin");
         // login for admin here
-        // this.props.setAdmin();
-        // this.props.onLogin(uid);
       } else {
         database()
           .ref(`students/${uid}`)
           .once("value")
           .then(res => {
             if (res.val()) {
-              console.log("login successful with student");
+              console.log("login successful with student", res.val());
               loginSuccessful(dispatch, uid, res.val().name, 2);
+              console.log("re routing");
+              history.replace("/profile");
             } else {
               database()
                 .ref(`companies/${uid}`)
@@ -101,6 +101,7 @@ export const signin = () => (dispatch, getState) => {
                   if (res.val()) {
                     console.log("login successful with companies");
                     loginSuccessful(dispatch, uid, res.val().name, 3);
+                    history.replace("/profile");
                   }
                 })
                 .catch(err => {
@@ -124,3 +125,5 @@ export const signin = () => (dispatch, getState) => {
       dispatch(dispatcher(actionTypes.SIGNIN_ERROR, { error: errorMessage }));
     });
 };
+
+export const signout = () => dispatcher(actionTypes.SIGNOUT);

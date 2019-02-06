@@ -1,16 +1,23 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 import Aux from "../../hoc/Auxiliary";
 import "./Navbar.css";
 
 class Navbar extends Component {
   render() {
-    // let links = "";
     let navbarContent = "";
-    const isAthenticated = false;
-    if (isAthenticated) {
+    const { status } = this.props;
+
+    if (status !== "") {
+      
+      // to render different tabs for diff type of users
+      let tabs = [];
+      if (status === 1) tabs = ["students", "companies", "vacancies", "logout"];
+      else if (status === 2) tabs = ["studentProfile", "companies", "vacancies", "logout"];
+      else if (status === 3) tabs = ["companyProfile", "students", "logout"];
+
       navbarContent = (
         <Aux>
           <p className="navbar-brand  nav-item-color">Recruitment Portal</p>
@@ -29,17 +36,13 @@ class Navbar extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item active">
-                <p className="nav-link nav-item-color">
-                  Home <span className="sr-only">(current)</span>
-                </p>
-              </li>
-              <li className="nav-item">
-                <p className="nav-link nav-item-color">Features</p>
-              </li>
-              <li className="nav-item">
-                <p className="nav-link nav-item-color">Pricing</p>
-              </li>
+              {tabs.map(tab => (
+                <li className="nav-item active" key={tab}>
+                  <NavLink className="nav-link nav-item-color" to={`/${tab}`}>
+                    {tab[0].toUpperCase() + tab.slice(1)}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
         </Aux>
@@ -56,23 +59,10 @@ class Navbar extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    status: state.auth.status
+  };
+};
 
-  /* <ul className="navbar-nav">
-            <li className="nav-item active">
-              <NavLink className="nav-link nav-item-color" to="/home">
-                Home <span className="sr-only">(current)</span>
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link nav-item-color" to="/homeas">
-                Features
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link nav-item-color" to="/homez">
-                Pricing
-              </NavLink>
-            </li>
-          </ul> */
-
-export default Navbar;
+export default connect(mapStateToProps)(Navbar);

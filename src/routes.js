@@ -1,10 +1,18 @@
-import React from 'react';
+import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 
-import Signin from "./containers/SignIn/SignIn";
-import Signup from "./containers/SignUp/SignUp";
+// auth containers
+import Signin from "./containers/Auth/SignIn/SignIn";
+import Signup from "./containers/Auth/SignUp/SignUp";
+import Logout from "./containers/Auth/Logout/Logout";
 
-const getRoutes = isAthenticated => {
+// student containers
+import StudentProfile from "./containers/Student/Profile/Profile";
+
+// company containers
+import CompanyProfile from "./containers/Company/Profile/Profile";
+
+const getRoutes = status => {
   let routes = (
     <Switch>
       <Route path="/signin" exact component={Signin} />
@@ -12,17 +20,45 @@ const getRoutes = isAthenticated => {
       <Redirect to="/signin" />
     </Switch>
   );
-  // if (isAthenticated) {
+
+  // routes for admin
+  // if (status === 1) {
   //   routes = (
-  // <Switch>
-  //   <Route path="/profile" component={Profile} />
-  //   <Route path="/auth" component={Auth} />
-  //   <Route path="/donors" component={Donors} />
-  //   <Route path="/logout" component={Logout} />
-  //   <Route path="/" exact component={Auth} />
-  // </Switch>
+  //     <Switch>
+  //       <Route path="/logout" component={Logout} />
+  //       <Route path="/auth" component={Auth} />
+  //       <Route path="/donors" component={Donors} />
+  //       <Route path="/" exact component={Auth} />
+  //     </Switch>
   //   );
   // }
+
+  // routes for students
+  if (status === 2) {
+    routes = (
+      <Switch>
+        <Route path="/profile" component={StudentProfile} />
+        <Route path="/logout" component={Logout} />
+        {/* <Route path="/companies" component={Auth} />
+        <Route path="/vacancies" component={Donors} />
+        <Route path="/" exact component={Auth} /> */}
+      </Switch>
+    );
+  }
+
+  // routes for companies
+  else if (status === 3) {
+    routes = (
+      <Switch>
+        <Route path="/profile" component={CompanyProfile} />
+        <Route path="/logout" component={Logout} />
+        {/* <Route path="/auth" component={Auth} />
+        <Route path="/donors" component={Donors} />
+        <Route path="/" exact component={Auth} /> */}
+      </Switch>
+    );
+  }
+
   return routes;
 };
 

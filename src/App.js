@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { connect } from "react-redux";
 
 import Navbar from "./components/Navbar/Navbar";
 import getRoutes from "./routes";
@@ -9,16 +9,22 @@ import "./App.css";
 
 class App extends Component {
   render() {
-    let routes = getRoutes(false);
+    let routes = getRoutes(this.props.status);
     return (
       <Router>
         <div className="App">
           <Navbar />
-          <MuiThemeProvider>{routes}</MuiThemeProvider>
+          {routes}
         </div>
       </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    status: state.auth.status
+  };
+};
+
+export default connect(mapStateToProps)(App);

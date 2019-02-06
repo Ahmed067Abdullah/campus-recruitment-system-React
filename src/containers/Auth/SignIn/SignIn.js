@@ -6,10 +6,10 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-import * as actions from "../../store/actions/authActions";
-import Card from "../../hoc/Card";
-import authValidations from "../../validations/authValidations";
-import Spinner from "./../../components/Spinner/Spinner";
+import * as actions from "../../../store/actions/authActions";
+import Card from "../../../hoc/Card";
+import authValidations from "../../../validations/authValidations";
+import Spinner from "./../../../components/Spinner/Spinner";
 import "./SignIn.css";
 
 const styles = theme => {
@@ -36,8 +36,10 @@ class SignIn extends Component {
   };
 
   handleSubmit = () => {
-    this.props.onSignIn();
+    const { onSignIn, history } = this.props;
+    onSignIn(history);
   };
+
   render() {
     const { auth, classes } = this.props;
     const { emailSignin, passwordSignin, loading, errorSignin } = auth;
@@ -113,7 +115,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onInputChange: payload => dispatch(actions.changeInput(payload)),
-    onSignIn: () => dispatch(actions.signin())
+    onSignIn: history => dispatch(actions.signin(history))
   };
 };
 

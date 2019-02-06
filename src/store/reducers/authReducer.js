@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  uid : "",
+  uid: "",
   type: "students",
   status: "",
   name: "",
@@ -14,7 +14,7 @@ const initialState = {
   loading: "",
   errorSignup: "",
   errorSignin: "",
-  emailSignin : "",
+  emailSignin: "",
   passwordSignin: ""
 };
 
@@ -46,16 +46,19 @@ const reducer = (state = initialState, action) => {
         ...state,
         errorSignup: action.payload.error
       };
-    case actionTypes.LOGIN_SUCCESSFUL:
-      const { uid, status } = action.payload;
+    case actionTypes.SIGNIN_SUCCESSFUL:
+      const { uid, status, name } = action.payload;
       return {
         ...state,
         uid,
         status,
-        errorSignin : "",
-        errorSignup : "",
-        loading : false
+        name,
+        errorSignin: "",
+        errorSignup: "",
+        loading: false
       };
+    case actionTypes.SIGNOUT:
+      return initialState;
     default:
       return state;
   }

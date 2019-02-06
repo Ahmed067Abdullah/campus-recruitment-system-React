@@ -8,11 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import * as actions from "../../store/actions/authActions";
-import Card from "../../hoc/Card";
-import SignUpFields from "./../../components/Auth/SignUpForm";
-import Spinner from "./../../components/Spinner/Spinner";
-import authValidations from "../../validations/authValidations";
+import * as actions from "../../../store/actions/authActions";
+import Card from "../../../hoc/Card";
+import SignUpFields from "../../../components/Auth/SignUpForm";
+import Spinner from "../../../components/Spinner/Spinner";
+import authValidations from "../../../validations/authValidations";
 import "./SignUp.css";
 
 const styles = theme => {
@@ -49,7 +49,8 @@ class SignUp extends Component {
   };
 
   handleSubmit = () => {
-    this.props.onSignUp();
+    const { onSignUp, history} = this.props;
+    onSignUp(history);
   };
 
   render() {
@@ -116,7 +117,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onInputChange: payload => dispatch(actions.changeInput(payload)),
-    onSignUp: () => dispatch(actions.signup())
+    onSignUp: history => dispatch(actions.signup(history))
   };
 };
 
