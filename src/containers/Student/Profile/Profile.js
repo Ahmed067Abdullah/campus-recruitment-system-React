@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import Button from "@material-ui/core/Button";
 
-import Card from "../../../hoc/Card";
 import PersonalInfo from "../../../components/Students/PersonalInfo";
 import EducationTable from "../../../components/Students/EducationTable";
 import ExperienceTable from "../../../components/Students/ExperienceTable";
@@ -37,8 +34,26 @@ class Profile extends Component {
   componentDidMount() {
     this.props.getProfile();
   }
-  personalInfoEditHandler = () => {
-    console.log("edit info");
+  openPersonalInfoModal = () => {};
+  openEducationModal = (index) => {
+    alert(index)
+  };
+  openExperienceModal = (index) => {
+    alert(index)
+  };
+  editPersonalInfoHandler = () => {};
+  addEducationHandler = () => {
+    
+  };
+  addExperienceHandler = () => {};
+  educationContextMenuHandler = () => {
+    alert("hrello world");
+  };
+  deleteEducationHandler = index => {
+    alert(index);
+  };
+  deleteExperienceHandler = index => {
+    alert(index);
   };
   render() {
     const { auth, student, classes } = this.props;
@@ -48,6 +63,7 @@ class Profile extends Component {
       github,
       linkedin,
       introduction,
+      skills,
       address,
       phone,
       education,
@@ -56,6 +72,7 @@ class Profile extends Component {
     const stdudentInfo = [
       { key: "Name", value: name },
       { key: "Age", value: age },
+      { key: "Skills", value: skills },
       { key: "Introduction", value: introduction },
       { key: "Address", value: address },
       { key: "Contact No", value: phone },
@@ -64,7 +81,7 @@ class Profile extends Component {
       { key: "LinkedIn", value: linkedin }
     ];
     return (
-      <div>
+      <div className="lol">
         <h1 className="main-heading-student-profile">Welcome {name}</h1>
         <div className="student-profile-card-container">
           <PersonalInfo
@@ -73,10 +90,33 @@ class Profile extends Component {
           />
         </div>
         <div className="student-profile-education-container">
-          <EducationTable education={education} />
+          <EducationTable
+            education={education}
+            contextMenu={this.educationContextMenuHandler}
+            editEducation={this.openEducationModal}
+            deleteEducation={this.deleteEducationHandler}
+          />
+          <Button
+            variant="contained"
+            className="add-eduEx-button"
+            onClick={this.addEducation}
+          >
+            Add Education
+          </Button>
         </div>
         <div className="student-profile-experience-container">
-          <ExperienceTable experience={experience} />
+          <ExperienceTable 
+            experience={experience} 
+            editExperience={this.openExperienceModal}
+            deleteExperience={this.deleteExperienceHandler}
+          />
+          <Button
+            variant="contained"
+            className="add-eduEx-button"
+            onClick={this.addExperience}
+          >
+            Add Experience
+          </Button>
         </div>
       </div>
     );

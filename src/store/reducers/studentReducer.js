@@ -9,12 +9,13 @@ const initialState = {
   introduction:
     "I've done software engineering, software enginerring is done by me, im proud of it",
   address: "House # 214, Street no 12, Bahadurabad, Karachi",
+  skills : "HTML, CSS, JS",
   education: [
     {
       institue: "NED University of Enginerring and Technology",
       degree: "Bachelors of Engineering",
       from: "2016",
-      to: "2020"
+      to: "Present"
     },
     {
       institue: "NED University of Enginerring and Technology",
@@ -38,7 +39,7 @@ const initialState = {
       institue: "NED University of Enginerring and Technology",
       degree: "Bachelors of Engineering",
       from: "2016",
-      to: "2020"
+      to: "Present"
     },
     {
       institue: "NED University of Enginerring and Technology",
@@ -52,7 +53,7 @@ const initialState = {
         company: "NED University of Enginerring and Technology",
         position: "Bachelors of Engineering",
         from: "2016",
-        to: "2020"
+        to: "Present"
       },
       {
         company: "NED University of Enginerring and Technology",
@@ -70,7 +71,7 @@ const initialState = {
         company: "NED University of Enginerring and Technology",
         position: "Bachelors of Engineering",
         from: "2016",
-        to: "2020"
+        to: "Present"
       },
       {
         company: "NED University of Enginerring and Technology",
