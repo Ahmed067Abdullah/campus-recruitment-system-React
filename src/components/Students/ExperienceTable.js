@@ -7,9 +7,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-
 import Aux from "../../hoc/Auxiliary";
+import EditableExperienceTableBody from "./EditableExperienceTableBody";
 
 const styles = theme => ({
   root: {
@@ -59,6 +58,7 @@ const styles = theme => ({
 
 const experienceTable = props => {
   const { classes, experience, editExperience, deleteExperience } = props;
+  const owner = true;
 
   return experience.length > 0 ? (
     <Aux>
@@ -82,72 +82,36 @@ const experienceTable = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {experience.map((row, index) => (
-              <Aux key={index}>
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`experience-${index}`}>
+            {owner ? (
+              <EditableExperienceTableBody
+                experience={experience}
+                classes={classes}
+                editExperience={editExperience}
+                deleteExperience={deleteExperience}
+              />
+            ) : (
+              experience.map((row, index) => (
+                <Aux key={index}>
+                  <TableRow>
+                    <TableCell align="center" padding="none">
                       {row.company}
-                    </ContextMenuTrigger>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`experience-${index}`}>
+                    <TableCell align="center" padding="none">
                       {row.position}
-                    </ContextMenuTrigger>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`experience-${index}`}>
+                    <TableCell align="center" padding="none">
                       {row.from}
-                    </ContextMenuTrigger>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`experience-${index}`}>
+                    <TableCell align="center" padding="none">
                       {row.to}
-                    </ContextMenuTrigger>
-                  </TableCell>
-                </TableRow>
-
-                <ContextMenu
-                  id={`experience-${index}`}
-                  className={classes.ctxMenu}
-                >
-                  <MenuItem
-                    data={{ foo: "bar" }}
-                    onClick={() => editExperience(index)}
-                    className={classes.ctxMenuItem}
-                  >
-                    Edit
-                  </MenuItem>
-                  <div className={classes.ctxMenuItemDivider} />
-                  <MenuItem
-                    data={{ foo: "bar" }}
-                    onClick={() => deleteExperience(index)}
-                    className={classes.ctxMenuItem}
-                  >
-                    Delete
-                  </MenuItem>
-                </ContextMenu>
-              </Aux>
-            ))}
+                    </TableCell>
+                  </TableRow>
+                </Aux>
+              ))
+            )}
           </TableBody>
         </Table>
       </Paper>

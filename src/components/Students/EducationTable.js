@@ -7,9 +7,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-
 import Aux from "../../hoc/Auxiliary";
+import EditableEducationTableBody from "./EditableEducationTableBody";
 
 const styles = theme => ({
   root: {
@@ -59,7 +58,7 @@ const styles = theme => ({
 
 const educationTable = props => {
   const { classes, education, deleteEducation, editEducation } = props;
-
+  let owner = true;
   return education.length > 0 ? (
     <Aux>
       <h2 className="sub-headings-student-profile">Education</h2>
@@ -82,72 +81,34 @@ const educationTable = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {education.map((row, index) => (
-              <Aux  key={index}>
+            {owner ? (
+              <EditableEducationTableBody
+                classes={classes}
+                education={education}
+                deleteEducation={deleteEducation}
+                editEducation={editEducation}
+              />
+            ) : (
+              education.map((row, index) => (
                 <TableRow>
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`education-${index}`}>
-                      {row.institue}
-                    </ContextMenuTrigger>
+                  <TableCell key={index} align="center" padding="none">
+                    {row.institue}
                   </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`education-${index}`}>
-                      {row.degree}
-                    </ContextMenuTrigger>
+                  <TableCell align="center" padding="none">
+                    {row.degree}
                   </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`education-${index}`}>
-                      {row.from}
-                    </ContextMenuTrigger>
+                  <TableCell align="center" padding="none">
+                    {row.from}
                   </TableCell>
 
-                  <TableCell
-                    align="center"
-                    padding="none"
-                    className={classes.ctxMenuTrigger}
-                  >
-                    <ContextMenuTrigger id={`education-${index}`}>
-                      {row.to}
-                    </ContextMenuTrigger>
+                  <TableCell align="center" padding="none">
+                    {row.to}
                   </TableCell>
                 </TableRow>
-
-                <ContextMenu
-                  id={`education-${index}`}
-                  className={classes.ctxMenu}
-                >
-                  <MenuItem
-                    data={{ foo: "bar" }}
-                    onClick={() => editEducation(index)}
-                    className={classes.ctxMenuItem}
-                  >
-                    Edit
-                  </MenuItem>
-                  <div className={classes.ctxMenuItemDivider} />
-                  <MenuItem
-                    data={{ foo: "bar" }}
-                    onClick={() => deleteEducation(index)}
-                    className={classes.ctxMenuItem}
-                  >
-                    Delete
-                  </MenuItem>
-                </ContextMenu>
-              </Aux>
-            ))}
+              ))
+            )}
           </TableBody>
         </Table>
       </Paper>
