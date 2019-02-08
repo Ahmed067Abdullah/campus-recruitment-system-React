@@ -5,7 +5,7 @@ const initialState = {
   type: "students",
   status: "2",
   name: "Ahmed Abdullah",
-  email: "",
+  email: "test1@test.com",
   enrollNo: "",
   phoneNo: "",
   address: "",
@@ -14,7 +14,6 @@ const initialState = {
   loading: "",
   errorSignup: "",
   errorSignin: "",
-  emailSignin: "test1@test.com",
   passwordSignin: ""
 };
 

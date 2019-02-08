@@ -5,9 +5,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
 import PersonalInfo from "../../../components/Students/PersonalInfo";
+import PersonalInfoForm from "../../../components/Students/PersonalInfoForm";
 import EducationTable from "../../../components/Students/EducationTable";
 import ExperienceTable from "../../../components/Students/ExperienceTable";
 import * as actions from "../../../store/actions/studentsActions";
+
+import Spinner from "./../../../components/Spinner/Spinner";
+import Modal from "../../../hoc/Modal";
 
 import "./Profile.css";
 
@@ -31,24 +35,54 @@ const styles = theme => {
 };
 
 class Profile extends Component {
+  state = {
+    infoModal: false,
+    info: {
+      name: "",
+      dob: "",
+      skills: "",
+      enrollNo: "",
+      introduction: "",
+      address: "",
+      phone: "",
+      github: "",
+      linkedin: ""
+    }
+  };
   componentDidMount() {
-    this.props.getProfile();
+    const { getProfile, auth } = this.props;
+    getProfile(auth.uid);
   }
-  openPersonalInfoModal = () => {};
-  openEducationModal = (index) => {
-    alert(index)
+  inputChangedHandler = e => {
+    const info = { ...this.state.info };
+    info[e.target.name] = e.target.value;
+    this.setState({ info });
   };
-  openExperienceModal = (index) => {
-    alert(index)
+  personalInfoModalHandler = flag => {
+    if (flag) {
+      const { auth, student } = this.props;
+      const { name } = auth;
+      const info = { ...student, name };
+      this.setState({ info });
+    }
+    this.setState({ infoModal: flag });
   };
-  editPersonalInfoHandler = () => {};
-  addEducationHandler = () => {
-    
+  openEducationModal = index => {
+    alert(index);
   };
+  openExperienceModal = index => {
+    alert(index);
+  };
+  onSavePersonalInfo = () => {
+    const { auth, student, saveProfile } = this.props;
+    const { info } = this.state;
+    const { uid, email } = auth;
+    const updatedStudent = { ...student, ...info, email };
+    saveProfile(uid, updatedStudent);
+    this.personalInfoModalHandler(false);
+  };
+  addEducationHandler = () => {};
   addExperienceHandler = () => {};
-  educationContextMenuHandler = () => {
-    alert("hrello world");
-  };
   deleteEducationHandler = index => {
     alert(index);
   };
@@ -56,8 +90,9 @@ class Profile extends Component {
     alert(index);
   };
   render() {
-    const { auth, student, classes } = this.props;
-    const { name, emailSignin } = auth;
+    const { auth, student } = this.props;
+    const { infoModal, info } = this.state;
+    const { name, email, loading } = auth;
     const {
       age,
       github,
@@ -66,27 +101,29 @@ class Profile extends Component {
       skills,
       address,
       phone,
+      enrollNo,
       education,
       experience
     } = student;
     const stdudentInfo = [
       { key: "Name", value: name },
+      { key: "Enrollment Number", value: enrollNo },
       { key: "Age", value: age },
       { key: "Skills", value: skills },
       { key: "Introduction", value: introduction },
       { key: "Address", value: address },
       { key: "Contact No", value: phone },
-      { key: "Email", value: emailSignin },
-      { key: "Github", value: github },
-      { key: "LinkedIn", value: linkedin }
+      { key: "Email", value: email },
+      { key: "Github Handle", value: github },
+      { key: "LinkedIn Handle", value: linkedin }
     ];
-    return (
+    return !loading ? (
       <div className="lol">
         <h1 className="main-heading-student-profile">Welcome {name}</h1>
         <div className="student-profile-card-container">
           <PersonalInfo
             stdudentInfo={stdudentInfo}
-            onEdit={this.personalInfoEditHandler}
+            onEdit={this.personalInfoModalHandler}
           />
         </div>
         <div className="student-profile-education-container">
@@ -105,8 +142,8 @@ class Profile extends Component {
           </Button>
         </div>
         <div className="student-profile-experience-container">
-          <ExperienceTable 
-            experience={experience} 
+          <ExperienceTable
+            experience={experience}
             editExperience={this.openExperienceModal}
             deleteExperience={this.deleteExperienceHandler}
           />
@@ -117,7 +154,18 @@ class Profile extends Component {
           >
             Add Experience
           </Button>
+          <Modal open={infoModal} handleClose={this.personalInfoModalHandler}>
+            <PersonalInfoForm
+              info={info}
+              inputChangedHandler={this.inputChangedHandler}
+              onSubmit={this.onSavePersonalInfo}
+            />
+          </Modal>
         </div>
+      </div>
+    ) : (
+      <div className="auth-spinner">
+        <Spinner />
       </div>
     );
   }
@@ -132,7 +180,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfile: () => dispatch(actions.getProfile())
+    getProfile: uid => dispatch(actions.getProfile(uid)),
+    saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload))
   };
 };
 

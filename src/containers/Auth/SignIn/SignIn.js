@@ -44,7 +44,7 @@ class SignIn extends Component {
 
   render() {
     const { auth, classes } = this.props;
-    const { emailSignin, passwordSignin, loading, errorSignin } = auth;
+    const { email, passwordSignin, loading, errorSignin } = auth;
     return (
       <div style={{ marginTop: 50 }}>
         <h1 className="main-heading">Campus Recruitment System</h1>
@@ -62,8 +62,8 @@ class SignIn extends Component {
                   className={classes.TextFields}
                   label="Email"
                   onChange={this.handleChange}
-                  name="emailSignin"
-                  value={emailSignin}
+                  name="email"
+                  value={email}
                   validators={["required", "isEmail"]}
                   errorMessages={["This field is required", "Invalid Email"]}
                 />

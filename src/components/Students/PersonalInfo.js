@@ -12,7 +12,7 @@ const personalInfo = props => {
           <span className="student-profile-info-val">{infoItem.value}</span>
         </p>
       ))}
-      <Button onClick={onEdit} variant="contained" className="auth-button">
+      <Button onClick={() => onEdit(true)} variant="contained" className="auth-button">
         Edit
       </Button>
     </Card>

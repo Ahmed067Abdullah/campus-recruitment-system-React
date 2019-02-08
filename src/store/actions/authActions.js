@@ -71,11 +71,11 @@ export const signup = history => (dispatch, getState) => {
 };
 
 export const signin = history => (dispatch, getState) => {
-  const { emailSignin, passwordSignin } = getState().auth;
+  const { email, passwordSignin } = getState().auth;
   dispatch(dispatcher(actionTypes.START_LOADING));
   console.log("inside signin");
   auth()
-    .signInWithEmailAndPassword(emailSignin, passwordSignin)
+    .signInWithEmailAndPassword(email, passwordSignin)
     .then(res => {
       console.log("signed in");
       const uid = res.user.uid;

@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 // auth containers
-import Signin from "./containers/Auth/SignIn/SignIn";
-import Signup from "./containers/Auth/SignUp/SignUp";
+// import Signin from "./containers/Auth/SignIn/SignIn";
+// import Signup from "./containers/Auth/SignUp/SignUp";
 import Logout from "./containers/Auth/Logout/Logout";
 
 // student containers
