@@ -56,7 +56,7 @@ const editableExperienceTableBody = (props) => {
       <ContextMenu id={`experience-${index}`} className={classes.ctxMenu}>
         <MenuItem
           data={{ foo: "bar" }}
-          onClick={() => editExperience(index)}
+          onClick={() => editExperience(true,index)}
           className={classes.ctxMenuItem}
         >
           Edit

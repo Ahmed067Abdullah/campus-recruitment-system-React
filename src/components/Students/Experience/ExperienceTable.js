@@ -39,7 +39,8 @@ const styles = theme => ({
     width: 70,
     padding: 8,
     borderRadius: 5,
-    cursor: "pointer"
+    cursor: "pointer",
+    zIndex : 1
   },
   ctxMenuItem: {
     paddingBottom: 0,

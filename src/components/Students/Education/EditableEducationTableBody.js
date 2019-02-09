@@ -56,7 +56,7 @@ const editableEducationTableBody = props => {
       <ContextMenu id={`education-${index}`} className={classes.ctxMenu}>
         <MenuItem
           data={{ foo: "bar" }}
-          onClick={() => editEducation(index)}
+          onClick={() => editEducation(true,index)}
           className={classes.ctxMenuItem}
         >
           Edit

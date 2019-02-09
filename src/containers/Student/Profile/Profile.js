@@ -95,8 +95,12 @@ class Profile extends Component {
   };
 
   // edu func
-  educationModalHandler = (flag, index = "") => {
-    if (index) {
+  educationModalHandler = (flag, eduEditIndex = "") => {
+    if (eduEditIndex !== "") {
+      console.log("editing", eduEditIndex);
+      const { education } = this.props.student;
+      const educationForm = education[eduEditIndex];
+      this.setState({ educationForm, eduEditIndex });
     }
     this.setState({ eduModal: flag });
   };
@@ -105,8 +109,8 @@ class Profile extends Component {
     const { eduEditIndex, educationForm } = this.state;
     const { auth, student, saveEdu } = this.props;
     const { education } = student;
-
-    if (eduEditIndex) education[eduEditIndex] = educationForm;
+    console.log("eduEditIndex",eduEditIndex)
+    if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
     else education.push(educationForm);
 
     saveEdu(auth.uid, education);
@@ -143,8 +147,12 @@ class Profile extends Component {
   };
 
   // exp func
-  experienceModalHandler = (flag, index = "") => {
-    if (index) {
+  experienceModalHandler = (flag, expEditIndex = "") => {
+    if (expEditIndex !== "") {
+      console.log("editing", expEditIndex);
+      const { experience } = this.props.student;
+      const experienceForm = experience[expEditIndex];
+      this.setState({ experienceForm, expEditIndex });
     }
     this.setState({ expModal: flag });
   };
@@ -154,7 +162,7 @@ class Profile extends Component {
     const { auth, student, saveExp } = this.props;
     const { experience } = student;
 
-    if (expEditIndex) experience[expEditIndex] = experienceForm;
+    if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
     else experience.push(experienceForm);
 
     saveExp(auth.uid, experience);
