@@ -4,20 +4,20 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
-import PersonalInfo from "../../../components/Students/PersonalInfo";
-import PersonalInfoForm from "../../../components/Students/PersonalInfoForm";
+import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
+import PersonalInfoForm from "../../../components/Students/PersonalInfo/PersonalInfoForm";
 
-import EducationTable from "../../../components/Students/EducationTable";
-import EducationForm from "../../../components/Students/EducationForm";
+import EducationTable from "../../../components/Students/Education/EducationTable";
+import EducationForm from "../../../components/Students/Education/EducationForm";
 
-import ExperienceTable from "../../../components/Students/ExperienceTable";
-import ExperienceForm from "../../../components/Students/ExperienceForm";
+import ExperienceTable from "../../../components/Students/Experience/ExperienceTable";
+import ExperienceForm from "../../../components/Students/Experience/ExperienceForm";
 
 import * as actions from "../../../store/actions/studentsActions";
+import getAge from "../../../common/getAge";
 
 import Spinner from "./../../../components/Spinner/Spinner";
 import Modal from "../../../hoc/Modal";
-import getAge from "../../../common/getAge";
 
 import "./Profile.css";
 
@@ -97,13 +97,12 @@ class Profile extends Component {
   // info func
   personalInfoModalHandler = flag => {
     if (flag) {
-      const { auth, student } = this.props;
-      const { name } = auth;
-      const info = { ...student, name };
+      const info = { ...this.props.student };
       this.setState({ info });
     }
     this.setState({ infoModal: flag });
   };
+
   onSavePersonalInfo = () => {
     const { auth, student, saveProfile } = this.props;
     const { info } = this.state;
@@ -173,9 +172,11 @@ class Profile extends Component {
     });
     this.experienceModalHandler(false);
   };
+
   deleteExperienceHandler = index => {
     alert(index);
   };
+
   render() {
     const { auth, student } = this.props;
     const {
@@ -183,8 +184,8 @@ class Profile extends Component {
       info,
       eduModal,
       educationForm,
-      experienceForm,
-      expModal
+      expModal,
+      experienceForm
     } = this.state;
     const { email, loading } = auth;
     const {
@@ -212,6 +213,7 @@ class Profile extends Component {
       { key: "Github Handle", value: github },
       { key: "LinkedIn Handle", value: linkedin }
     ];
+
     return !loading ? (
       <div className="lol">
         <h1 className="main-heading-student-profile">Welcome {name}</h1>

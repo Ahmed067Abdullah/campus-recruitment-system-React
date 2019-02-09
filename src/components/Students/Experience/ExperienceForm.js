@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 // import Card from "../../hoc/Card";
-import validations from "../../validation/Validation";
+import validations from "../../../validation/Validation";
 
 const styles = theme => {
   return {
@@ -17,13 +17,13 @@ const styles = theme => {
   };
 };
 
-class EducationForm extends Component {
+class ExperienceForm extends Component {
   componentDidMount() {
     validations();
   }
 
   handleChange = event => {
-    this.props.inputChangedHandler(event,"edu");
+    this.props.inputChangedHandler(event, "exp");
   };
 
   handleSubmit = () => {
@@ -31,12 +31,12 @@ class EducationForm extends Component {
   };
 
   render() {
-    const { education, classes } = this.props;
-    const { institute, degree, from, to } = education;
+    const { experience, classes } = this.props;
+    const { company, position, from, to } = experience;
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">
-          <h2 className="singin-heading">Education</h2>
+          <h2 className="singin-heading">Experience</h2>
           <ValidatorForm
             ref="form"
             onSubmit={this.handleSubmit}
@@ -44,20 +44,20 @@ class EducationForm extends Component {
           >
             <TextValidator
               className={classes.TextFields}
-              label="Institute"
+              label="Company"
               onChange={this.handleChange}
-              name="institute"
-              value={institute}
+              name="company"
+              value={company}
               validators={["required"]}
               errorMessages={["This field is required"]}
             />
             <br />
             <TextValidator
               className={classes.TextFields}
-              label="Degree"
+              label="Position"
               onChange={this.handleChange}
-              name="degree"
-              value={degree}
+              name="position"
+              value={position}
               validators={["required"]}
               errorMessages={["This field is required"]}
             />
@@ -97,4 +97,4 @@ class EducationForm extends Component {
   }
 }
 
-export default withStyles(styles)(EducationForm);
+export default withStyles(styles)(ExperienceForm);

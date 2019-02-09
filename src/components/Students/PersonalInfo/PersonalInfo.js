@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import Card from "../../hoc/Card";
+import Card from "../../../hoc/Card";
 
 const personalInfo = props => {
   const { stdudentInfo, onEdit } = props;

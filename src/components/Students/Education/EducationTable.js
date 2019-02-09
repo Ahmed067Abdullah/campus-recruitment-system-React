@@ -7,8 +7,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import Aux from "../../hoc/Auxiliary";
-import EditableExperienceTableBody from "./EditableExperienceTableBody";
+import Aux from "../../../hoc/Auxiliary";
+import EditableEducationTableBody from "./EditableEducationTableBody";
 
 const styles = theme => ({
   root: {
@@ -16,11 +16,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   },
-  comp: {
+  inst: {
     width: "40%",
     padding: "2%"
   },
-  pos: {
+  deg: {
     width: "24%",
     padding: "2%"
   },
@@ -56,22 +56,21 @@ const styles = theme => ({
   }
 });
 
-const experienceTable = props => {
-  const { classes, experience, editExperience, deleteExperience } = props;
-  const owner = true;
-
-  return experience.length > 0 ? (
+const educationTable = props => {
+  const { classes, education, deleteEducation, editEducation } = props;
+  let owner = true;
+  return education.length > 0 ? (
     <Aux>
-      <h2 className="sub-headings-student-profile">Experience</h2>
+      <h2 className="sub-headings-student-profile">Education</h2>
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell align="center" padding="none" className={classes.comp}>
-                Company
+              <TableCell align="center" padding="none" className={classes.inst}>
+                Institute
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.pos}>
-                Position
+              <TableCell align="center" padding="none" className={classes.deg}>
+                Degree
               </TableCell>
               <TableCell align="center" padding="none" className={classes.from}>
                 From
@@ -83,33 +82,31 @@ const experienceTable = props => {
           </TableHead>
           <TableBody>
             {owner ? (
-              <EditableExperienceTableBody
-                experience={experience}
+              <EditableEducationTableBody
                 classes={classes}
-                editExperience={editExperience}
-                deleteExperience={deleteExperience}
+                education={education}
+                deleteEducation={deleteEducation}
+                editEducation={editEducation}
               />
             ) : (
-              experience.map((row, index) => (
-                <Aux key={index}>
-                  <TableRow>
-                    <TableCell align="center" padding="none">
-                      {row.company}
-                    </TableCell>
+              education.map((row, index) => (
+                <TableRow>
+                  <TableCell key={index} align="center" padding="none">
+                    {row.institute}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {row.position}
-                    </TableCell>
+                  <TableCell align="center" padding="none">
+                    {row.degree}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {row.from}
-                    </TableCell>
+                  <TableCell align="center" padding="none">
+                    {row.from}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {row.to}
-                    </TableCell>
-                  </TableRow>
-                </Aux>
+                  <TableCell align="center" padding="none">
+                    {row.to}
+                  </TableCell>
+                </TableRow>
               ))
             )}
           </TableBody>
@@ -117,8 +114,8 @@ const experienceTable = props => {
       </Paper>
     </Aux>
   ) : (
-    <p>No Experience to Show</p>
+    <p>No Education to Show</p>
   );
 };
 
-export default withStyles(styles)(experienceTable);
+export default withStyles(styles)(educationTable);
