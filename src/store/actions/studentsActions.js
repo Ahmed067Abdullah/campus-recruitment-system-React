@@ -14,18 +14,15 @@ export const getProfile = uid => dispatch => {
 };
 
 export const saveProfile = (uid, payload) => dispatch => {
-  delete payload.education;
-  delete payload.experience;
   console.log("setting:", payload);
   database()
     .ref(`/students/${uid}`)
-    .set(payload)
-    .then(() => {
-      dispatch(
-        dispatcher(actionTypes.CHANGE_INPUT, {
-          key: "name",
-          value: payload.name
-        })
-      );
-    });
+    .set(payload);
+};
+
+export const saveEduExp = (uid, payload, field) => dispatch => {
+  console.log("updating edu/exp:", payload, field);
+  database()
+    .ref(`/students/${uid}/${field}`)
+    .set(payload);
 };

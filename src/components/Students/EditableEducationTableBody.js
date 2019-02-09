@@ -17,7 +17,7 @@ const editableEducationTableBody = props => {
           className={classes.ctxMenuTrigger}
         >
           <ContextMenuTrigger id={`education-${index}`}>
-            {row.institue}
+            {row.institute}
           </ContextMenuTrigger>
         </TableCell>
 

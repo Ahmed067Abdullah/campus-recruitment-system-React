@@ -23,7 +23,7 @@ class PersonalInfoForm extends Component {
   }
 
   handleChange = event => {
-    this.props.inputChangedHandler(event);
+    this.props.inputChangedHandler(event, "info");
   };
 
   handleSubmit = () => {

@@ -92,7 +92,7 @@ const educationTable = props => {
               education.map((row, index) => (
                 <TableRow>
                   <TableCell key={index} align="center" padding="none">
-                    {row.institue}
+                    {row.institute}
                   </TableCell>
 
                   <TableCell align="center" padding="none">

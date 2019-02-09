@@ -6,12 +6,18 @@ import Button from "@material-ui/core/Button";
 
 import PersonalInfo from "../../../components/Students/PersonalInfo";
 import PersonalInfoForm from "../../../components/Students/PersonalInfoForm";
+
 import EducationTable from "../../../components/Students/EducationTable";
+import EducationForm from "../../../components/Students/EducationForm";
+
 import ExperienceTable from "../../../components/Students/ExperienceTable";
+import ExperienceForm from "../../../components/Students/ExperienceForm";
+
 import * as actions from "../../../store/actions/studentsActions";
 
 import Spinner from "./../../../components/Spinner/Spinner";
 import Modal from "../../../hoc/Modal";
+import getAge from "../../../common/getAge";
 
 import "./Profile.css";
 
@@ -37,6 +43,10 @@ const styles = theme => {
 class Profile extends Component {
   state = {
     infoModal: false,
+    eduModal: false,
+    expModal: false,
+    eduEditIndex: "",
+    expEditIndex: "",
     info: {
       name: "",
       dob: "",
@@ -47,17 +57,44 @@ class Profile extends Component {
       phone: "",
       github: "",
       linkedin: ""
+    },
+    educationForm: {
+      institute: "",
+      degree: "",
+      from: "",
+      to: ""
+    },
+    experienceForm: {
+      company: "",
+      position: "",
+      from: "",
+      to: ""
     }
   };
+
   componentDidMount() {
     const { getProfile, auth } = this.props;
     getProfile(auth.uid);
   }
-  inputChangedHandler = e => {
-    const info = { ...this.state.info };
-    info[e.target.name] = e.target.value;
-    this.setState({ info });
+
+  inputChangedHandler = (e, form) => {
+    const { name, value } = e.target;
+    if (form === "info") {
+      const info = { ...this.state.info };
+      info[name] = value;
+      this.setState({ info });
+    } else if (form === "edu") {
+      const educationForm = { ...this.state.educationForm };
+      educationForm[name] = value;
+      this.setState({ educationForm });
+    } else if (form === "exp") {
+      const experienceForm = { ...this.state.experienceForm };
+      experienceForm[name] = value;
+      this.setState({ experienceForm });
+    }
   };
+
+  // info func
   personalInfoModalHandler = flag => {
     if (flag) {
       const { auth, student } = this.props;
@@ -67,34 +104,92 @@ class Profile extends Component {
     }
     this.setState({ infoModal: flag });
   };
-  openEducationModal = index => {
-    alert(index);
-  };
-  openExperienceModal = index => {
-    alert(index);
-  };
   onSavePersonalInfo = () => {
     const { auth, student, saveProfile } = this.props;
     const { info } = this.state;
     const { uid, email } = auth;
     const updatedStudent = { ...student, ...info, email };
+
     saveProfile(uid, updatedStudent);
     this.personalInfoModalHandler(false);
   };
-  addEducationHandler = () => {};
-  addExperienceHandler = () => {};
+
+  // edu func
+  educationModalHandler = (flag, index = "") => {
+    if (index) {
+    }
+    this.setState({ eduModal: flag });
+  };
+
+  onSaveEducation = () => {
+    const { eduEditIndex, educationForm } = this.state;
+    const { auth, student, saveEdu } = this.props;
+    const { education } = student;
+
+    if (eduEditIndex) education[eduEditIndex] = educationForm;
+    else education.push(educationForm);
+
+    saveEdu(auth.uid, education);
+    this.setState({
+      educationForm: {
+        institute: "",
+        degree: "",
+        from: "",
+        to: ""
+      },
+      eduEditIndex: ""
+    });
+    this.educationModalHandler(false);
+  };
+
   deleteEducationHandler = index => {
     alert(index);
+  };
+
+  // exp func
+  experienceModalHandler = (flag, index = "") => {
+    if (index) {
+    }
+    this.setState({ expModal: flag });
+  };
+
+  onSaveExperience = () => {
+    const { expEditIndex, experienceForm } = this.state;
+    const { auth, student, saveExp } = this.props;
+    const { experience } = student;
+
+    if (expEditIndex) experience[expEditIndex] = experienceForm;
+    else experience.push(experienceForm);
+
+    saveExp(auth.uid, experience);
+    this.setState({
+      experienceForm: {
+        company: "",
+        position: "",
+        from: "",
+        to: ""
+      },
+      expEditIndex: ""
+    });
+    this.experienceModalHandler(false);
   };
   deleteExperienceHandler = index => {
     alert(index);
   };
   render() {
     const { auth, student } = this.props;
-    const { infoModal, info } = this.state;
-    const { name, email, loading } = auth;
     const {
-      age,
+      infoModal,
+      info,
+      eduModal,
+      educationForm,
+      experienceForm,
+      expModal
+    } = this.state;
+    const { email, loading } = auth;
+    const {
+      name,
+      dob,
       github,
       linkedin,
       introduction,
@@ -108,7 +203,7 @@ class Profile extends Component {
     const stdudentInfo = [
       { key: "Name", value: name },
       { key: "Enrollment Number", value: enrollNo },
-      { key: "Age", value: age },
+      { key: "Age", value: getAge(dob) },
       { key: "Skills", value: skills },
       { key: "Introduction", value: introduction },
       { key: "Address", value: address },
@@ -120,48 +215,68 @@ class Profile extends Component {
     return !loading ? (
       <div className="lol">
         <h1 className="main-heading-student-profile">Welcome {name}</h1>
+
+        {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
             stdudentInfo={stdudentInfo}
             onEdit={this.personalInfoModalHandler}
           />
         </div>
+        <Modal open={infoModal} handleClose={this.personalInfoModalHandler}>
+          <PersonalInfoForm
+            info={info}
+            inputChangedHandler={this.inputChangedHandler}
+            onSubmit={this.onSavePersonalInfo}
+          />
+        </Modal>
+
+        {/* education componenets */}
         <div className="student-profile-education-container">
           <EducationTable
             education={education}
             contextMenu={this.educationContextMenuHandler}
-            editEducation={this.openEducationModal}
+            editEducation={this.educationModalHandler}
             deleteEducation={this.deleteEducationHandler}
           />
           <Button
             variant="contained"
             className="add-eduEx-button"
-            onClick={this.addEducation}
+            onClick={() => this.educationModalHandler(true)}
           >
             Add Education
           </Button>
         </div>
+        <Modal open={eduModal} handleClose={this.educationModalHandler}>
+          <EducationForm
+            education={educationForm}
+            inputChangedHandler={this.inputChangedHandler}
+            onSubmit={this.onSaveEducation}
+          />
+        </Modal>
+
+        {/* experience componenets */}
         <div className="student-profile-experience-container">
           <ExperienceTable
             experience={experience}
-            editExperience={this.openExperienceModal}
+            editExperience={this.experienceModalHandler}
             deleteExperience={this.deleteExperienceHandler}
           />
           <Button
             variant="contained"
             className="add-eduEx-button"
-            onClick={this.addExperience}
+            onClick={() => this.experienceModalHandler(true)}
           >
             Add Experience
           </Button>
-          <Modal open={infoModal} handleClose={this.personalInfoModalHandler}>
-            <PersonalInfoForm
-              info={info}
-              inputChangedHandler={this.inputChangedHandler}
-              onSubmit={this.onSavePersonalInfo}
-            />
-          </Modal>
         </div>
+        <Modal open={expModal} handleClose={this.experienceModalHandler}>
+          <ExperienceForm
+            experience={experienceForm}
+            inputChangedHandler={this.inputChangedHandler}
+            onSubmit={this.onSaveExperience}
+          />
+        </Modal>
       </div>
     ) : (
       <div className="auth-spinner">
@@ -181,7 +296,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getProfile: uid => dispatch(actions.getProfile(uid)),
-    saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload))
+    saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload)),
+    saveEdu: (uid, payload) =>
+      dispatch(actions.saveEduExp(uid, payload, "education")),
+    saveExp: (uid, payload) =>
+      dispatch(actions.saveEduExp(uid, payload, "experience"))
   };
 };
 

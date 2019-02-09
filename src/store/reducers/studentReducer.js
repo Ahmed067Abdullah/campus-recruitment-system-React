@@ -1,91 +1,17 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  dob: new Date(),
-  age: "",
+  dob: "",
+  name: "",
   github: "",
   phone: "",
-  enrollNo : "",
+  enrollNo: "",
   linkedin: "",
   introduction: "",
   address: "",
   skills: "",
-  education: [
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "Present"
-    },
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "Present"
-    },
-    {
-      institue: "NED University of Enginerring and Technology",
-      degree: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    }
-  ],
-  experience: [
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "Present"
-    },
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "Present"
-    },
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    },
-    {
-      company: "NED University of Enginerring and Technology",
-      position: "Bachelors of Engineering",
-      from: "2016",
-      to: "2020"
-    }
-  ]
+  education: [],
+  experience: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -94,7 +20,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload
-      }
+      };
     default:
       return state;
   }

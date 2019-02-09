@@ -11,29 +11,33 @@ class Navbar extends Component {
     const { status } = this.props;
 
     if (status !== "") {
-      
       // to render different tabs for diff type of users
       let tabs = [];
       if (status === 1) tabs = ["students", "companies", "vacancies", "logout"];
-      else if (status === 2) tabs = ["studentProfile", "companies", "vacancies", "logout"];
+      else if (status === 2)
+        tabs = ["studentProfile", "companies", "vacancies", "logout"];
       else if (status === 3) tabs = ["companyProfile", "students", "logout"];
 
       navbarContent = (
         <Aux>
           <p className="navbar-brand  nav-item-color">Recruitment Portal</p>
-          <button
-            className="navbar-toggler toggle-button"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <div className="hamburger" />
-            <div className="hamburger" />
-            <div className="hamburger" />
-          </button>
+          {tabs.length > 0 ? (
+            <button
+              className="navbar-toggler toggle-button"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <div className="hamburger" />
+              <div className="hamburger" />
+              <div className="hamburger" />
+            </button>
+          ) : (
+            ""
+          )}
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               {tabs.map(tab => (
