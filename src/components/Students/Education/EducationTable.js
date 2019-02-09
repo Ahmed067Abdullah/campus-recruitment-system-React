@@ -10,6 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import Aux from "../../../hoc/Auxiliary";
 import EditableEducationTableBody from "./EditableEducationTableBody";
 
+import getYear from "../../../common/getYear";
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -100,11 +102,11 @@ const educationTable = props => {
                   </TableCell>
 
                   <TableCell align="center" padding="none">
-                    {row.from}
+                    {getYear(row.from)}
                   </TableCell>
 
                   <TableCell align="center" padding="none">
-                    {row.to}
+                    {getYear(row.to)}
                   </TableCell>
                 </TableRow>
               ))

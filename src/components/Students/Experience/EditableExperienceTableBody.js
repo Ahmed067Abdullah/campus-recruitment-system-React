@@ -5,6 +5,7 @@ import TableRow from "@material-ui/core/TableRow";
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import Aux from "../../../hoc/Auxiliary";
+import getYear from "../../../common/getYear";
 
 const editableExperienceTableBody = (props) => {
   const { experience, classes, editExperience, deleteExperience } = props;
@@ -37,7 +38,7 @@ const editableExperienceTableBody = (props) => {
           className={classes.ctxMenuTrigger}
         >
           <ContextMenuTrigger id={`experience-${index}`}>
-            {row.from}
+            {getYear(row.from)}
           </ContextMenuTrigger>
         </TableCell>
 
@@ -47,7 +48,7 @@ const editableExperienceTableBody = (props) => {
           className={classes.ctxMenuTrigger}
         >
           <ContextMenuTrigger id={`experience-${index}`}>
-            {row.to}
+            {getYear(row.to)}
           </ContextMenuTrigger>
         </TableCell>
       </TableRow>

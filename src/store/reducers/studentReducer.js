@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   dob: "",
+  cgpa : "",
   name: "",
   github: "",
   phone: "",

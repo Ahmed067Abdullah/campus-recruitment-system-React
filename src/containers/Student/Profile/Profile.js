@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
@@ -21,25 +20,6 @@ import Modal from "../../../hoc/Modal";
 
 import "./Profile.css";
 
-const styles = theme => {
-  return {
-    TextFields: {
-      marginBottom: "20px",
-      width: "95%"
-    },
-    button: {
-      margin: theme.spacing.unit,
-      marginBottom: "10px",
-      backgroundColor: "#1f4f16",
-      color: "white"
-    },
-    authMessage: {
-      textDecoration: "underline",
-      cursor: "pointer"
-    }
-  };
-};
-
 class Profile extends Component {
   state = {
     infoModal: false,
@@ -50,6 +30,7 @@ class Profile extends Component {
     info: {
       name: "",
       dob: "",
+      cgpa: "",
       skills: "",
       enrollNo: "",
       introduction: "",
@@ -142,7 +123,23 @@ class Profile extends Component {
   };
 
   deleteEducationHandler = index => {
-    alert(index);
+    const { auth, student, saveEdu } = this.props;
+    const { education } = student;
+
+    education.splice(index, 1);
+    saveEdu(auth.uid, education);
+
+    // clear fields if currently editing edu is delete
+    if (index === this.state.eduEditIndex)
+      this.setState({
+        educationForm: {
+          institute: "",
+          degree: "",
+          from: "",
+          to: ""
+        },
+        eduEditIndex: ""
+      });
   };
 
   // exp func
@@ -174,7 +171,23 @@ class Profile extends Component {
   };
 
   deleteExperienceHandler = index => {
-    alert(index);
+    const { auth, student, saveExp } = this.props;
+    const { experience } = student;
+
+    experience.splice(index, 1);
+    saveExp(auth.uid, experience);
+
+    // clear fields if currently editing exp is delete
+    if (index === this.state.expEditIndex)
+      this.setState({
+        educationForm: {
+          institute: "",
+          degree: "",
+          from: "",
+          to: ""
+        },
+        expEditIndex: ""
+      });
   };
 
   render() {
@@ -192,6 +205,7 @@ class Profile extends Component {
       name,
       dob,
       github,
+      cgpa,
       linkedin,
       introduction,
       skills,
@@ -203,10 +217,11 @@ class Profile extends Component {
     } = student;
     const stdudentInfo = [
       { key: "Name", value: name },
-      { key: "Enrollment Number", value: enrollNo },
       { key: "Age", value: getAge(dob) },
       { key: "Skills", value: skills },
+      { key: "Current CGPA", value: cgpa },
       { key: "Introduction", value: introduction },
+      { key: "Enrollment Number", value: enrollNo },
       { key: "Address", value: address },
       { key: "Contact No", value: phone },
       { key: "Email", value: email },
@@ -237,7 +252,6 @@ class Profile extends Component {
         <div className="student-profile-education-container">
           <EducationTable
             education={education}
-            contextMenu={this.educationContextMenuHandler}
             editEducation={this.educationModalHandler}
             deleteEducation={this.deleteEducationHandler}
           />
@@ -309,4 +323,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Profile));
+)(Profile);

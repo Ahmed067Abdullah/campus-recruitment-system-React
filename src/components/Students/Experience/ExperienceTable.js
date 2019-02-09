@@ -9,6 +9,7 @@ import Paper from "@material-ui/core/Paper";
 
 import Aux from "../../../hoc/Auxiliary";
 import EditableExperienceTableBody from "./EditableExperienceTableBody";
+import getYear from "../../../common/getYear";
 
 const styles = theme => ({
   root: {
@@ -102,11 +103,11 @@ const experienceTable = props => {
                     </TableCell>
 
                     <TableCell align="center" padding="none">
-                      {row.from}
+                      {getYear(row.from)}
                     </TableCell>
 
                     <TableCell align="center" padding="none">
-                      {row.to}
+                      {getYear(row.to)}
                     </TableCell>
                   </TableRow>
                 </Aux>

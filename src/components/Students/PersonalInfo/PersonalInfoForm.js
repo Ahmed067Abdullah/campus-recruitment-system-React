@@ -38,6 +38,7 @@ class PersonalInfoForm extends Component {
       enrollNo,
       skills,
       introduction,
+      cgpa,
       address,
       phone,
       github,
@@ -99,6 +100,14 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="introduction"
               value={introduction}
+            />
+            <br />
+            <TextValidator
+              className={classes.TextFields}
+              label="Current CGPA"
+              onChange={this.handleChange}
+              name="cgpa"
+              value={cgpa}
             />
             <br />
             <TextValidator
