@@ -11,17 +11,18 @@ import StudentProfile from "./containers/Student/Profile/Profile";
 
 // company containers
 import CompanyProfile from "./containers/Company/Profile/Profile";
+import Vacancies from "./containers/Company/Vacancies/Vacancies";
 
 const getRoutes = status => {
   console.log("status", status);
-  
+
   let routes = (
     <Switch>
-      <Route path="/profile" component={CompanyProfile} />
-      <Redirect to="/profile" />
+        <Route path="/vacancies" component={Vacancies} />
+      <Redirect to="/vacancies" /> 
       {/* <Route path="/signin" exact component={Signin} />
-      <Route path="/signup" exact component={Signup} />
-      <Redirect to="/signin" /> */}
+      <Route path="/signup" exact component={Signup} /> */}
+      <Redirect to="/signin" />
     </Switch>
   );
 
@@ -43,10 +44,10 @@ const getRoutes = status => {
     routes = (
       <Switch>
         <Route path="/profile" component={StudentProfile} />
+        <Route path="/vacancies" component={Vacancies} />
         <Route path="/logout" component={Logout} />
         <Redirect to="/profile" />
-        {/* <Route path="/companies" component={Auth} />
-        <Route path="/vacancies" component={Donors} />
+        {/*<Route path="/vacancies" component={Donors} />
         <Route path="/" exact component={Auth} /> */}
       </Switch>
     );

@@ -19,3 +19,9 @@ export const SET_STUDENT = 'SET_STUDENT';
 // company action types
 export const SET_COMPANY = 'SET_COMPANY';
 
+// companies action types
+export const SET_COMPANIES = 'SET_COMPANIES';
+
+// vacancies action types
+export const SET_VACANCIES = 'SET_VACANCIES';
+

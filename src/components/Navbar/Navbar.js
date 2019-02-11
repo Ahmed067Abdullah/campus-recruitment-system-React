@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import Aux from "../../hoc/Auxiliary";
 import "./Navbar.css";
@@ -14,9 +14,8 @@ class Navbar extends Component {
       // to render different tabs for diff type of users
       let tabs = [];
       if (status === 1) tabs = ["students", "companies", "vacancies", "logout"];
-      else if (status === 2)
-        tabs = ["studentProfile", "companies", "vacancies", "logout"];
-      else if (status === 3) tabs = ["companyProfile", "students", "logout"];
+      else if (status === 2) tabs = ["profile", "companies", "vacancies", "logout"];
+      else if (status === 3) tabs = ["profile", "students", "logout"];
 
       navbarContent = (
         <Aux>
@@ -41,7 +40,7 @@ class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               {tabs.map(tab => (
-                <li className="nav-item active" key={tab}>
+                <li className="nav-item" key={tab}>
                   <NavLink className="nav-link nav-item-color" to={`/${tab}`}>
                     {tab[0].toUpperCase() + tab.slice(1)}
                   </NavLink>
@@ -69,4 +68,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default withRouter(connect(mapStateToProps)(Navbar));

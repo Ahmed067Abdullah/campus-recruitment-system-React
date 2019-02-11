@@ -5,7 +5,7 @@ const initialState = {
   type: "students",
   status: "3",
   name: "Ahmed",
-  email: "test2@test.com",
+  email: "test1@test.com",
   enrollNo: "",
   phoneNo: "",
   address: "",

@@ -5,6 +5,11 @@
   color: #e7ffde !important;
 }
 
+.active {
+  font-weight: bold;
+  font-size: 17px;
+}
+
 .toggle-button {
   border-color: #e7ffde !important;
 }

@@ -91,7 +91,10 @@ class Profile extends Component {
     const { auth, company, saveVac } = this.props;
     const { vacancies } = company;
     if (vacEditIndex !== "") vacancies[vacEditIndex] = vacancyForm;
-    else vacancies.push(vacancyForm);
+    else {
+      vacancyForm.postedAt = Date.now();
+      vacancies.push(vacancyForm)
+    };
 
     saveVac(auth.uid, vacancies);
     this.clearFields();
