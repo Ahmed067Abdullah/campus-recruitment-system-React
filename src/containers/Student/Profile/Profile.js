@@ -84,7 +84,7 @@ class Profile extends Component {
     this.setState({ infoModal: flag });
   };
 
-  onSavePersonalInfo = () => {
+  savePersonalInfoHandler = () => {
     const { auth, student, saveProfile } = this.props;
     const { info } = this.state;
     const { uid, email } = auth;
@@ -97,32 +97,24 @@ class Profile extends Component {
   // edu func
   educationModalHandler = (flag, eduEditIndex = "") => {
     if (eduEditIndex !== "") {
-      console.log("editing", eduEditIndex);
       const { education } = this.props.student;
       const educationForm = education[eduEditIndex];
       this.setState({ educationForm, eduEditIndex });
+    } else {
+      this.clearEduFields();
     }
     this.setState({ eduModal: flag });
   };
 
-  onSaveEducation = () => {
+  saveEducationHandler = () => {
     const { eduEditIndex, educationForm } = this.state;
     const { auth, student, saveEdu } = this.props;
     const { education } = student;
-    console.log("eduEditIndex",eduEditIndex)
     if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
     else education.push(educationForm);
 
     saveEdu(auth.uid, education);
-    this.setState({
-      educationForm: {
-        institute: "",
-        degree: "",
-        from: "",
-        to: ""
-      },
-      eduEditIndex: ""
-    });
+    this.clearEduFields();
     this.educationModalHandler(false);
   };
 
@@ -134,30 +126,22 @@ class Profile extends Component {
     saveEdu(auth.uid, education);
 
     // clear fields if currently editing edu is delete
-    if (index === this.state.eduEditIndex)
-      this.setState({
-        educationForm: {
-          institute: "",
-          degree: "",
-          from: "",
-          to: ""
-        },
-        eduEditIndex: ""
-      });
+    if (index === this.state.eduEditIndex) this.clearEduFields();
   };
 
   // exp func
   experienceModalHandler = (flag, expEditIndex = "") => {
     if (expEditIndex !== "") {
-      console.log("editing", expEditIndex);
       const { experience } = this.props.student;
       const experienceForm = experience[expEditIndex];
       this.setState({ experienceForm, expEditIndex });
+    } else {
+      this.clearExpFields();
     }
     this.setState({ expModal: flag });
   };
 
-  onSaveExperience = () => {
+  saveExperienceHandler = () => {
     const { expEditIndex, experienceForm } = this.state;
     const { auth, student, saveExp } = this.props;
     const { experience } = student;
@@ -166,15 +150,7 @@ class Profile extends Component {
     else experience.push(experienceForm);
 
     saveExp(auth.uid, experience);
-    this.setState({
-      experienceForm: {
-        company: "",
-        position: "",
-        from: "",
-        to: ""
-      },
-      expEditIndex: ""
-    });
+    this.clearExpFields();
     this.experienceModalHandler(false);
   };
 
@@ -186,16 +162,31 @@ class Profile extends Component {
     saveExp(auth.uid, experience);
 
     // clear fields if currently editing exp is delete
-    if (index === this.state.expEditIndex)
-      this.setState({
-        educationForm: {
-          institute: "",
-          degree: "",
-          from: "",
-          to: ""
-        },
-        expEditIndex: ""
-      });
+    if (index === this.state.expEditIndex) this.clearExpFields();
+  };
+
+  clearEduFields = () => {
+    this.setState({
+      educationForm: {
+        institute: "",
+        degree: "",
+        from: "",
+        to: ""
+      },
+      eduEditIndex: ""
+    });
+  };
+
+  clearExpFields = () => {
+    this.setState({
+      experienceForm: {
+        company: "",
+        position: "",
+        from: "",
+        to: ""
+      },
+      expEditIndex: ""
+    });
   };
 
   render() {
@@ -252,7 +243,7 @@ class Profile extends Component {
           <PersonalInfoForm
             info={info}
             inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.onSavePersonalInfo}
+            onSubmit={this.savePersonalInfoHandler}
           />
         </Modal>
 
@@ -275,7 +266,7 @@ class Profile extends Component {
           <EducationForm
             education={educationForm}
             inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.onSaveEducation}
+            onSubmit={this.saveEducationHandler}
           />
         </Modal>
 
@@ -286,6 +277,7 @@ class Profile extends Component {
             editExperience={this.experienceModalHandler}
             deleteExperience={this.deleteExperienceHandler}
           />
+          <br />
           <Button
             variant="contained"
             className="add-eduEx-button"
@@ -298,12 +290,12 @@ class Profile extends Component {
           <ExperienceForm
             experience={experienceForm}
             inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.onSaveExperience}
+            onSubmit={this.saveExperienceHandler}
           />
         </Modal>
       </div>
     ) : (
-      <div className="auth-spinner">
+      <div className="profile-spinner">
         <Spinner />
       </div>
     );
@@ -321,10 +313,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getProfile: uid => dispatch(actions.getProfile(uid)),
     saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload)),
-    saveEdu: (uid, payload) =>
-      dispatch(actions.saveEduExp(uid, payload, "education")),
-    saveExp: (uid, payload) =>
-      dispatch(actions.saveEduExp(uid, payload, "experience"))
+    saveEdu: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "education")),
+    saveExp: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "experience"))
   };
 };
 

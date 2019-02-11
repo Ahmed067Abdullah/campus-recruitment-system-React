@@ -16,3 +16,6 @@ export const STOP_LOADING = 'STOP_LOADING';
 // student action types
 export const SET_STUDENT = 'SET_STUDENT';
 
+// company action types
+export const SET_COMPANY = 'SET_COMPANY';
+

@@ -1,11 +1,11 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  uid: "N8ngiSVUDgeGJYJeX9HysdThWw52",
+  uid: "aBuJ4FXc8ag12lk9lNmkzDTGZ472",
   type: "students",
-  status: "2",
-  name: "Ahmed Abdullah",
-  email: "test1@test.com",
+  status: "3",
+  name: "Ahmed",
+  email: "test2@test.com",
   enrollNo: "",
   phoneNo: "",
   address: "",
@@ -14,7 +14,7 @@ const initialState = {
   loading: "",
   errorSignup: "",
   errorSignin: "",
-  passwordSignin: ""
+  passwordSignin: "123456"
 };
 
 const reducer = (state = initialState, action) => {

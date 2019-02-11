@@ -1,0 +1,20 @@
+.my-vacancies {
+  margin: 0px auto 10px;
+  width: 90%;
+}
+
+.card-text {
+  text-align: left;
+}
+
+@media (min-width: 500px) {
+  .my-vacancies {
+    width: 30%;
+    display: inline-block;
+    margin-left: 1%;
+    margin-right: 1%;
+    height: 240px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+}

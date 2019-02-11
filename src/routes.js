@@ -13,10 +13,11 @@ import StudentProfile from "./containers/Student/Profile/Profile";
 import CompanyProfile from "./containers/Company/Profile/Profile";
 
 const getRoutes = status => {
+  console.log("status", status);
+  
   let routes = (
     <Switch>
-      <Route path="/profile" component={StudentProfile} />
-      <Route path="/logout" component={Logout} />
+      <Route path="/profile" component={CompanyProfile} />
       <Redirect to="/profile" />
       {/* <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
@@ -35,7 +36,7 @@ const getRoutes = status => {
   //     </Switch>
   //   );
   // }
-  console.log("status", status);
+
   // routes for students
   if (status === 2) {
     console.log("status", status);
