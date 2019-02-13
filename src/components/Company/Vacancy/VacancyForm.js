@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 // import Card from "../../hoc/Card";
@@ -31,7 +32,7 @@ class VacancyForm extends Component {
 
   render() {
     const { vacancy, classes } = this.props;
-    const { skills, gpa, salary, description } = vacancy;
+    const { skills, gpa, salary, description, lastDate } = vacancy;
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">
@@ -57,8 +58,12 @@ class VacancyForm extends Component {
               onChange={this.handleChange}
               name="gpa"
               value={gpa}
-              validators={["required"]}
-              errorMessages={["This field is required"]}
+              validators={["required", "isFloat", "inGpaRange"]}
+              errorMessages={[
+                "This field is required",
+                "CGPA must be a number",
+                "CGPA must be between 1 and 4"
+              ]}
             />
             <br />
             <TextValidator
@@ -67,6 +72,12 @@ class VacancyForm extends Component {
               onChange={this.handleChange}
               name="salary"
               value={salary}
+              validators={["required", "isFloat", "moreThanMinSal"]}
+              errorMessages={[
+                "This field is required",
+                "Salary must be a number",
+                "Salary must be between more than 15,000"
+              ]}
             />
             <br />
             <TextValidator
@@ -75,6 +86,25 @@ class VacancyForm extends Component {
               onChange={this.handleChange}
               name="description"
               value={description}
+              validators={["required", "lessThan10Chars"]}
+              errorMessages={[
+                "This field is required",
+                "Description must contain at least 10 characters"
+              ]}
+            />
+            <br />
+            <TextField
+              id="date"
+              label="Last Date to Apply"
+              type="date"
+              required
+              onChange={this.handleChange}
+              name="lastDate"
+              value={lastDate}
+              className={classes.TextFields}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
             <br />
             <Button type="submit" variant="contained" className="auth-button">

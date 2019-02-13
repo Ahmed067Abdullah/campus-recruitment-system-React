@@ -16,6 +16,7 @@ import * as actions from "../../../store/actions/studentsActions";
 import getAge from "../../../common/getAge";
 
 import Spinner from "./../../../components/Spinner/Spinner";
+import checkFromTo from '../../../common/checkFromTo';
 import Modal from "../../../hoc/Modal";
 
 import "./Profile.css";
@@ -81,6 +82,7 @@ class Profile extends Component {
       const info = { ...this.props.student };
       this.setState({ info });
     }
+    console.log(flag);
     this.setState({ infoModal: flag });
   };
 
@@ -110,6 +112,10 @@ class Profile extends Component {
     const { eduEditIndex, educationForm } = this.state;
     const { auth, student, saveEdu } = this.props;
     const { education } = student;
+
+    if (checkFromTo(educationForm.from, educationForm.to))
+      alert("something wrong");
+
     if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
     else education.push(educationForm);
 
@@ -145,6 +151,9 @@ class Profile extends Component {
     const { expEditIndex, experienceForm } = this.state;
     const { auth, student, saveExp } = this.props;
     const { experience } = student;
+
+    if (checkFromTo(experienceForm.from, experienceForm.to))
+      alert("something wrong");
 
     if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
     else experience.push(experienceForm);
@@ -235,7 +244,7 @@ class Profile extends Component {
         {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
-            stdudentInfo={stdudentInfo}
+            info={stdudentInfo}
             onEdit={this.personalInfoModalHandler}
           />
         </div>
@@ -313,8 +322,10 @@ const mapDispatchToProps = dispatch => {
   return {
     getProfile: uid => dispatch(actions.getProfile(uid)),
     saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload)),
-    saveEdu: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "education")),
-    saveExp: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "experience"))
+    saveEdu: (uid, payload) =>
+      dispatch(actions.saveEduExp(uid, payload, "education")),
+    saveExp: (uid, payload) =>
+      dispatch(actions.saveEduExp(uid, payload, "experience"))
   };
 };
 

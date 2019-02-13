@@ -43,7 +43,7 @@ class PersonalInfoForm extends Component {
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">
-          <h2 className="singin-heading">Edit Personal Information</h2>
+          <h2 className="singin-heading">Edit Company Information</h2>
           <ValidatorForm
             ref="form"
             onSubmit={this.handleSubmit}
@@ -55,8 +55,11 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="name"
               value={name}
-              validators={["required"]}
-              errorMessages={["This field is required"]}
+              validators={["required", "isNameLongEnough"]}
+              errorMessages={[
+                "This field is required",
+                "Name must be longer than 2 characters"
+              ]}
             />
             <br />
             <TextValidator
@@ -65,6 +68,8 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="facebook"
               value={facebook}
+              validators={["isURL"]}
+              errorMessages={["Invalid URL"]}
             />
             <br />
             <TextValidator
@@ -73,6 +78,8 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="website"
               value={website}
+              validators={["isURL"]}
+              errorMessages={["Invalid URL"]}
             />
             <br />
             <TextField
@@ -90,10 +97,12 @@ class PersonalInfoForm extends Component {
             <br />
             <TextValidator
               className={classes.TextFields}
-              label="Introduce Yourself"
+              label="Introduce Your Company"
               onChange={this.handleChange}
               name="introduction"
               value={introduction}
+              validators={["lessThan5Chars"]}
+              errorMessages={["Introduction must be longer than 4 Characters"]}
             />
             <br />
             <TextValidator
@@ -102,8 +111,11 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="address"
               value={address}
-              validators={["required"]}
-              errorMessages={["This field is required"]}
+              validators={["required", "isAddressLongEnough"]}
+              errorMessages={[
+                "This field is required",
+                "Address must be longer than 9 characters"
+              ]}
             />
             <br />
             <TextValidator
@@ -112,8 +124,12 @@ class PersonalInfoForm extends Component {
               onChange={this.handleChange}
               name="phoneNo"
               value={phoneNo}
-              validators={["required"]}
-              errorMessages={["This field is required"]}
+              validators={["required", "isNumber", "isPhoneLengthOk"]}
+              errorMessages={[
+                "This field is required",
+                "Contact Number must contain only digits",
+                "Contact Number must contain 11 digits"
+              ]}
             />
             <br />
             <Button type="submit" variant="contained" className="auth-button">

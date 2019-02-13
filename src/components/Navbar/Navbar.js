@@ -19,7 +19,7 @@ class Navbar extends Component {
 
       navbarContent = (
         <Aux>
-          <p className="navbar-brand  nav-item-color">Recruitment Portal</p>
+          <p className="navbar-brand  nav-item-color nav-bar-heading">Recruitment Portal</p>
           {tabs.length > 0 ? (
             <button
               className="navbar-toggler toggle-button"

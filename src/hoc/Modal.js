@@ -2,15 +2,24 @@ import React from "react";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  paper : {
+    margin : "auto",
+    color : "#1f4f16"
+  }
+});
 
 const modal = props => {
-  const { children, open, handleClose } = props;
+  const { children, open, handleClose,classes } = props;
   return (
     <div>
       <Dialog
         open={open}
         onClose={() => handleClose(false)}
         aria-labelledby="form-dialog-title"
+        className={classes.paper}
       >
         <DialogContent>{children}</DialogContent>
       </Dialog>
@@ -18,4 +27,4 @@ const modal = props => {
   );
 };
 
-export default modal;
+export default withStyles(styles)(modal);

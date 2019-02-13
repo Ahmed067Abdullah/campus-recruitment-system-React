@@ -65,6 +65,7 @@ class ExperienceForm extends Component {
               id="date"
               label="From"
               type="date"
+              required
               onChange={this.handleChange}
               name="from"
               value={from}
@@ -78,6 +79,7 @@ class ExperienceForm extends Component {
               id="date"
               label="To"
               type="date"
+              required
               onChange={this.handleChange}
               name="to"
               value={to}

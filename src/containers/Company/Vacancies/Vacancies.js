@@ -7,7 +7,7 @@ import VacanciesList from "../../../components/Company/Vacancy/VacanciesList";
 
 import Spinner from "./../../../components/Spinner/Spinner";
 
-class Profile extends Component {
+class Vacancies extends Component {
   componentDidMount() {
     const { getVacancies } = this.props;
     getVacancies();
@@ -60,4 +60,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Profile);
+)(Vacancies);

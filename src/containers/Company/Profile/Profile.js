@@ -11,6 +11,7 @@ import VacancyForm from "../../../components/Company/Vacancy/VacancyForm";
 import VacanciesList from "../../../components/Company/Vacancy/VacanciesList";
 
 import Spinner from "./../../../components/Spinner/Spinner";
+import checkFromTo from "../../../common/checkFromTo";
 import Modal from "../../../hoc/Modal";
 
 import "./Profile.css";
@@ -33,7 +34,8 @@ class Profile extends Component {
       skills: "",
       gpa: "",
       salary: "",
-      description: ""
+      description: "",
+      lastDate: ""
     }
   };
 
@@ -68,6 +70,12 @@ class Profile extends Component {
     const { auth, company, saveProfile } = this.props;
     const { info } = this.state;
     const { uid, email } = auth;
+
+    if (
+      info.operatingSince ? checkFromTo(info.operatingSince, Date.now()) : false
+    )
+      alert("something wrong");
+
     const updatedCompany = { ...company, ...info, email };
 
     saveProfile(uid, updatedCompany);
@@ -90,11 +98,20 @@ class Profile extends Component {
     const { vacEditIndex, vacancyForm } = this.state;
     const { auth, company, saveVac } = this.props;
     const { vacancies } = company;
+
+    if (
+      vacancyForm.lastDate
+        ? checkFromTo(Date.now(),vacancyForm.lastDate)
+        : false
+    )
+      alert("something wrong");
+
     if (vacEditIndex !== "") vacancies[vacEditIndex] = vacancyForm;
     else {
       vacancyForm.postedAt = Date.now();
-      vacancies.push(vacancyForm)
-    };
+      vacancyForm.postedBy = auth.name;
+      vacancies.push(vacancyForm);
+    }
 
     saveVac(auth.uid, vacancies);
     this.clearFields();
@@ -156,7 +173,7 @@ class Profile extends Component {
         {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
-            stdudentInfo={companyInfo}
+            info={companyInfo}
             onEdit={this.companyInfoModalHandler}
           />
         </div>
