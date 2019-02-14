@@ -11,13 +11,16 @@ import VacancyForm from "../../../components/Company/Vacancy/VacancyForm";
 import VacanciesList from "../../../components/Company/Vacancy/VacanciesList";
 
 import Spinner from "./../../../components/Spinner/Spinner";
+import Aux from "../../../hoc/Auxiliary";
 import checkFromTo from "../../../common/checkFromTo";
+import getDate from "../../../common/getDate";
 import Modal from "../../../hoc/Modal";
 
 import "./Profile.css";
 
 class Profile extends Component {
   state = {
+    owner: true,
     infoModal: false,
     vacModal: false,
     vacEditIndex: "",
@@ -40,8 +43,14 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    const { getProfile, auth } = this.props;
-    getProfile(auth.uid);
+    const { getProfile, auth, match } = this.props;
+    const visitingId = match.params.id;
+    if (visitingId) {
+      this.setState({ owner: false });
+      getProfile(visitingId);
+    } else {
+      getProfile(auth.uid);
+    }
   }
 
   inputChangedHandler = (e, form) => {
@@ -101,7 +110,7 @@ class Profile extends Component {
 
     if (
       vacancyForm.lastDate
-        ? checkFromTo(Date.now(),vacancyForm.lastDate)
+        ? checkFromTo(Date.now(), vacancyForm.lastDate)
         : false
     )
       alert("something wrong");
@@ -143,7 +152,7 @@ class Profile extends Component {
 
   render() {
     const { auth, company } = this.props;
-    const { infoModal, info, vacModal, vacancyForm } = this.state;
+    const { owner, infoModal, info, vacModal, vacancyForm } = this.state;
     const { email, loading } = auth;
     const {
       name,
@@ -157,7 +166,10 @@ class Profile extends Component {
     } = company;
     const companyInfo = [
       { key: "Name", value: name },
-      { key: "Operating Since", value: operatingSince },
+      {
+        key: "Operating Since",
+        value: operatingSince ? getDate(operatingSince) : ""
+      },
       { key: "Facebook", value: facebook },
       { key: "Website", value: website },
       { key: "Introduction", value: introduction },
@@ -168,50 +180,61 @@ class Profile extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Welcome {name}</h1>
+        <h1 className="main-heading-student-profile">Profile</h1>
 
         {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
             info={companyInfo}
-            onEdit={this.companyInfoModalHandler}
+            onEdit={owner ? this.companyInfoModalHandler : ""}
           />
         </div>
-        <Modal open={infoModal} handleClose={this.companyInfoModalHandler}>
-          <PersonalInfoForm
-            info={info}
-            inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.savecompanyInfoHandler}
-          />
-        </Modal>
 
         {/* vacancies componenets */}
         <div className="company-vacancies-container" style={{ width: "100%" }}>
-          <h2 className="sub-headings-company-profile">
-            Your Posted Vacancies
-          </h2>
-          <Button
-            variant="contained"
-            className="add-vac-button"
-            onClick={() => this.vacancyModalHandler(true)}
-          >
-            Add Vacancy
-          </Button>
+          <h2 className="sub-headings-company-profile">Posted Vacancies</h2>
+          {owner ? (
+            <Button
+              variant="contained"
+              className="add-vac-button"
+              onClick={() => this.vacancyModalHandler(true)}
+            >
+              Add Vacancy
+            </Button>
+          ) : (
+            ""
+          )}
+
           <div>
             <VacanciesList
               vacancies={vacancies}
               editVacancy={this.vacancyModalHandler}
               deleteVacancy={this.deleteVacancyHandler}
+              profile={true}
+              owner={owner}
             />
           </div>
         </div>
-        <Modal open={vacModal} handleClose={this.vacancyModalHandler}>
-          <VacancyForm
-            vacancy={vacancyForm}
-            inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.saveVacancyHandler}
-          />
-        </Modal>
+        {owner ? (
+          <Aux>
+            <Modal open={infoModal} handleClose={this.companyInfoModalHandler}>
+              <PersonalInfoForm
+                info={info}
+                inputChangedHandler={this.inputChangedHandler}
+                onSubmit={this.savecompanyInfoHandler}
+              />
+            </Modal>
+            <Modal open={vacModal} handleClose={this.vacancyModalHandler}>
+              <VacancyForm
+                vacancy={vacancyForm}
+                inputChangedHandler={this.inputChangedHandler}
+                onSubmit={this.saveVacancyHandler}
+              />
+            </Modal>
+          </Aux>
+        ) : (
+          ""
+        )}
       </div>
     ) : (
       <div className="profile-spinner">

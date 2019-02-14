@@ -249,7 +249,7 @@ class Profile extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Welcome {name}</h1>
+        <h1 className="main-heading-student-profile">Profile</h1>
 
         <div className="student-profile-card-container">
           <PersonalInfo

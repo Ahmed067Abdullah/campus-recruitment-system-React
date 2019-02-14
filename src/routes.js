@@ -45,9 +45,10 @@ const getRoutes = status => {
     console.log("status", status);
     routes = (
       <Switch>
-        <Route path="/profile" component={StudentProfile} />
+        <Route path="/profile" exact component={StudentProfile} />
         <Route path="/vacancies" component={Vacancies} />
         <Route path="/companies" component={Companies} />
+        <Route path="/profile/:id" component={CompanyProfile} />
         <Route path="/logout" component={Logout} />
         <Redirect to="/profile" />
       </Switch>

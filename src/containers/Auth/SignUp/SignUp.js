@@ -68,7 +68,7 @@ class SignUp extends Component {
     );
 
     return (
-      <div style={{ marginTop: 50 }}>
+      <div style={{ marginTop: 90 }}>
         <h1 className="main-heading-signup">Campus Recruitment System</h1>
         <div className="signup-card-container">
           {!loading ? (

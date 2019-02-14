@@ -1,96 +1,79 @@
 import React from "react";
 import Card from "../../../hoc/Card";
+import { Link } from 'react-router-dom';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
-import getTime from '../../../common/getTime';
-import getDate from '../../../common/getDate';
+import getTime from "../../../common/getTime";
+import getDate from "../../../common/getDate";
 
 import "./VacancyList.css";
 import "../../../common/ContextMenu.css";
 
 const vacanciesList = props => {
-  const { deleteVacancy, editVacancy, vacancies } = props;
+  const { deleteVacancy, editVacancy, vacancies, owner } = props;
   if (vacancies.length > 0) {
-    return vacancies.map((vacancy, index) => {
+    const vacancyInfoArray = vacancies.map(vacancy => [
+      { key: "Posted By", value: vacancy.postedBy },
+      { key: "Posted At", value: getTime(vacancy.postedAt) },
+      { key: "Last Date to Apply", value: getDate(vacancy.lastDate) },
+      { key: "Required Skills", value: vacancy.skills },
+      { key: "Minimum CGPA", value: vacancy.gpa },
+      { key: "Starting Salary", value: vacancy.salary },
+      { key: "Details", value: vacancy.description }
+    ]);
+
+    return vacancyInfoArray.map((vacancyInfo, index) => {
       return (
         <div className="my-vacancies" key={index}>
+         <Link
+          to={`/profile/${vacancies[index].postedById}`}
+          style={{ textDecoration: "none" }}
+        >
           <Card>
             <ContextMenuTrigger id={`vacancy-${index}`}>
               <div className="card-text">
-                {/* <strong>Reported By</strong> : {vacancy.reportedBy}
-              <br /> */}
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">Posted By: {" "}</span>
-                  <span className="student-profile-info-val">
-                    {vacancy.postedBy}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">Posted At: {" "}</span>
-                  <span className="student-profile-info-val">
-                    {getTime(vacancy.postedAt)}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">Last Date to Apply: {" "}</span>
-                  <span className="student-profile-info-val">
-                    {getDate(vacancy.lastDate)}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">
-                    Required Skills:{" "}
-                  </span>
-                  <span className="student-profile-info-val">
-                    {vacancy.skills}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">
-                    Minimum GPA:{" "}
-                  </span>
-                  <span className="student-profile-info-val">
-                    {vacancy.gpa}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">
-                    Starting Salary:{" "}
-                  </span>
-                  <span className="student-profile-info-val">
-                    {vacancy.salary}
-                  </span>
-                </p>
-                <p className="student-profile-info-container">
-                  <span className="student-profile-info-key">Details: {" "}</span>
-                  <span className="student-profile-info-val">
-                    {vacancy.description}
-                  </span>
-                </p>
+                {vacancyInfo.map(info => (
+                  <p className="student-profile-info-container" key={info.key}>
+                    <span className="student-profile-info-key">
+                      {info.key}:{" "}
+                    </span>
+                    <span className="student-profile-info-val">
+                      {info.value}
+                    </span>
+                  </p>
+                ))}
               </div>
             </ContextMenuTrigger>
           </Card>
-          <ContextMenu id={`vacancy-${index}`} className="ctxMenu">
-            <MenuItem
-              onClick={() => editVacancy(true, index)}
-              className="ctxMenuItem"
-            >
-              Edit
-            </MenuItem>
-            <div className="ctxMenuItemDivider" />
-            <MenuItem
-              onClick={() => deleteVacancy(index)}
-              className="ctxMenuItem"
-            >
-              Delete
-            </MenuItem>
-          </ContextMenu>
+          </Link>
+          {owner ? (
+            <ContextMenu id={`vacancy-${index}`} className="ctxMenu">
+              <MenuItem
+                onClick={() => editVacancy(true, index)}
+                className="ctxMenuItem"
+              >
+                Edit
+              </MenuItem>
+              <div className="ctxMenuItemDivider" />
+              <MenuItem
+                onClick={() => deleteVacancy(index)}
+                className="ctxMenuItem"
+              >
+                Delete
+              </MenuItem>
+            </ContextMenu>
+          ) : (
+            ""
+          )}
         </div>
+         
+
+        
       );
     });
   } else {
-    return <p className="no-vac-msg">No Vacancies to Show</p>
+    return <p className="no-vac-msg">No Vacancies to Show</p>;
   }
 };
 

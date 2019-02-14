@@ -15,7 +15,7 @@ class Vacancies extends Component {
 
   deleteVacancyHandler = index => {
     const { companies, saveVac } = this.props;
-    const { vacancies } = companies;
+    const { vacancies } = companies; 
     console.log("deleting vac");
   };
 
@@ -26,7 +26,7 @@ class Vacancies extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Available Vacancies</h1>
+        <h1 className="main-heading-student-profile">Posted Vacancies</h1>
 
         {/* vacancies componenets */}
         <div className="company-vacancies-container" style={{ width: "100%" }}>
