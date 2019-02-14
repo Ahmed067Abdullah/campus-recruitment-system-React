@@ -1,4 +1,5 @@
 import React from "react";
+
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import Aux from "../../../hoc/Auxiliary";
 import EditableEducationTableBody from "./EditableEducationTableBody";
 
-import getYear from "../../../common/getYear";
+import {getYear} from "../../../common/timeHelperFunctions";
 
 const styles = theme => ({
   root: {

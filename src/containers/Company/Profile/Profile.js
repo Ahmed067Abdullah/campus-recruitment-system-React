@@ -12,9 +12,11 @@ import VacanciesList from "../../../components/Company/Vacancy/VacanciesList";
 
 import Spinner from "./../../../components/Spinner/Spinner";
 import Aux from "../../../hoc/Auxiliary";
-import checkFromTo from "../../../common/checkFromTo";
-import getDate from "../../../common/getDate";
 import Modal from "../../../hoc/Modal";
+
+import {getDate,checkFromTo} from "../../../common/timeHelperFunctions";
+
+
 
 import "./Profile.css";
 

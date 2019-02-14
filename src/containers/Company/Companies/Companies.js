@@ -6,7 +6,8 @@ import * as actions from "../../../store/actions/companiesActions";
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
 
 import Spinner from "./../../../components/Spinner/Spinner";
-import getDate from "../../../common/getDate";
+
+import { getDate } from "../../../common/timeHelperFunctions";
 
 import "./Companies.css";
 

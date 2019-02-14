@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
-import getTime from "../../../common/getTime";
-import getDate from "../../../common/getDate";
+import { getTime, getDate} from "../../../common/timeHelperFunctions";
+
 
 import "./VacancyList.css";
 import "../../../common/ContextMenu.css";
+
+const clickedHandler= (e,owner) =>{
+  if(owner) e.preventDefault()
+}
 
 const vacanciesList = props => {
   const { deleteVacancy, editVacancy, vacancies, owner } = props;
@@ -28,6 +32,7 @@ const vacanciesList = props => {
         <div className="my-vacancies" key={index}>
          <Link
           to={`/profile/${vacancies[index].postedById}`}
+          onClick={e => clickedHandler(e,owner)}
           style={{ textDecoration: "none" }}
         >
           <Card>

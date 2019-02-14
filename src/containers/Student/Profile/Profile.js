@@ -13,12 +13,13 @@ import ExperienceTable from "../../../components/Students/Experience/ExperienceT
 import ExperienceForm from "../../../components/Students/Experience/ExperienceForm";
 
 import * as actions from "../../../store/actions/studentsActions";
-import getAge from "../../../common/getAge";
 
 import Spinner from "./../../../components/Spinner/Spinner";
-import checkFromTo from "../../../common/checkFromTo";
 import Modal from "../../../hoc/Modal";
 import Aux from "../../../hoc/Auxiliary";
+
+import {getAge,checkFromTo} from "../../../common/timeHelperFunctions";
+
 
 import "./Profile.css";
 

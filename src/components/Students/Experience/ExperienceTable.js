@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 
 import Aux from "../../../hoc/Auxiliary";
 import EditableExperienceTableBody from "./EditableExperienceTableBody";
-import getYear from "../../../common/getYear";
+import { getYear } from "../../../common/timeHelperFunctions";
 
 const styles = theme => ({
   root: {

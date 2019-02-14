@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
-// import Card from "../../hoc/Card";
 import validations from "../../../validation/Validation";
 
 const styles = theme => {

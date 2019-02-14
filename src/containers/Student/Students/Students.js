@@ -4,10 +4,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import * as actions from "../../../store/actions/studentsActions";
-import getAge from "../../../common/getAge";
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
 
 import Spinner from "./../../../components/Spinner/Spinner";
+
+import { getAge } from "../../../common/timeHelperFunctions";
 
 import "./Students.css";
 
@@ -39,7 +40,10 @@ class Students extends Component {
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {studentsInfoArray.map((studentInfo, index) => (
             <div className="stds-list-info-container" key={index}>
-              <Link to={`/profile/${students.students[index].id}`} style={{textDecoration : "none"}}>
+              <Link
+                to={`/profile/${students.students[index].id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <PersonalInfo info={studentInfo} />
               </Link>
             </div>

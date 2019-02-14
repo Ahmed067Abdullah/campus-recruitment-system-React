@@ -1,11 +1,12 @@
 import React from "react";
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import Aux from "../../../hoc/Auxiliary";
-import getYear from "../../../common/getYear";
+import { getYear } from "../../../common/timeHelperFunctions";
+
 
 const editableEducationTableBody = props => {
   const { education, classes, editEducation, deleteEducation } = props;
