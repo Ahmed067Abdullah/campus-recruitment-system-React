@@ -9,7 +9,7 @@ const personalInfo = props => {
       {info.map(infoItem => (
         <p key={infoItem.key} className={"student-profile-info-container"}>
           <span className="student-profile-info-key">{infoItem.key}: </span>
-          <span className="student-profile-info-val">{infoItem.value}</span>
+          <span className="student-profile-info-val">{infoItem.value ? infoItem.value : "--"}</span>
         </p>
       ))}
       {onEdit ? (

@@ -26,3 +26,19 @@ export const saveEduExp = (uid, payload, field) => dispatch => {
     .ref(`/students/${uid}/${field}`)
     .set(payload);
 };
+
+export const getStudents = () => dispatch => {
+  dispatch(dispatcher(actionTypes.START_LOADING));
+  database()
+    .ref(`/students/`)
+    .on("value", snapshot => {
+      const studentsObj = snapshot.val();
+      let students = [];
+      for (let key in studentsObj)
+      students.push({ id: key, ...studentsObj[key] });
+      console.log(students);
+      dispatch(dispatcher(actionTypes.SET_STUDENTS, students));
+      dispatch(dispatcher(actionTypes.STOP_LOADING));
+    });
+};
+

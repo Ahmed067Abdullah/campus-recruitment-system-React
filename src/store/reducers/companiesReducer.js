@@ -17,6 +17,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         vacancies: action.payload
       };
+    case actionTypes.SIGNOUT:
+      return initialState;
     default:
       return state;
   }

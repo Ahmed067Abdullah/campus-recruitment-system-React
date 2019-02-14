@@ -14,12 +14,15 @@ class Navbar extends Component {
       // to render different tabs for diff type of users
       let tabs = [];
       if (status === 1) tabs = ["students", "companies", "vacancies", "logout"];
-      else if (status === 2) tabs = ["profile", "companies", "vacancies", "logout"];
+      else if (status === 2)
+        tabs = ["profile", "companies", "vacancies", "logout"];
       else if (status === 3) tabs = ["profile", "students", "logout"];
 
       navbarContent = (
         <Aux>
-          <p className="navbar-brand  nav-item-color nav-bar-heading">Recruitment Portal</p>
+          <p className="navbar-brand  nav-item-color nav-bar-heading">
+            Recruitment Portal
+          </p>
           {tabs.length > 0 ? (
             <button
               className="navbar-toggler toggle-button"
@@ -41,7 +44,11 @@ class Navbar extends Component {
             <ul className="navbar-nav">
               {tabs.map(tab => (
                 <li className="nav-item" key={tab}>
-                  <NavLink className="nav-link nav-item-color" to={`/${tab}`}>
+                  <NavLink
+                    className="nav-link nav-item-color"
+                    to={`/${tab}`}
+                    exact
+                  >
                     {tab[0].toUpperCase() + tab.slice(1)}
                   </NavLink>
                 </li>
@@ -53,9 +60,7 @@ class Navbar extends Component {
     }
     return (
       <nav
-        className="navbar navbar-expand-lg navbar-light navbar-bg"
-        style={{ height: 55 }}
-      >
+        className="navbar navbar-expand-lg navbar-light navbar-bg custom-nav">
         {navbarContent}
       </nav>
     );

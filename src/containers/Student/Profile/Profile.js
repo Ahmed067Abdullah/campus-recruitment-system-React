@@ -16,13 +16,15 @@ import * as actions from "../../../store/actions/studentsActions";
 import getAge from "../../../common/getAge";
 
 import Spinner from "./../../../components/Spinner/Spinner";
-import checkFromTo from '../../../common/checkFromTo';
+import checkFromTo from "../../../common/checkFromTo";
 import Modal from "../../../hoc/Modal";
+import Aux from "../../../hoc/Auxiliary";
 
 import "./Profile.css";
 
 class Profile extends Component {
   state = {
+    owner: true,
     infoModal: false,
     eduModal: false,
     expModal: false,
@@ -55,8 +57,14 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    const { getProfile, auth } = this.props;
-    getProfile(auth.uid);
+    const { getProfile, auth, match } = this.props;
+    const visitingId = match.params.id;
+    if (visitingId) {
+      this.setState({ owner: false });
+      getProfile(visitingId);
+    } else {
+      getProfile(auth.uid);
+    }
   }
 
   inputChangedHandler = (e, form) => {
@@ -201,6 +209,7 @@ class Profile extends Component {
   render() {
     const { auth, student } = this.props;
     const {
+      owner,
       infoModal,
       info,
       eduModal,
@@ -208,9 +217,10 @@ class Profile extends Component {
       expModal,
       experienceForm
     } = this.state;
-    const { email, loading } = auth;
+    const {  loading } = auth;
     const {
       name,
+      email,
       dob,
       github,
       cgpa,
@@ -241,45 +251,34 @@ class Profile extends Component {
       <div className="lol">
         <h1 className="main-heading-student-profile">Welcome {name}</h1>
 
-        {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
             info={stdudentInfo}
-            onEdit={this.personalInfoModalHandler}
+            onEdit={owner ? this.personalInfoModalHandler : ""}
           />
         </div>
-        <Modal open={infoModal} handleClose={this.personalInfoModalHandler}>
-          <PersonalInfoForm
-            info={info}
-            inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.savePersonalInfoHandler}
-          />
-        </Modal>
 
-        {/* education componenets */}
         <div className="student-profile-education-container">
           <EducationTable
             education={education}
             editEducation={this.educationModalHandler}
             deleteEducation={this.deleteEducationHandler}
+            owner={owner}
           />
-          <Button
-            variant="contained"
-            className="add-eduEx-button"
-            onClick={() => this.educationModalHandler(true)}
-          >
-            Add Education
-          </Button>
+          {owner ? (
+            <Button
+              variant="contained"
+              className="add-eduEx-button"
+              onClick={() => this.educationModalHandler(true)}
+              owner={owner}
+            >
+              Add Education
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
-        <Modal open={eduModal} handleClose={this.educationModalHandler}>
-          <EducationForm
-            education={educationForm}
-            inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.saveEducationHandler}
-          />
-        </Modal>
 
-        {/* experience componenets */}
         <div className="student-profile-experience-container">
           <ExperienceTable
             experience={experience}
@@ -287,21 +286,49 @@ class Profile extends Component {
             deleteExperience={this.deleteExperienceHandler}
           />
           <br />
-          <Button
-            variant="contained"
-            className="add-eduEx-button"
-            onClick={() => this.experienceModalHandler(true)}
-          >
-            Add Experience
-          </Button>
+          {owner ? (
+            <Button
+              variant="contained"
+              className="add-eduEx-button"
+              onClick={() => this.experienceModalHandler(true)}
+            >
+              Add Experience
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
-        <Modal open={expModal} handleClose={this.experienceModalHandler}>
-          <ExperienceForm
-            experience={experienceForm}
-            inputChangedHandler={this.inputChangedHandler}
-            onSubmit={this.saveExperienceHandler}
-          />
-        </Modal>
+
+        {/* only render modals for owner */}
+        {owner ? (
+          <Aux>
+            <Modal open={infoModal} handleClose={this.personalInfoModalHandler}>
+              <PersonalInfoForm
+                info={info}
+                inputChangedHandler={this.inputChangedHandler}
+                onSubmit={this.savePersonalInfoHandler}
+              />
+            </Modal>
+
+            <Modal open={eduModal} handleClose={this.educationModalHandler}>
+              <EducationForm
+                education={educationForm}
+                inputChangedHandler={this.inputChangedHandler}
+                onSubmit={this.saveEducationHandler}
+              />
+            </Modal>
+
+            <Modal open={expModal} handleClose={this.experienceModalHandler}>
+              <ExperienceForm
+                experience={experienceForm}
+                inputChangedHandler={this.inputChangedHandler}
+                onSubmit={this.saveExperienceHandler}
+              />
+            </Modal>
+          </Aux>
+        ) : (
+          ""
+        )}
       </div>
     ) : (
       <div className="profile-spinner">

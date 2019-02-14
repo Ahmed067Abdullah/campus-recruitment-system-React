@@ -18,6 +18,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         ...action.payload
       };
+    case actionTypes.SIGNOUT:
+      return initialState;
     default:
       return state;
   }

@@ -59,8 +59,7 @@ const styles = theme => ({
 });
 
 const experienceTable = props => {
-  const { classes, experience, editExperience, deleteExperience } = props;
-  const owner = true;
+  const { classes, experience, editExperience, deleteExperience, owner} = props;
 
   return experience.length > 0 ? (
     <Aux>

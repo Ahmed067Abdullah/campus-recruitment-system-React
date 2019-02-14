@@ -1,21 +1,18 @@
-// import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
-
-// dont for now
 const initialState = {
-  DoB: "",
-  age : "",
-  github: "",
-  phone: "",
-  linkedin: "",
-  introduction: "",
-  address: "",
-  education: [],
-  experience: []
+  students : []
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SET_STUDENTS:
+      return {
+        ...state,
+        students: action.payload
+      };
+    case actionTypes.SIGNOUT:
+      return initialState;
     default:
       return state;
   }

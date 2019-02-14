@@ -60,8 +60,8 @@ const styles = theme => ({
 });
 
 const educationTable = props => {
-  const { classes, education, deleteEducation, editEducation } = props;
-  let owner = true;
+  const { classes, education, deleteEducation, editEducation,owner,admin } = props;
+
   return education.length > 0 ? (
     <Aux>
       <h2 className="sub-headings-student-profile">Education</h2>

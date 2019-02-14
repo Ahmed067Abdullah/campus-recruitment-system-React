@@ -19,9 +19,11 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_STUDENT:
       return {
-        ...state,
+        ...initialState,
         ...action.payload
       };
+    case actionTypes.SIGNOUT:
+      return initialState;
     default:
       return state;
   }

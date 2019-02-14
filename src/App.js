@@ -14,7 +14,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          {routes}
+          <div style={{marginTop : 50}}>{routes}</div>
         </div>
       </Router>
     );
