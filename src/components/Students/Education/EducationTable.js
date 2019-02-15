@@ -1,17 +1,16 @@
 import React from "react";
 
-import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
 
-import Aux from "../../../hoc/Auxiliary";
 import EditableEducationTableBody from "./EditableEducationTableBody";
-
-import {getYear} from "../../../common/timeHelperFunctions";
+import Aux from "../../../hoc/Auxiliary";
+import { getYear } from "../../../common/timeHelperFunctions";
 
 const styles = theme => ({
   root: {
@@ -34,34 +33,18 @@ const styles = theme => ({
   to: {
     width: "11%",
     padding: "2%"
-  },
-  ctxMenu: {
-    backgroundColor: "#1f4f16",
-    color: "#e7ffde",
-    width: 70,
-    padding: 8,
-    borderRadius: 5,
-    cursor: "pointer",
-    zIndex : 1
-  },
-  ctxMenuItem: {
-    paddingBottom: 0,
-    marginBottom: 0,
-    cursor: "pointer"
-  },
-  ctxMenuItemDivider: {
-    backgroundColor: "#e7ffde",
-    height: 1,
-    marginTop: 5,
-    marginBottom: 5
-  },
-  ctxMenuTrigger: {
-    cursor: "pointer"
   }
 });
 
 const educationTable = props => {
-  const { classes, education, deleteEducation, editEducation,owner,admin } = props;
+  const {
+    classes,
+    education,
+    deleteEducation,
+    editEducation,
+    owner,
+    admin
+  } = props;
 
   return education.length > 0 ? (
     <Aux>
@@ -84,10 +67,10 @@ const educationTable = props => {
               </TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {owner ? (
               <EditableEducationTableBody
-                classes={classes}
                 education={education}
                 deleteEducation={deleteEducation}
                 editEducation={editEducation}

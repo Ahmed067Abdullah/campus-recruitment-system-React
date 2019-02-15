@@ -22,7 +22,7 @@ class EducationForm extends Component {
   }
 
   handleChange = event => {
-    this.props.inputChangedHandler(event,"edu");
+    this.props.inputChangedHandler(event, "edu");
   };
 
   handleSubmit = () => {
@@ -32,6 +32,7 @@ class EducationForm extends Component {
   render() {
     const { education, classes } = this.props;
     const { institute, degree, from, to } = education;
+
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">

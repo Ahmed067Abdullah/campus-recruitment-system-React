@@ -8,10 +8,6 @@ import { getTime, getDate } from "../../../common/timeHelperFunctions";
 import "./VacancyList.css";
 import "../../../common/ContextMenu.css";
 
-const clickedHandler = (e, owner) => {
-  if (owner) e.preventDefault();
-};
-
 const vacanciesList = props => {
   const { deleteVacancy, editVacancy, vacancies, owner, admin } = props;
   if (vacancies.length > 0) {
@@ -30,23 +26,15 @@ const vacanciesList = props => {
         <div className="my-vacancies" key={index}>
           <Link
             to={`/profile/${vacancies[index].postedById}`}
-            onClick={e => clickedHandler(e, admin || owner)}
             style={{ textDecoration: "none" }}
           >
             <Card>
               <ContextMenuTrigger id={`vacancy-${index}`}>
                 <div className="card-text" style={{ position: "relative" }}>
                   {vacancyInfo.map(info => (
-                    <p
-                      className="student-profile-info-container"
-                      key={info.key}
-                    >
-                      <span className="student-profile-info-key">
-                        {info.key}:{" "}
-                      </span>
-                      <span className="student-profile-info-val">
-                        {info.value}
-                      </span>
+                    <p className="info-container" key={info.key}>
+                      <span className="info-key">{info.key}: </span>
+                      <span>{info.value}</span>
                     </p>
                   ))}
                 </div>
@@ -61,7 +49,9 @@ const vacanciesList = props => {
               >
                 Edit
               </MenuItem>
+              
               <div className="ctxMenuItemDivider" />
+              
               <MenuItem
                 onClick={() => deleteVacancy(index)}
                 className="ctxMenuItem"
@@ -69,9 +59,7 @@ const vacanciesList = props => {
                 Delete
               </MenuItem>
             </ContextMenu>
-          ) : (
-            ""
-          )}
+          ) : "" }
         </div>
       );
     });

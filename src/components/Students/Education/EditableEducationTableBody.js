@@ -7,66 +7,50 @@ import TableRow from "@material-ui/core/TableRow";
 import Aux from "../../../hoc/Auxiliary";
 import { getYear } from "../../../common/timeHelperFunctions";
 
-
 const editableEducationTableBody = props => {
-  const { education, classes, editEducation, deleteEducation } = props;
+  const { education, editEducation, deleteEducation } = props;
+
   return education.map((row, index) => (
     <Aux key={index}>
       <TableRow>
-        <TableCell
-          align="center"
-          padding="none"
-          className={classes.ctxMenuTrigger}
-        >
+        <TableCell align="center" padding="none" className="ctxMenuTrigger">
           <ContextMenuTrigger id={`education-${index}`}>
             {row.institute}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell
-          align="center"
-          padding="none"
-          className={classes.ctxMenuTrigger}
-        >
+        <TableCell align="center" padding="none" className="ctxMenuTrigger">
           <ContextMenuTrigger id={`education-${index}`}>
             {row.degree}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell
-          align="center"
-          padding="none"
-          className={classes.ctxMenuTrigger}
-        >
+        <TableCell align="center" padding="none" className="ctxMenuTrigger">
           <ContextMenuTrigger id={`education-${index}`}>
             {getYear(row.from)}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell
-          align="center"
-          padding="none"
-          className={classes.ctxMenuTrigger}
-        >
+        <TableCell align="center" padding="none" className="ctxMenuTrigger">
           <ContextMenuTrigger id={`education-${index}`}>
             {getYear(row.to)}
           </ContextMenuTrigger>
         </TableCell>
       </TableRow>
 
-      <ContextMenu id={`education-${index}`} className={classes.ctxMenu}>
+      <ContextMenu id={`education-${index}`} className="ctxMenu">
         <MenuItem
-          data={{ foo: "bar" }}
-          onClick={() => editEducation(true,index)}
-          className={classes.ctxMenuItem}
+          onClick={() => editEducation(true, index)}
+          className="ctxMenuItem"
         >
           Edit
         </MenuItem>
-        <div className={classes.ctxMenuItemDivider} />
+
+        <div className="ctxMenuItemDivider" />
+
         <MenuItem
-          data={{ foo: "bar" }}
           onClick={() => deleteEducation(index)}
-          className={classes.ctxMenuItem}
+          className="ctxMenuItem"
         >
           Delete
         </MenuItem>

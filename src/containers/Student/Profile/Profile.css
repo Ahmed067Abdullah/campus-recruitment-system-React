@@ -20,20 +20,16 @@
     font-weight: bold;
 }
 
-.student-profile-info-container{
+.info-container{
     color : #1f4f16;
     text-align: left;
 }
 
-.student-profile-info-key{
+.info-key{
     font-weight: bold;
 }
 
-.student-profile-info-val{
-
-}
-
-.lol{
+.cont{
     overflow: hidden;
 }
 
