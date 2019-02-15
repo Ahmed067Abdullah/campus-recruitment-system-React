@@ -13,15 +13,9 @@ class Vacancies extends Component {
     getVacancies();
   }
 
-  deleteVacancyHandler = index => {
-    const { companies, saveVac } = this.props;
-    const { vacancies } = companies; 
-    console.log("deleting vac");
-  };
-
   render() {
     const { auth, companies } = this.props;
-    const { loading } = auth;
+    const { loading, admin } = auth;
     const { vacancies } = companies
 
     return !loading ? (
@@ -33,6 +27,7 @@ class Vacancies extends Component {
           <VacanciesList
             vacancies={vacancies}
             deleteVacancy={this.deleteVacancyHandler}
+            admin={admin}
           />
         </div>
       </div>

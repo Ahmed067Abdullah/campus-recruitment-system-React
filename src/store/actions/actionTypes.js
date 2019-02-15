@@ -1,6 +1,6 @@
-// auth action types
 export const CHANGE_INPUT = "CHANGE_INPUT";
 
+// auth action types
 export const SIGNIN_SUCCESSFUL = 'SIGNIN_SUCCESSFUL';
 export const SIGNIN_FAILED = 'SIGNIN_SUCCESSFUL';
 export const SIGNIN_ERROR = 'SIGNIN_ERROR';
@@ -12,6 +12,8 @@ export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 
 export const START_LOADING = 'START_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';
+
+export const SET_ADMIN = 'SET_ADMIN';
 
 // student action types
 export const SET_STUDENT = 'SET_STUDENT';

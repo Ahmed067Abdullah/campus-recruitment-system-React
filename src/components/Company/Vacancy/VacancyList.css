@@ -7,6 +7,14 @@
   text-align: left;
 }
 
+.vacancy-delete-icon{
+  color : red;
+  position: absolute;
+  font-size: 20px;
+  top : 0%;
+  right: 2%;
+}
+
 @media (min-width: 500px) {
   .my-vacancies {
     width: 30%;

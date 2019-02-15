@@ -17,6 +17,7 @@ class Navbar extends Component {
       else if (status === 2)
         tabs = ["profile", "companies", "vacancies", "logout"];
       else if (status === 3) tabs = ["profile", "students", "logout"];
+      else if (status === 4) tabs = ["logout"];
 
       navbarContent = (
         <Aux>
@@ -59,8 +60,7 @@ class Navbar extends Component {
       );
     }
     return (
-      <nav
-        className="navbar navbar-expand-lg navbar-light navbar-bg custom-nav">
+      <nav className="navbar navbar-expand-lg navbar-light navbar-bg custom-nav">
         {navbarContent}
       </nav>
     );

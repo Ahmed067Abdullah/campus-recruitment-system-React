@@ -5,6 +5,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Signin from "./containers/Auth/SignIn/SignIn";
 import Signup from "./containers/Auth/SignUp/SignUp";
 import Logout from "./containers/Auth/Logout/Logout";
+import Blocked from "./containers/Auth/Blocked/Blocked";
 
 // student containers
 import StudentProfile from "./containers/Student/Profile/Profile";
@@ -29,16 +30,16 @@ const getRoutes = status => {
   );
 
   // routes for admin
-  // if (status === 1) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/logout" component={Logout} />
-  //       <Route path="/auth" component={Auth} />
-  //       <Route path="/donors" component={Donors} />
-  //       <Route path="/" exact component={Auth} />
-  //     </Switch>
-  //   );
-  // }
+  if (status === 1) {
+    routes = (
+      <Switch>
+        <Route path="/students" component={Students} />
+        <Route path="/vacancies" component={Vacancies} />
+        <Route path="/companies" component={Companies} />
+        <Route path="/logout" component={Logout} />
+      </Switch>
+    );
+  }
 
   // routes for students
   if (status === 2) {
@@ -67,6 +68,17 @@ const getRoutes = status => {
       </Switch>
     );
   }
+
+    // routes for blocked users
+    else if (status === 4) {
+      routes = (
+        <Switch>
+          <Route path="/blocked" component={Blocked} />
+          <Route path="/logout" component={Logout} />
+          <Redirect to="/blocked" />
+        </Switch>
+      );
+    }
 
   return routes;
 };

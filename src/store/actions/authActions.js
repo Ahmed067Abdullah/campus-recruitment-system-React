@@ -35,6 +35,7 @@ export const signup = history => (dispatch, getState) => {
   } = getState().auth;
 
   const newUser = { name, email };
+  newUser.disabled = false;
   if (type === "students") {
     console.log("inside students");
     newUser.enrollNo = enrollNo;
@@ -82,7 +83,9 @@ export const signin = history => (dispatch, getState) => {
       if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
         loginSuccessful(dispatch, uid, "Admin", 1);
         console.log("login successful with admin");
-        // login for admin here
+        dispatch(dispatcher(actionTypes.SET_ADMIN));
+        console.log("re routing");
+        history.replace("/students");
       } else {
         database()
           .ref(`students/${uid}`)
@@ -90,7 +93,9 @@ export const signin = history => (dispatch, getState) => {
           .then(res => {
             if (res.val()) {
               console.log("login successful with student", res.val());
-              loginSuccessful(dispatch, uid, res.val().name, 2);
+              let status = 2;
+              if (res.val().disabled) status = 4;
+              loginSuccessful(dispatch, uid, res.val().name, status);
               console.log("re routing");
               history.replace("/profile");
             } else {
@@ -100,7 +105,9 @@ export const signin = history => (dispatch, getState) => {
                 .then(res => {
                   if (res.val()) {
                     console.log("login successful with companies");
-                    loginSuccessful(dispatch, uid, res.val().name, 3);
+                    let status = 3;
+                    if (res.val().disabled) status = 4;
+                    loginSuccessful(dispatch, uid, res.val().name, status);
                     history.replace("/profile");
                   }
                 })

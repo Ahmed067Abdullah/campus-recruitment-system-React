@@ -1,21 +1,20 @@
 import React from "react";
 import Card from "../../../hoc/Card";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-
-import { getTime, getDate} from "../../../common/timeHelperFunctions";
-
+import DeleteIcon from "../../../components//DeleteIcon/DeleteIcon";
+import { getTime, getDate } from "../../../common/timeHelperFunctions";
 
 import "./VacancyList.css";
 import "../../../common/ContextMenu.css";
 
-const clickedHandler= (e,owner) =>{
-  if(owner) e.preventDefault()
-}
+const clickedHandler = (e, owner) => {
+  if (owner) e.preventDefault();
+};
 
 const vacanciesList = props => {
-  const { deleteVacancy, editVacancy, vacancies, owner } = props;
+  const { deleteVacancy, editVacancy, vacancies, owner, admin } = props;
   if (vacancies.length > 0) {
     const vacancyInfoArray = vacancies.map(vacancy => [
       { key: "Posted By", value: vacancy.postedBy },
@@ -30,27 +29,30 @@ const vacanciesList = props => {
     return vacancyInfoArray.map((vacancyInfo, index) => {
       return (
         <div className="my-vacancies" key={index}>
-         <Link
-          to={`/profile/${vacancies[index].postedById}`}
-          onClick={e => clickedHandler(e,owner)}
-          style={{ textDecoration: "none" }}
-        >
-          <Card>
-            <ContextMenuTrigger id={`vacancy-${index}`}>
-              <div className="card-text">
-                {vacancyInfo.map(info => (
-                  <p className="student-profile-info-container" key={info.key}>
-                    <span className="student-profile-info-key">
-                      {info.key}:{" "}
-                    </span>
-                    <span className="student-profile-info-val">
-                      {info.value}
-                    </span>
-                  </p>
-                ))}
-              </div>
-            </ContextMenuTrigger>
-          </Card>
+          <Link
+            to={`/profile/${vacancies[index].postedById}`}
+            onClick={e => clickedHandler(e, admin || owner)}
+            style={{ textDecoration: "none" }}
+          >
+            <Card>
+              <ContextMenuTrigger id={`vacancy-${index}`}>
+                <div className="card-text" style={{ position: "relative" }}>
+                  {vacancyInfo.map(info => (
+                    <p
+                      className="student-profile-info-container"
+                      key={info.key}
+                    >
+                      <span className="student-profile-info-key">
+                        {info.key}:{" "}
+                      </span>
+                      <span className="student-profile-info-val">
+                        {info.value}
+                      </span>
+                    </p>
+                  ))}
+                </div>
+              </ContextMenuTrigger>
+            </Card>
           </Link>
           {owner ? (
             <ContextMenu id={`vacancy-${index}`} className="ctxMenu">
@@ -72,9 +74,6 @@ const vacanciesList = props => {
             ""
           )}
         </div>
-         
-
-        
       );
     });
   } else {

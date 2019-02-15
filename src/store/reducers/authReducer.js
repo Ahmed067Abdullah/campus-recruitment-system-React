@@ -5,16 +5,17 @@ const initialState = {
   type: "students",
   status: "2",
   name: "Ahmed",
-  email: "test1@test.com",
+  email: "admin@gmail.com",
   enrollNo: "",
   phoneNo: "",
   address: "",
   password: "",
   rePassword: "",
   loading: "",
+  admin : false,
   errorSignup: "",
   errorSignin: "",
-  passwordSignin: "123456"
+  passwordSignin: "CMAD17A"
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,6 +57,11 @@ const reducer = (state = initialState, action) => {
         errorSignup: "",
         loading: false
       };
+    case actionTypes.SET_ADMIN:
+      return{
+        ...state,
+        admin : true
+      }
     case actionTypes.SIGNOUT:
       return initialState;
     default:
