@@ -134,3 +134,10 @@ export const signin = history => (dispatch, getState) => {
 };
 
 export const signout = () => dispatcher(actionTypes.SIGNOUT);
+
+export const blockAccount = (type, uid) => dispatch => {
+  console.log("blocking:", uid);
+  database()
+    .ref(`/${type}/${uid}/disabled`)
+    .set(true);
+};

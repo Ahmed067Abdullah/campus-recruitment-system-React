@@ -17,12 +17,9 @@ import Vacancies from "./containers/Company/Vacancies/Vacancies";
 import Companies from "./containers/Company/Companies/Companies";
 
 const getRoutes = status => {
-  console.log("status", status);
 
   let routes = (
     <Switch>
-      {/* <Route path="/profile" component={Students} />
-      <Redirect to="/profile" /> */}
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
       <Redirect to="/signin" />

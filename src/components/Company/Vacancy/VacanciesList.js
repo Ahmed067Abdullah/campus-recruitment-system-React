@@ -1,9 +1,8 @@
 import React from "react";
-import Card from "../../../hoc/Card";
 import { Link } from "react-router-dom";
-
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
-import DeleteIcon from "../../../components//DeleteIcon/DeleteIcon";
+
+import Card from "../../../hoc/Card";
 import { getTime, getDate } from "../../../common/timeHelperFunctions";
 
 import "./VacancyList.css";

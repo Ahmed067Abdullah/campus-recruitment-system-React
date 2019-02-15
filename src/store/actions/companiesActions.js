@@ -35,6 +35,7 @@ export const getVacancies = () => dispatch => {
       const vacanciesObj = snapshot.val();
       let vacancies = [];
       for (let key in vacanciesObj) {
+        if(vacanciesObj[key].disabled) continue;
         const vacs = vacanciesObj[key].vacancies;
         for (let vac in vacs)
           vacancies.push({
@@ -56,8 +57,10 @@ export const getCompanies = () => dispatch => {
     .on("value", snapshot => {
       const companiesObj = snapshot.val();
       let companies = [];
-      for (let key in companiesObj)
+      for (let key in companiesObj){
+        if(companiesObj[key].disabled) continue;
         companies.push({ id: key, ...companiesObj[key] });
+      }
       console.log(companies);
       dispatch(dispatcher(actionTypes.SET_COMPANIES, companies));
       dispatch(dispatcher(actionTypes.STOP_LOADING));

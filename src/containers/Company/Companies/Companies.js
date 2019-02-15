@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import * as actions from "../../../store/actions/companiesActions";
+import { blockAccount } from "../../../store/actions/authActions";
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
+import BlockIcon from "../../../components/BlockIcon/BlockIcon";
 
 import Spinner from "./../../../components/Spinner/Spinner";
 
@@ -16,9 +18,17 @@ class Companies extends Component {
     this.props.getCompanies();
   }
 
+  onBlock = uid => {
+    this.props.blockAccount(uid);
+  };
+
+  clickedHandler = (e, admin) => {
+    if (admin) e.preventDefault();
+  };
+
   render() {
     const { auth, companies } = this.props;
-    const { loading } = auth;
+    const { loading, admin } = auth;
 
     const compnayInfoArray = companies.companies.map(company => [
       { key: "Name", value: company.name },
@@ -39,16 +49,34 @@ class Companies extends Component {
         <h1 className="main-heading-student-profile">Registered Companies</h1>
 
         <div className="company-vacancies-container" style={{ width: "100%" }}>
-          {compnayInfoArray.map((companyInfo, index) => (
-            <div className="cmps-list-info-container" key={index}>
-              <Link
-                to={`/profile/${companies.companies[index].id}`}
-                style={{ textDecoration: "none" }}
+          {compnayInfoArray.map((companyInfo, index) => {
+            const id = companies.companies[index].id;
+            return (
+              <div
+                className="cmps-list-info-container"
+                key={index}
+                style={{ position: "relative" }}
               >
-                <PersonalInfo info={companyInfo} />
-              </Link>
-            </div>
-          ))}
+                <Link
+                  to={`/profile/${id}`}
+                  style={{ textDecoration: "none" }}
+                  onClick={e => this.clickedHandler(e, admin)}
+                >
+                  {admin ? (
+                    <span
+                      className="cmp-blk-ic"
+                      onClick={() => this.onBlock(id)}
+                    >
+                      <BlockIcon />
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <PersonalInfo info={companyInfo} />
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     ) : (
@@ -68,7 +96,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCompanies: () => dispatch(actions.getCompanies())
+    getCompanies: () => dispatch(actions.getCompanies()),
+    blockAccount: uid => dispatch(blockAccount("companies", uid))
   };
 };
 

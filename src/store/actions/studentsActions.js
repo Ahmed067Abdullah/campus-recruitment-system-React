@@ -34,8 +34,10 @@ export const getStudents = () => dispatch => {
     .on("value", snapshot => {
       const studentsObj = snapshot.val();
       let students = [];
-      for (let key in studentsObj)
-      students.push({ id: key, ...studentsObj[key] });
+      for (let key in studentsObj){
+        if(studentsObj[key].disabled) continue;
+        students.push({ id: key, ...studentsObj[key] });
+      }
       console.log(students);
       dispatch(dispatcher(actionTypes.SET_STUDENTS, students));
       dispatch(dispatcher(actionTypes.STOP_LOADING));

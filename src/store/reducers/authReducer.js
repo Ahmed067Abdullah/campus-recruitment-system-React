@@ -1,10 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  uid: "aBuJ4FXc8ag12lk9lNmkzDTGZ472",
+  uid: "",
   type: "students",
   status: "2",
-  name: "Ahmed",
+  name: "",
   email: "admin@gmail.com",
   enrollNo: "",
   phoneNo: "",
