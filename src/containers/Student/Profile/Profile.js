@@ -18,8 +18,7 @@ import Spinner from "./../../../components/Spinner/Spinner";
 import Modal from "../../../hoc/Modal";
 import Aux from "../../../hoc/Auxiliary";
 
-import {getAge,checkFromTo} from "../../../common/timeHelperFunctions";
-
+import { getAge, checkFromTo } from "../../../common/timeHelperFunctions";
 
 import "./Profile.css";
 
@@ -91,7 +90,6 @@ class Profile extends Component {
       const info = { ...this.props.student };
       this.setState({ info });
     }
-    console.log(flag);
     this.setState({ infoModal: flag });
   };
 
@@ -99,10 +97,13 @@ class Profile extends Component {
     const { auth, student, saveProfile } = this.props;
     const { info } = this.state;
     const { uid, email } = auth;
-    const updatedStudent = { ...student, ...info, email };
-
-    saveProfile(uid, updatedStudent);
-    this.personalInfoModalHandler(false);
+    if (info.dob ? getAge(info.dob) < 18 : false)
+      alert("You can't be in university with this age!");
+    else {
+      const updatedStudent = { ...student, ...info, email };
+      saveProfile(uid, updatedStudent);
+      this.personalInfoModalHandler(false);
+    }
   };
 
   // edu func
@@ -123,14 +124,15 @@ class Profile extends Component {
     const { education } = student;
 
     if (checkFromTo(educationForm.from, educationForm.to))
-      alert("something wrong");
+      alert("Invalid to/from date");
+    else {
+      if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
+      else education.push(educationForm);
 
-    if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
-    else education.push(educationForm);
-
-    saveEdu(auth.uid, education);
-    this.clearEduFields();
-    this.educationModalHandler(false);
+      saveEdu(auth.uid, education);
+      this.clearEduFields();
+      this.educationModalHandler(false);
+    }
   };
 
   deleteEducationHandler = index => {
@@ -162,14 +164,15 @@ class Profile extends Component {
     const { experience } = student;
 
     if (checkFromTo(experienceForm.from, experienceForm.to))
-      alert("something wrong");
+      alert("Invalid to/from date");
+    else {
+      if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
+      else experience.push(experienceForm);
 
-    if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
-    else experience.push(experienceForm);
-
-    saveExp(auth.uid, experience);
-    this.clearExpFields();
-    this.experienceModalHandler(false);
+      saveExp(auth.uid, experience);
+      this.clearExpFields();
+      this.experienceModalHandler(false);
+    }
   };
 
   deleteExperienceHandler = index => {
@@ -218,7 +221,7 @@ class Profile extends Component {
       expModal,
       experienceForm
     } = this.state;
-    const {  loading } = auth;
+    const { loading } = auth;
     const {
       name,
       email,
@@ -250,7 +253,7 @@ class Profile extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Profile</h1>
+        <h1 className="main-heading-profile">Profile</h1>
 
         <div className="student-profile-card-container">
           <PersonalInfo
@@ -271,7 +274,6 @@ class Profile extends Component {
               variant="contained"
               className="add-eduEx-button"
               onClick={() => this.educationModalHandler(true)}
-              owner={owner}
             >
               Add Education
             </Button>
@@ -285,6 +287,7 @@ class Profile extends Component {
             experience={experience}
             editExperience={this.experienceModalHandler}
             deleteExperience={this.deleteExperienceHandler}
+            owner={owner}
           />
           <br />
           {owner ? (

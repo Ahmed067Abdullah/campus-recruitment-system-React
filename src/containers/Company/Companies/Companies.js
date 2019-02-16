@@ -10,6 +10,7 @@ import BlockIcon from "../../../components/BlockIcon/BlockIcon";
 import Spinner from "./../../../components/Spinner/Spinner";
 
 import { getDate } from "../../../common/timeHelperFunctions";
+import navigationHandler from "../../../common/navigationHandler";
 
 import "./Companies.css";
 
@@ -20,10 +21,6 @@ class Companies extends Component {
 
   onBlock = uid => {
     this.props.blockAccount(uid);
-  };
-
-  clickedHandler = (e, admin) => {
-    if (admin) e.preventDefault();
   };
 
   render() {
@@ -41,42 +38,33 @@ class Companies extends Component {
       { key: "Email", value: company.email },
       {
         key: "Posted Vacancies",
-        value: company.vacancies ? company.vacancies.length : 0
+        value: company.vacancies ? company.vacancies.length : "0"
       }
     ]);
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Registered Companies</h1>
+        <h1 className="main-heading-profile">Registered Companies</h1>
 
         <div className="company-vacancies-container" style={{ width: "100%" }}>
-          {compnayInfoArray.map((companyInfo, index) => {
-            const id = companies.companies[index].id;
-            return (
-              <div
-                className="cmps-list-info-container"
-                key={index}
-                style={{ position: "relative" }}
-              >
-                <Link
-                  to={`/profile/${id}`}
-                  style={{ textDecoration: "none" }}
-                  onClick={e => this.clickedHandler(e, admin)}
-                >
-                  {admin ? (
-                    <span
-                      className="cmp-blk-ic"
-                      onClick={() => this.onBlock(id)}
-                    >
-                      <BlockIcon />
-                    </span>
-                  ) : (
-                    ""
-                  )}
-                  <PersonalInfo info={companyInfo} />
-                </Link>
-              </div>
-            );
-          })}
+          {compnayInfoArray.length > 0 ? (
+            compnayInfoArray.map((companyInfo, index) => {
+              const id = companies.companies[index].id;
+              return (
+                <div className="cmps-list-info-container" key={index}>
+                  <Link
+                    to={`/profile/${id}`}
+                    style={{ textDecoration: "none" }}
+                    onClick={e => navigationHandler(e, admin)}
+                  >
+                    {admin ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
+                    <PersonalInfo info={companyInfo} />
+                  </Link>
+                </div>
+              );
+            })
+          ) : (
+            <h1 className="blocked-msg">No Companies to Show.</h1>
+          )}
         </div>
       </div>
     ) : (

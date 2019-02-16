@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { Link } from "react-router-dom";
 
+import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
+import navigationHandler from "../../../common/navigationHandler";
+import BlockIcon from "../../../components/BlockIcon/BlockIcon";
+import Spinner from "./../../../components/Spinner/Spinner";
 import * as actions from "../../../store/actions/studentsActions";
 import { blockAccount } from "../../../store/actions/authActions";
-import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
-import BlockIcon from "../../../components/BlockIcon/BlockIcon";
-
-import Spinner from "./../../../components/Spinner/Spinner";
-
 import { getAge } from "../../../common/timeHelperFunctions";
 
 import "./Students.css";
@@ -21,10 +19,6 @@ class Students extends Component {
 
   onBlock = uid => {
     this.props.blockAccount(uid);
-  };
-
-  clickedHandler = (e, admin) => {
-    if (admin) e.preventDefault();
   };
 
   render() {
@@ -45,37 +39,28 @@ class Students extends Component {
     ]);
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Registered Students</h1>
+        <h1 className="main-heading-profile">Registered Students</h1>
 
         <div className="company-vacancies-container" style={{ width: "100%" }}>
-          {studentsInfoArray.map((studentInfo, index) => {
-            const id = students.students[index].id;
-            return (
-              <div
-                className="stds-list-info-container"
-                key={index}
-                style={{ position: "relative" }}
-              >
-                <Link
-                  to={`/profile/${id}`}
-                  onClick={e => this.clickedHandler(e, admin)}
-                  style={{ textDecoration: "none" }}
-                >
-                  {admin ? (
-                    <span
-                      className="cmp-blk-ic"
-                      onClick={() => this.onBlock(id)}
-                    >
-                      <BlockIcon />
-                    </span>
-                  ) : (
-                    ""
-                  )}
-                  <PersonalInfo info={studentInfo} />
-                </Link>
-              </div>
-            );
-          })}
+          {studentsInfoArray.length > 0 ? (
+            studentsInfoArray.map((studentInfo, index) => {
+              const id = students.students[index].id;
+              return (
+                <div className="stds-list-info-container" key={index}>
+                  <Link
+                    to={`/profile/${id}`}
+                    onClick={e => navigationHandler(e, admin)}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {admin ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
+                    <PersonalInfo info={studentInfo} />
+                  </Link>
+                </div>
+              );
+            })
+          ) : (
+            <h1 className="blocked-msg">No Students to Show.</h1>
+          )}
         </div>
       </div>
     ) : (

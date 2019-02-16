@@ -6,7 +6,7 @@
     padding : 15px;
 }
 
-.main-heading-student-profile{
+.main-heading-profile{
     margin-top : 35px;
     color : #1f4f16;
     font-size: 30px;
@@ -72,7 +72,7 @@
 }
 
 @media(min-width : 500px){
-    .main-heading-student-profile{
+    .main-heading-profile{
         margin-bottom: 20px;
         font-size: 60px;
     }

@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenuTrigger } from "react-contextmenu";
 
 import Card from "../../../hoc/Card";
+import ContextMenu from "../../ContextMenu/ContextMenu";
+import navigationHandler from "../../../common/navigationHandler";
 import { getTime, getDate } from "../../../common/timeHelperFunctions";
 
 import "./VacancyList.css";
@@ -27,6 +29,7 @@ const vacanciesList = props => {
           <Link
             to={`/profile/${vacancies[index].postedById}`}
             style={{ textDecoration: "none" }}
+            onClick={e => navigationHandler(e, admin || owner)}
           >
             <Card>
               <ContextMenuTrigger id={`vacancy-${index}`}>
@@ -41,25 +44,17 @@ const vacanciesList = props => {
               </ContextMenuTrigger>
             </Card>
           </Link>
+
           {owner ? (
-            <ContextMenu id={`vacancy-${index}`} className="ctxMenu">
-              <MenuItem
-                onClick={() => editVacancy(true, index)}
-                className="ctxMenuItem"
-              >
-                Edit
-              </MenuItem>
-              
-              <div className="ctxMenuItemDivider" />
-              
-              <MenuItem
-                onClick={() => deleteVacancy(index)}
-                className="ctxMenuItem"
-              >
-                Delete
-              </MenuItem>
-            </ContextMenu>
-          ) : "" }
+            <ContextMenu
+              type="vacancy"
+              index={index}
+              onEdit={editVacancy}
+              onDelete={deleteVacancy}
+            />
+          ) : (
+            ""
+          )}
         </div>
       );
     });

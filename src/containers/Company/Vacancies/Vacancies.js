@@ -19,7 +19,7 @@ class Vacancies extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Posted Vacancies</h1>
+        <h1 className="main-heading-profile">Posted Vacancies</h1>
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           <VacanciesList
             vacancies={vacancies}

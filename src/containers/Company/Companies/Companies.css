@@ -1,9 +1,10 @@
 .cmps-list-info-container {
   margin: 0px auto 10px;
   width: 90%;
+  position : relative;
 }
 
-.cmp-blk-ic {
+.block-icon {
   color : red;
   position: absolute;
   top : 3%;

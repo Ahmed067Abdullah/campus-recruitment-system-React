@@ -33,7 +33,7 @@ class Navbar extends Component {
               aria-controls="navbarNav"
               aria-expanded="false"
               aria-label="Toggle navigation"
-            >
+            > 
               <div className="hamburger" />
               <div className="hamburger" />
               <div className="hamburger" />

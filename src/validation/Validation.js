@@ -12,7 +12,7 @@ const authValidations = () => {
   });
 
   ValidatorForm.addValidationRule("isPhoneLengthOk", value => {
-    if (value.trim().length !== 11) return false;
+    if (value.trim().length !== 0 && value.trim().length !== 11) return false;
     return true;
   });
 

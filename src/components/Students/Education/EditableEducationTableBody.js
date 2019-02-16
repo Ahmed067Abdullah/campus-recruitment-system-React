@@ -1,10 +1,11 @@
 import React from "react";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenuTrigger } from "react-contextmenu";
 
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
 import Aux from "../../../hoc/Auxiliary";
+import ContextMenu from "../../ContextMenu/ContextMenu";
 import { getYear } from "../../../common/timeHelperFunctions";
 
 const editableEducationTableBody = props => {
@@ -38,23 +39,12 @@ const editableEducationTableBody = props => {
         </TableCell>
       </TableRow>
 
-      <ContextMenu id={`education-${index}`} className="ctxMenu">
-        <MenuItem
-          onClick={() => editEducation(true, index)}
-          className="ctxMenuItem"
-        >
-          Edit
-        </MenuItem>
-
-        <div className="ctxMenuItemDivider" />
-
-        <MenuItem
-          onClick={() => deleteEducation(index)}
-          className="ctxMenuItem"
-        >
-          Delete
-        </MenuItem>
-      </ContextMenu>
+      <ContextMenu
+        type="education"
+        index={index}
+        onEdit={editEducation}
+        onDelete={deleteEducation}
+      />
     </Aux>
   ));
 };

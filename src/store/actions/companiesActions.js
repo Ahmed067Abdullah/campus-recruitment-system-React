@@ -14,14 +14,12 @@ export const getProfile = uid => dispatch => {
 };
 
 export const saveProfile = (uid, payload) => dispatch => {
-  console.log("setting:", payload);
   database()
     .ref(`/companies/${uid}`)
     .set(payload);
 };
 
 export const saveVacancies = (uid, payload) => dispatch => {
-  console.log("updating Vacancies:", payload);
   database()
     .ref(`/companies/${uid}/vacancies`)
     .set(payload);
@@ -44,7 +42,6 @@ export const getVacancies = () => dispatch => {
             ...vacs[vac]
           });
       }
-      console.log(vacancies);
       dispatch(dispatcher(actionTypes.SET_VACANCIES, vacancies));
       dispatch(dispatcher(actionTypes.STOP_LOADING));
     });
@@ -61,7 +58,6 @@ export const getCompanies = () => dispatch => {
         if(companiesObj[key].disabled) continue;
         companies.push({ id: key, ...companiesObj[key] });
       }
-      console.log(companies);
       dispatch(dispatcher(actionTypes.SET_COMPANIES, companies));
       dispatch(dispatcher(actionTypes.STOP_LOADING));
     });

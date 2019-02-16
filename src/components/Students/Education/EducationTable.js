@@ -42,8 +42,7 @@ const educationTable = props => {
     education,
     deleteEducation,
     editEducation,
-    owner,
-    admin
+    owner
   } = props;
 
   return education.length > 0 ? (
@@ -77,7 +76,7 @@ const educationTable = props => {
               />
             ) : (
               education.map((row, index) => (
-                <TableRow>
+                <TableRow key={index}>
                   <TableCell key={index} align="center" padding="none">
                     {row.institute}
                   </TableCell>

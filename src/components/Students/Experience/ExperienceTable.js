@@ -76,8 +76,7 @@ const experienceTable = props => {
               />
             ) : (
               experience.map((row, index) => (
-                <Aux key={index}>
-                  <TableRow>
+                  <TableRow key={index}>
                     <TableCell align="center" padding="none">
                       {row.company}
                     </TableCell>
@@ -94,7 +93,6 @@ const experienceTable = props => {
                       {getYear(row.to)}
                     </TableCell>
                   </TableRow>
-                </Aux>
               ))
             )}
           </TableBody>

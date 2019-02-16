@@ -14,9 +14,7 @@ import Spinner from "./../../../components/Spinner/Spinner";
 import Aux from "../../../hoc/Auxiliary";
 import Modal from "../../../hoc/Modal";
 
-import {getDate,checkFromTo} from "../../../common/timeHelperFunctions";
-
-
+import { getDate, checkFromTo } from "../../../common/timeHelperFunctions";
 
 import "./Profile.css";
 
@@ -85,12 +83,12 @@ class Profile extends Component {
     if (
       info.operatingSince ? checkFromTo(info.operatingSince, Date.now()) : false
     )
-      alert("something wrong");
-
-    const updatedCompany = { ...company, ...info, email };
-
-    saveProfile(uid, updatedCompany);
-    this.companyInfoModalHandler(false);
+      alert("'Operating Since' can't be in future");
+    else {
+      const updatedCompany = { ...company, ...info, email };
+      saveProfile(uid, updatedCompany);
+      this.companyInfoModalHandler(false);
+    }
   };
 
   // vac func
@@ -115,18 +113,19 @@ class Profile extends Component {
         ? checkFromTo(Date.now(), vacancyForm.lastDate)
         : false
     )
-      alert("something wrong");
-
-    if (vacEditIndex !== "") vacancies[vacEditIndex] = vacancyForm;
+      alert("Last date to apply can't be in past");
     else {
-      vacancyForm.postedAt = Date.now();
-      vacancyForm.postedBy = auth.name;
-      vacancies.push(vacancyForm);
-    }
+      if (vacEditIndex !== "") vacancies[vacEditIndex] = vacancyForm;
+      else {
+        vacancyForm.postedAt = Date.now();
+        vacancyForm.postedBy = auth.name;
+        vacancies.push(vacancyForm);
+      }
 
-    saveVac(auth.uid, vacancies);
-    this.clearFields();
-    this.vacancyModalHandler(false);
+      saveVac(auth.uid, vacancies);
+      this.clearFields();
+      this.vacancyModalHandler(false);
+    }
   };
 
   deleteVacancyHandler = index => {
@@ -182,7 +181,7 @@ class Profile extends Component {
 
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-student-profile">Profile</h1>
+        <h1 className="main-heading-profile">Profile</h1>
 
         {/* profile componenets */}
         <div className="student-profile-card-container">

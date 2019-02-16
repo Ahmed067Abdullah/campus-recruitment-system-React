@@ -1,6 +1,6 @@
 .custom-nav {
-  height: 55px;
   position: fixed;
+  min-height: 60px;
   width: 100%;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@
 
 .nav-bar-heading {
   font-size: 28px;
-  margin-top: -7px;
+  margin-bottom: 0px;
 }
 
 .toggle-button {
@@ -37,7 +37,10 @@
 
 @media (min-width: 500px) {
   .nav-bar-heading {
-    font-size: 32px;
-    margin-top: 7px;
+    font-size: 37px;
+    margin-bottom: 1px;
+  }
+  .custom-nav{
+    height: 55px;
   }
 }

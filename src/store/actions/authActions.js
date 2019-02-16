@@ -23,7 +23,6 @@ export const changeInput = payload =>
   dispatcher(actionTypes.CHANGE_INPUT, payload);
 
 export const signup = history => (dispatch, getState) => {
-  console.log("inside sign up");
   const {
     type,
     name,
@@ -36,15 +35,11 @@ export const signup = history => (dispatch, getState) => {
 
   const newUser = { name, email };
   newUser.disabled = false;
-  if (type === "students") {
-    console.log("inside students");
-    newUser.enrollNo = enrollNo;
-  } else if (type === "companies") {
-    console.log("inside companies");
+  if (type === "students") newUser.enrollNo = enrollNo;
+  else if (type === "companies") {
     newUser.phoneNo = phoneNo;
     newUser.address = address;
   }
-  console.log("creating new");
   dispatch(dispatcher(actionTypes.START_LOADING));
   auth()
     .createUserWithEmailAndPassword(email, password)
@@ -54,7 +49,6 @@ export const signup = history => (dispatch, getState) => {
         .ref(`${type}/${uid}`)
         .set(newUser)
         .then(res => {
-          console.log("new user added");
           loginSuccessful(dispatch, uid, name, type === "students" ? 2 : 3);
           history.replace("/profile");
         });
@@ -74,17 +68,13 @@ export const signup = history => (dispatch, getState) => {
 export const signin = history => (dispatch, getState) => {
   const { email, passwordSignin } = getState().auth;
   dispatch(dispatcher(actionTypes.START_LOADING));
-  console.log("inside signin");
   auth()
     .signInWithEmailAndPassword(email, passwordSignin)
     .then(res => {
-      console.log("signed in");
       const uid = res.user.uid;
       if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
         loginSuccessful(dispatch, uid, "Admin", 1);
-        console.log("login successful with admin");
         dispatch(dispatcher(actionTypes.SET_ADMIN));
-        console.log("re routing");
         history.replace("/students");
       } else {
         database()
@@ -92,11 +82,9 @@ export const signin = history => (dispatch, getState) => {
           .once("value")
           .then(res => {
             if (res.val()) {
-              console.log("login successful with student", res.val());
               let status = 2;
               if (res.val().disabled) status = 4;
               loginSuccessful(dispatch, uid, res.val().name, status);
-              console.log("re routing");
               history.replace("/profile");
             } else {
               database()
@@ -104,7 +92,6 @@ export const signin = history => (dispatch, getState) => {
                 .once("value")
                 .then(res => {
                   if (res.val()) {
-                    console.log("login successful with companies");
                     let status = 3;
                     if (res.val().disabled) status = 4;
                     loginSuccessful(dispatch, uid, res.val().name, status);
@@ -122,7 +109,6 @@ export const signin = history => (dispatch, getState) => {
       }
     })
     .catch(error => {
-      console.log("not signed in");
       dispatch(dispatcher(actionTypes.STOP_LOADING));
       let errorMessage = "";
       if (error.code === "auth/wrong-password") errorMessage = "Wrong Password";
@@ -136,7 +122,6 @@ export const signin = history => (dispatch, getState) => {
 export const signout = () => dispatcher(actionTypes.SIGNOUT);
 
 export const blockAccount = (type, uid) => dispatch => {
-  console.log("blocking:", uid);
   database()
     .ref(`/${type}/${uid}/disabled`)
     .set(true);

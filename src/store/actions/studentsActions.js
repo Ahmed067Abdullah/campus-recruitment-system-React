@@ -14,14 +14,12 @@ export const getProfile = uid => dispatch => {
 };
 
 export const saveProfile = (uid, payload) => dispatch => {
-  console.log("setting:", payload);
   database()
     .ref(`/students/${uid}`)
     .set(payload);
 };
 
 export const saveEduExp = (uid, payload, field) => dispatch => {
-  console.log("updating edu/exp:", payload, field);
   database()
     .ref(`/students/${uid}/${field}`)
     .set(payload);
@@ -38,7 +36,6 @@ export const getStudents = () => dispatch => {
         if(studentsObj[key].disabled) continue;
         students.push({ id: key, ...studentsObj[key] });
       }
-      console.log(students);
       dispatch(dispatcher(actionTypes.SET_STUDENTS, students));
       dispatch(dispatcher(actionTypes.STOP_LOADING));
     });

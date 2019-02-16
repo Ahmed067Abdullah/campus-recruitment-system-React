@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_COMPANY:
       return {
-        ...state,
+        ...initialState,
         ...action.payload
       };
     case actionTypes.SIGNOUT:

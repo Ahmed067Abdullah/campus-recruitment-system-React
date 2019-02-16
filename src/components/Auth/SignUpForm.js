@@ -44,8 +44,11 @@ class CreateForm extends Component {
               onChange={handleChange}
               name="enrollNo"
               value={enrollNo}
-              validators={["required"]}
-              errorMessages={["This field is required"]}
+              validators={["required", "isNameLongEnough"]}
+              errorMessages={[
+                "This field is required",
+                "Enrollment Number must be longer than 2 digits"
+              ]}
             />
             <br />
           </Aux>

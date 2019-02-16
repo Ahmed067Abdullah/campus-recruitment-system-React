@@ -1,8 +1,9 @@
 import React from "react";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenuTrigger } from "react-contextmenu";
 
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import ContextMenu from "../../ContextMenu/ContextMenu";
 
 import Aux from "../../../hoc/Auxiliary";
 import { getYear } from "../../../common/timeHelperFunctions";
@@ -38,23 +39,12 @@ const editableExperienceTableBody = props => {
         </TableCell>
       </TableRow>
 
-      <ContextMenu id={`experience-${index}`} className="ctxMenu">
-        <MenuItem
-          onClick={() => editExperience(true, index)}
-          className="ctxMenuItem"
-        >
-          Edit
-        </MenuItem>
-
-        <div className="ctxMenuItemDivider" />
-
-        <MenuItem
-          onClick={() => deleteExperience(index)}
-          className="ctxMenuItem"
-        >
-          Delete
-        </MenuItem>
-      </ContextMenu>
+      <ContextMenu
+        type="experience"
+        index={index}
+        onEdit={editExperience}
+        onDelete={deleteExperience}
+      />
     </Aux>
   ));
 };
