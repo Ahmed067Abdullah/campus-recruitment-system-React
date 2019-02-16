@@ -19,25 +19,26 @@ const styles = theme => ({
     overflowX: "auto"
   },
   inst: {
-    width: "40%",
+    width: "41%",
     padding: "2%"
   },
   deg: {
-    width: "24%",
+    width: "25%",
     padding: "2%"
   },
   from: {
     width: "9%",
     padding: "2%"
   },
-  to: {
-    width: "11%",
-    padding: "2%"
+  head: {
+    color: "#1f4f16",
+    fontWeight: "bold"
   }
 });
 
 const educationTable = props => {
   const { classes, education, deleteEducation, editEducation, owner } = props;
+  const { head, inst, deg, from } = classes;
 
   return education.length > 0 ? (
     <Aux>
@@ -46,16 +47,16 @@ const educationTable = props => {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell align="center" padding="none" className={classes.inst}>
+              <TableCell align="center" padding="none" className={[head, inst]}>
                 Institute
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.deg}>
+              <TableCell align="center" padding="none" className={[head, deg]}>
                 Degree
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.from}>
+              <TableCell align="center" padding="none" className={[head, from]}>
                 From
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.to}>
+              <TableCell align="center" padding="none" className={[head, from]}>
                 To
               </TableCell>
             </TableRow>
@@ -71,19 +72,19 @@ const educationTable = props => {
             ) : (
               education.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell key={index} align="center" padding="none">
+                  <TableCell key={index} align="center" padding="none" className="td">
                     {row.institute}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {row.degree}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {getYear(row.from)}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {row.to === "Now" ? row.to : getYear(row.to)}
                   </TableCell>
                 </TableRow>

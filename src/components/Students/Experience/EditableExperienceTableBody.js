@@ -14,25 +14,25 @@ const editableExperienceTableBody = props => {
   return experience.map((row, index) => (
     <Aux key={index}>
       <TableRow>
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`experience-${index}`}>
             {row.company}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`experience-${index}`}>
             {row.position}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`experience-${index}`}>
             {getYear(row.from)}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`experience-${index}`}>
             {row.to === "Now" ? row.to : getYear(row.to)}
           </ContextMenuTrigger>

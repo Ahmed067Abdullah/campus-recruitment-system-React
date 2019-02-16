@@ -71,6 +71,10 @@
     margin-bottom: 10px;
 }
 
+.td{
+    color: #1f4f16 !important;
+}
+
 @media(min-width : 500px){
     .main-heading-profile{
         margin-bottom: 20px;

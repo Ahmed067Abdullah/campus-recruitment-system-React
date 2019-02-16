@@ -19,20 +19,21 @@ const styles = theme => ({
     overflowX: "auto"
   },
   comp: {
-    width: "40%",
+    width: "41%",
     padding: "2%"
   },
   pos: {
-    width: "24%",
+    width: "25%",
     padding: "2%"
   },
   from: {
     width: "9%",
     padding: "2%"
   },
-  to: {
-    width: "11%",
-    padding: "2%"
+  head: {
+    color: "#1f4f16",
+    fontWeight: "bold",
+    fontSize : 14
   }
 });
 
@@ -45,6 +46,8 @@ const experienceTable = props => {
     owner
   } = props;
 
+  const { head, comp, pos, from } = classes;
+
   return experience.length > 0 ? (
     <Aux>
       <h2 className="sub-headings-student-profile">Experience</h2>
@@ -52,16 +55,16 @@ const experienceTable = props => {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell align="center" padding="none" className={classes.comp}>
+              <TableCell align="center" padding="none" className={[comp, head]}>
                 Company
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.pos}>
+              <TableCell align="center" padding="none" className={[pos, head]}>
                 Position
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.from}>
+              <TableCell align="center" padding="none" className={[from, head]}>
                 From
               </TableCell>
-              <TableCell align="center" padding="none" className={classes.to}>
+              <TableCell align="center" padding="none" className={[from, head]}>
                 To
               </TableCell>
             </TableRow>
@@ -77,19 +80,19 @@ const experienceTable = props => {
             ) : (
               experience.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {row.company}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {row.position}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {getYear(row.from)}
                   </TableCell>
 
-                  <TableCell align="center" padding="none">
+                  <TableCell align="center" padding="none" className="td">
                     {row.to === "Now" ? row.to : getYear(row.to)}
                   </TableCell>
                 </TableRow>

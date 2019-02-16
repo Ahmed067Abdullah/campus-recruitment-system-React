@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import green from "@material-ui/core/colors/green";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 import validations from "../../../validation/Validation";
@@ -17,9 +16,9 @@ const styles = theme => {
       width: "95%"
     },
     root: {
-      color: green[600],
+      color: "#1f4f16",
       "&$checked": {
-        color: green[500]
+        color: "#1f4f16"
       }
     },
     checked: {}

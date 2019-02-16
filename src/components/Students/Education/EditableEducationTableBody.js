@@ -14,25 +14,25 @@ const editableEducationTableBody = props => {
   return education.map((row, index) => (
     <Aux key={index}>
       <TableRow>
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`education-${index}`}>
             {row.institute}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`education-${index}`}>
             {row.degree}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`education-${index}`}>
             {getYear(row.from)}
           </ContextMenuTrigger>
         </TableCell>
 
-        <TableCell align="center" padding="none" className="ctxMenuTrigger">
+        <TableCell align="center" padding="none" className="ctxMenuTrigger td">
           <ContextMenuTrigger id={`education-${index}`}>
             {row.to === "Now" ? row.to : getYear(row.to)}
           </ContextMenuTrigger>
