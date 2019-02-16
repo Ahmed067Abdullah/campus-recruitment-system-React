@@ -34,7 +34,7 @@ const editableExperienceTableBody = props => {
 
         <TableCell align="center" padding="none" className="ctxMenuTrigger">
           <ContextMenuTrigger id={`experience-${index}`}>
-            {getYear(row.to)}
+            {row.to === "Now" ? row.to : getYear(row.to)}
           </ContextMenuTrigger>
         </TableCell>
       </TableRow>

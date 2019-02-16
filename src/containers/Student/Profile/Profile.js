@@ -46,13 +46,15 @@ class Profile extends Component {
       institute: "",
       degree: "",
       from: "",
-      to: ""
+      to: "",
+      currently: false
     },
     experienceForm: {
       company: "",
       position: "",
       from: "",
-      to: ""
+      to: "",
+      currently: false
     }
   };
 
@@ -69,6 +71,7 @@ class Profile extends Component {
 
   inputChangedHandler = (e, form) => {
     const { name, value } = e.target;
+
     if (form === "info") {
       const info = { ...this.state.info };
       info[name] = value;
@@ -123,16 +126,25 @@ class Profile extends Component {
     const { auth, student, saveEdu } = this.props;
     const { education } = student;
 
-    if (checkFromTo(educationForm.from, educationForm.to))
-      alert("Invalid to/from date");
-    else {
-      if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
-      else education.push(educationForm);
-
-      saveEdu(auth.uid, education);
-      this.clearEduFields();
-      this.educationModalHandler(false);
+    if (educationForm.currently) {
+      if (checkFromTo(educationForm.from, Date.now())) {
+        alert("Invalid starting date");
+        return;
+      }
+      educationForm.to = "Now";
+    } else {
+      if (checkFromTo(educationForm.from, educationForm.to)) {
+        alert("Invalid to/from date");
+        return;
+      }
     }
+    console.log(educationForm);
+    if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
+    else education.push(educationForm);
+
+    saveEdu(auth.uid, education);
+    this.clearEduFields();
+    this.educationModalHandler(false);
   };
 
   deleteEducationHandler = index => {
@@ -163,16 +175,25 @@ class Profile extends Component {
     const { auth, student, saveExp } = this.props;
     const { experience } = student;
 
-    if (checkFromTo(experienceForm.from, experienceForm.to))
-      alert("Invalid to/from date");
-    else {
-      if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
-      else experience.push(experienceForm);
+    if (experienceForm.currently) {
+      if (checkFromTo(experienceForm.from, Date.now())) {
+        alert("Invalid starting date");
+        return;
+      }
+      experienceForm.to = "Now";
+    } else {
+      if (checkFromTo(experienceForm.from, experienceForm.to)) {
+        alert("Invalid to/from date");
+        return;
+      }
+    }
+    
+    if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
+    else experience.push(experienceForm);
 
       saveExp(auth.uid, experience);
       this.clearExpFields();
       this.experienceModalHandler(false);
-    }
   };
 
   deleteExperienceHandler = index => {

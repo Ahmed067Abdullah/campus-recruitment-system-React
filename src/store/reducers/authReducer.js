@@ -5,7 +5,7 @@ const initialState = {
   type: "students",
   status: "2",
   name: "",
-  email: "",
+  email: "test1@test.com",
   enrollNo: "",
   phoneNo: "",
   address: "",
@@ -15,7 +15,7 @@ const initialState = {
   admin : false,
   errorSignup: "",
   errorSignin: "",
-  passwordSignin: ""
+  passwordSignin: "123456"
 };
 
 const reducer = (state = initialState, action) => {

@@ -76,23 +76,23 @@ const experienceTable = props => {
               />
             ) : (
               experience.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell align="center" padding="none">
-                      {row.company}
-                    </TableCell>
+                <TableRow key={index}>
+                  <TableCell align="center" padding="none">
+                    {row.company}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {row.position}
-                    </TableCell>
+                  <TableCell align="center" padding="none">
+                    {row.position}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {getYear(row.from)}
-                    </TableCell>
+                  <TableCell align="center" padding="none">
+                    {getYear(row.from)}
+                  </TableCell>
 
-                    <TableCell align="center" padding="none">
-                      {getYear(row.to)}
-                    </TableCell>
-                  </TableRow>
+                  <TableCell align="center" padding="none">
+                    {row.to === "Now" ? row.to : getYear(row.to)}
+                  </TableCell>
+                </TableRow>
               ))
             )}
           </TableBody>

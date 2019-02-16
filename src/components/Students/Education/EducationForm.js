@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import green from "@material-ui/core/colors/green";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 import validations from "../../../validation/Validation";
@@ -12,7 +15,14 @@ const styles = theme => {
     TextFields: {
       marginBottom: "20px",
       width: "95%"
-    }
+    },
+    root: {
+      color: green[600],
+      "&$checked": {
+        color: green[500]
+      }
+    },
+    checked: {}
   };
 };
 
@@ -25,13 +35,17 @@ class EducationForm extends Component {
     this.props.inputChangedHandler(event, "edu");
   };
 
+  handleCheckBox = name => event => {
+    this.handleChange({ target: { name, value: event.target.checked } });
+  };
+
   handleSubmit = () => {
     this.props.onSubmit();
   };
 
   render() {
     const { education, classes } = this.props;
-    const { institute, degree, from, to } = education;
+    const { institute, degree, from, to, currently } = education;
 
     return (
       <div style={{ marginTop: 50 }}>
@@ -75,19 +89,37 @@ class EducationForm extends Component {
               }}
             />
             <br />
-            <TextField
-              id="date"
-              label="To"
-              type="date"
-              required
-              onChange={this.handleChange}
-              name="to"
-              value={to}
-              className={classes.TextFields}
-              InputLabelProps={{
-                shrink: true
-              }}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={currently}
+                  onChange={this.handleCheckBox("currently")}
+                  value="currently"
+                  classes={{
+                    root: classes.root,
+                    checked: classes.checked
+                  }}
+                />
+              }
+              label="I currently study there"
             />
+            {currently ? (
+              ""
+            ) : (
+              <TextField
+                id="date"
+                label="To"
+                type="date"
+                required
+                onChange={this.handleChange}
+                name="to"
+                value={to}
+                className={classes.TextFields}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            )}
             <br />
             <Button type="submit" variant="contained" className="auth-button">
               Save

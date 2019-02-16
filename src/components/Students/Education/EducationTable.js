@@ -37,13 +37,7 @@ const styles = theme => ({
 });
 
 const educationTable = props => {
-  const {
-    classes,
-    education,
-    deleteEducation,
-    editEducation,
-    owner
-  } = props;
+  const { classes, education, deleteEducation, editEducation, owner } = props;
 
   return education.length > 0 ? (
     <Aux>
@@ -90,7 +84,7 @@ const educationTable = props => {
                   </TableCell>
 
                   <TableCell align="center" padding="none">
-                    {getYear(row.to)}
+                    {row.to === "Now" ? row.to : getYear(row.to)}
                   </TableCell>
                 </TableRow>
               ))
