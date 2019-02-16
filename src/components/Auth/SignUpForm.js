@@ -14,6 +14,7 @@ class CreateForm extends Component {
       enrollNo,
       phoneNo,
       address,
+      dept,
       password,
       rePassword
     } = auth;
@@ -48,6 +49,18 @@ class CreateForm extends Component {
               errorMessages={[
                 "This field is required",
                 "Enrollment Number must be longer than 2 digits"
+              ]}
+            />
+            <br />
+            <TextValidator
+              className={classes.TextFields}
+              label="Department"
+              onChange={handleChange}
+              name="dept"
+              value={dept}
+              validators={["required"]}
+              errorMessages={[
+                "This field is required"
               ]}
             />
             <br />

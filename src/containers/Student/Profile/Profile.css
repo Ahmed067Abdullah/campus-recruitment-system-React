@@ -7,9 +7,10 @@
 }
 
 .main-heading-profile{
-    margin-top : 35px;
+    margin-top : 80px;
+    margin-bottom: -35px;
     color : #1f4f16;
-    font-size: 30px;
+    font-size: 60px;
 }
 
 .sub-headings-student-profile{
@@ -77,7 +78,7 @@
 
 @media(min-width : 500px){
     .main-heading-profile{
-        margin-bottom: 20px;
+        margin-bottom: 0px;
         font-size: 60px;
     }
     .sub-headings-student-profile{

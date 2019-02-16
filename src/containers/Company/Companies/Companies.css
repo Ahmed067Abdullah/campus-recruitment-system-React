@@ -4,6 +4,13 @@
   position : relative;
 }
 
+.main-heading-companies {
+  margin-top: 80px;
+  /* margin-bottom: -35px; */
+  color: #1f4f16;
+  font-size: 40px;
+}
+
 .block-icon {
   color : red;
   position: absolute;
@@ -20,5 +27,10 @@
     height: 400px;
     overflow: auto;
     overflow-x: hidden;
+  }
+
+  .main-heading-companies {
+    margin-bottom: 20px;
+    font-size: 60px;
   }
 }

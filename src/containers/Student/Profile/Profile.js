@@ -33,6 +33,7 @@ class Profile extends Component {
     info: {
       name: "",
       dob: "",
+      dept : "",
       cgpa: "",
       skills: "",
       enrollNo: "",
@@ -138,7 +139,6 @@ class Profile extends Component {
         return;
       }
     }
-    console.log(educationForm);
     if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
     else education.push(educationForm);
 
@@ -213,7 +213,8 @@ class Profile extends Component {
         institute: "",
         degree: "",
         from: "",
-        to: ""
+        to: "",
+        currently : false
       },
       eduEditIndex: ""
     });
@@ -225,7 +226,8 @@ class Profile extends Component {
         company: "",
         position: "",
         from: "",
-        to: ""
+        to: "",
+        currently : false
       },
       expEditIndex: ""
     });
@@ -249,6 +251,7 @@ class Profile extends Component {
       dob,
       github,
       cgpa,
+      dept,
       linkedin,
       introduction,
       skills,
@@ -261,8 +264,9 @@ class Profile extends Component {
     const stdudentInfo = [
       { key: "Name", value: name },
       { key: "Age", value: getAge(dob) },
-      { key: "Skills", value: skills },
+      { key: "Department", value: dept },
       { key: "Current CGPA", value: cgpa },
+      { key: "Skills", value: skills },
       { key: "Introduction", value: introduction },
       { key: "Enrollment Number", value: enrollNo },
       { key: "Address", value: address },

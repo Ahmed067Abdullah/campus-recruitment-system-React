@@ -183,7 +183,7 @@ class Profile extends Component {
       <div className="lol">
         <h1 className="main-heading-profile">Profile</h1>
 
-        {/* profile componenets */}
+        {/* profile componenets */} 
         <div className="student-profile-card-container">
           <PersonalInfo
             info={companyInfo}

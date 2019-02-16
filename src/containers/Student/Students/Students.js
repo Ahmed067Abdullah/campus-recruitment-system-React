@@ -28,8 +28,9 @@ class Students extends Component {
     const studentsInfoArray = students.students.map(student => [
       { key: "Name", value: student.name },
       { key: "Age", value: getAge(student.dob) },
-      { key: "Skills", value: student.skills },
+      { key: "Department", value: student.dept },
       { key: "Current CGPA", value: student.cgpa },
+      { key: "Skills", value: student.skills },
       { key: "Introduction", value: student.introduction },
       { key: "Address", value: student.address },
       { key: "Contact No", value: student.phone },
@@ -39,7 +40,7 @@ class Students extends Component {
     ]);
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-profile">Registered Students</h1>
+        <h1 className="main-heading-companies">Registered Students</h1>
 
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {studentsInfoArray.length > 0 ? (

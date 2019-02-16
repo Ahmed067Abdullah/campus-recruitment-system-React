@@ -28,6 +28,7 @@ export const signup = history => (dispatch, getState) => {
     name,
     email,
     enrollNo,
+    dept,
     phoneNo,
     address,
     password
@@ -35,7 +36,10 @@ export const signup = history => (dispatch, getState) => {
 
   const newUser = { name, email };
   newUser.disabled = false;
-  if (type === "students") newUser.enrollNo = enrollNo;
+  if (type === "students") {
+    newUser.enrollNo = enrollNo;
+    newUser.dept = dept;
+  }
   else if (type === "companies") {
     newUser.phoneNo = phoneNo;
     newUser.address = address;

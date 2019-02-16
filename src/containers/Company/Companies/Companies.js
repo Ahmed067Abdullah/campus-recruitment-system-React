@@ -43,7 +43,7 @@ class Companies extends Component {
     ]);
     return !loading ? (
       <div className="lol">
-        <h1 className="main-heading-profile">Registered Companies</h1>
+        <h1 className="main-heading-companies">Registered Companies</h1>
 
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {compnayInfoArray.length > 0 ? (
