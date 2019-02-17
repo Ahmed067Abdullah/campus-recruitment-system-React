@@ -4,13 +4,9 @@ import dispatcher from "../dispater";
 
 // helper functions
 const loginSuccessful = (dispatch, uid, name, status) => {
-  dispatch(
-    dispatcher(actionTypes.SIGNIN_SUCCESSFUL, {
-      uid,
-      name,
-      status
-    })
-  );
+  const user = { uid, name, status };
+  localStorage.setItem("crs", JSON.stringify(user));
+  dispatch(dispatcher(actionTypes.SIGNIN_SUCCESSFUL, user));
 };
 
 const loginFailed = dispatch => {
@@ -21,6 +17,11 @@ const loginFailed = dispatch => {
 // actions
 export const changeInput = payload =>
   dispatcher(actionTypes.CHANGE_INPUT, payload);
+
+export const setSignedIn = user => dispatch => {
+  const { uid, name, status } = user;
+  loginSuccessful(dispatch, uid, name, status);
+};
 
 export const signup = history => (dispatch, getState) => {
   const {
@@ -39,8 +40,7 @@ export const signup = history => (dispatch, getState) => {
   if (type === "students") {
     newUser.enrollNo = enrollNo;
     newUser.dept = dept;
-  }
-  else if (type === "companies") {
+  } else if (type === "companies") {
     newUser.phoneNo = phoneNo;
     newUser.address = address;
   }
@@ -123,7 +123,10 @@ export const signin = history => (dispatch, getState) => {
     });
 };
 
-export const signout = () => dispatcher(actionTypes.SIGNOUT);
+export const signout = () => dispatch => {
+  dispatch(dispatcher(actionTypes.SIGNOUT));
+  localStorage.removeItem("crs");
+};
 
 export const blockAccount = (type, uid) => dispatch => {
   database()
