@@ -14,6 +14,7 @@ export const START_LOADING = 'START_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';
 
 export const SET_ADMIN = 'SET_ADMIN';
+export const SET_BLOCKED = 'SET_BLOCKED';
 
 // student action types
 export const SET_STUDENT = 'SET_STUDENT';

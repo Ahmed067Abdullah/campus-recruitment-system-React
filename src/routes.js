@@ -40,7 +40,6 @@ const getRoutes = status => {
 
   // routes for students
   if (status === 2) {
-    console.log("status", status);
     routes = (
       <Switch>
         <Route path="/profile" exact component={StudentProfile} />

@@ -5,7 +5,7 @@ const initialState = {
   type: "students",
   status: "2",
   name: "",
-  dept : "",
+  dept: "",
   email: "",
   enrollNo: "",
   phoneNo: "",
@@ -13,7 +13,7 @@ const initialState = {
   password: "",
   rePassword: "",
   loading: "",
-  admin : false,
+  admin: false,
   errorSignup: "",
   errorSignin: "",
   passwordSignin: ""
@@ -59,10 +59,15 @@ const reducer = (state = initialState, action) => {
         loading: false
       };
     case actionTypes.SET_ADMIN:
-      return{
+      return {
         ...state,
-        admin : true
-      }
+        admin: true
+      };
+    case actionTypes.SET_BLOCKED:
+      return {
+        ...state,
+        status: action.payload.status
+      };
     case actionTypes.SIGNOUT:
       return initialState;
     default:
