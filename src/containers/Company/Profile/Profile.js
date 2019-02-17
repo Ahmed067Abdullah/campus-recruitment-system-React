@@ -1,19 +1,19 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
+import * as actions from "../../../store/actions/companiesActions";
 
 import Button from "@material-ui/core/Button";
-
-import * as actions from "../../../store/actions/companiesActions";
 
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
 import PersonalInfoForm from "../../../components/Company/PersonalInfo/PersonalInfoForm";
 import VacancyForm from "../../../components/Company/Vacancy/VacancyForm";
 import VacanciesList from "../../../components/Company/Vacancy/VacanciesList";
-
 import Spinner from "./../../../components/Spinner/Spinner";
 import Aux from "../../../hoc/Auxiliary";
-import Modal from "../../../hoc/Modal";
+import Modal from "../../../hoc/Modal/Modal";
 
+// helper functions
 import { getDate, checkFromTo } from "../../../common/timeHelperFunctions";
 
 import "./Profile.css";
@@ -94,8 +94,7 @@ class Profile extends Component {
   // vac func
   vacancyModalHandler = (flag, vacEditIndex = "") => {
     if (vacEditIndex !== "") {
-      const { vacancies } = this.props.company;
-      const vacancyForm = vacancies[vacEditIndex];
+      const vacancyForm = this.props.company.vacancies[vacEditIndex];
       this.setState({ vacancyForm, vacEditIndex });
     } else {
       this.clearFields();
@@ -115,6 +114,8 @@ class Profile extends Component {
     )
       alert("Last date to apply can't be in past");
     else {
+
+      // if index present then put new at index, else create new
       if (vacEditIndex !== "") vacancies[vacEditIndex] = vacancyForm;
       else {
         vacancyForm.postedAt = Date.now();
@@ -154,9 +155,10 @@ class Profile extends Component {
   render() {
     const { auth, company } = this.props;
     const { owner, infoModal, info, vacModal, vacancyForm } = this.state;
-    const { email, loading } = auth;
+    const { loading } = auth;
     const {
       name,
+      email,
       operatingSince,
       phoneNo,
       facebook,
@@ -183,7 +185,7 @@ class Profile extends Component {
       <div className="lol">
         <h1 className="main-heading-profile">Profile</h1>
 
-        {/* profile componenets */} 
+        {/* profile componenets */}
         <div className="student-profile-card-container">
           <PersonalInfo
             info={companyInfo}
@@ -194,6 +196,8 @@ class Profile extends Component {
         {/* vacancies componenets */}
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           <h2 className="sub-headings-company-profile">Posted Vacancies</h2>
+          
+          {/* show add button only if owner */}
           {owner ? (
             <Button
               variant="contained"
@@ -202,9 +206,7 @@ class Profile extends Component {
             >
               Add Vacancy
             </Button>
-          ) : (
-            ""
-          )}
+          ) : "" }
 
           <div>
             <VacanciesList
@@ -216,6 +218,8 @@ class Profile extends Component {
             />
           </div>
         </div>
+
+        {/* render edit modals only if owner */}
         {owner ? (
           <Aux>
             <Modal open={infoModal} handleClose={this.companyInfoModalHandler}>
@@ -233,9 +237,7 @@ class Profile extends Component {
               />
             </Modal>
           </Aux>
-        ) : (
-          ""
-        )}
+        ) : "" }
       </div>
     ) : (
       <div className="profile-spinner">

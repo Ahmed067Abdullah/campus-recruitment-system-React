@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import { connect } from "react-redux";
+import * as actions from "../../../store/actions/studentsActions";
 
 import Button from "@material-ui/core/Button";
 
@@ -12,12 +14,11 @@ import EducationForm from "../../../components/Students/Education/EducationForm"
 import ExperienceTable from "../../../components/Students/Experience/ExperienceTable";
 import ExperienceForm from "../../../components/Students/Experience/ExperienceForm";
 
-import * as actions from "../../../store/actions/studentsActions";
-
 import Spinner from "./../../../components/Spinner/Spinner";
-import Modal from "../../../hoc/Modal";
+import Modal from "../../../hoc/Modal/Modal";
 import Aux from "../../../hoc/Auxiliary";
 
+// helper functions
 import { getAge, checkFromTo } from "../../../common/timeHelperFunctions";
 
 import "./Profile.css";
@@ -128,17 +129,21 @@ class Profile extends Component {
     const { education } = student;
 
     if (educationForm.currently) {
+      // if currently working then from date must be in past
       if (checkFromTo(educationForm.from, Date.now())) {
         alert("Invalid starting date");
         return;
       }
       educationForm.to = "Now";
     } else {
+      // check from is before to date
       if (checkFromTo(educationForm.from, educationForm.to)) {
         alert("Invalid to/from date");
         return;
       }
     }
+
+    // if index present then put new at index, else create new
     if (eduEditIndex !== "") education[eduEditIndex] = educationForm;
     else education.push(educationForm);
 
@@ -176,18 +181,21 @@ class Profile extends Component {
     const { experience } = student;
 
     if (experienceForm.currently) {
+      // if currently working then from date must be in past
       if (checkFromTo(experienceForm.from, Date.now())) {
         alert("Invalid starting date");
         return;
       }
       experienceForm.to = "Now";
     } else {
+      // check from is before to date
       if (checkFromTo(experienceForm.from, experienceForm.to)) {
         alert("Invalid to/from date");
         return;
       }
     }
     
+    // if index present then put new at index, else create new
     if (expEditIndex !== "") experience[expEditIndex] = experienceForm;
     else experience.push(experienceForm);
 
@@ -261,6 +269,7 @@ class Profile extends Component {
       education,
       experience
     } = student;
+
     const stdudentInfo = [
       { key: "Name", value: name },
       { key: "Age", value: getAge(dob) },
@@ -302,9 +311,7 @@ class Profile extends Component {
             >
               Add Education
             </Button>
-          ) : (
-            ""
-          )}
+          ) : ""}
         </div>
 
         <div className="student-profile-experience-container">
@@ -323,9 +330,7 @@ class Profile extends Component {
             >
               Add Experience
             </Button>
-          ) : (
-            ""
-          )}
+          ) : "" }
         </div>
 
         {/* only render modals for owner */}
@@ -355,9 +360,7 @@ class Profile extends Component {
               />
             </Modal>
           </Aux>
-        ) : (
-          ""
-        )}
+        ) : "" }
       </div>
     ) : (
       <div className="profile-spinner">
@@ -378,10 +381,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getProfile: uid => dispatch(actions.getProfile(uid)),
     saveProfile: (uid, payload) => dispatch(actions.saveProfile(uid, payload)),
-    saveEdu: (uid, payload) =>
-      dispatch(actions.saveEduExp(uid, payload, "education")),
-    saveExp: (uid, payload) =>
-      dispatch(actions.saveEduExp(uid, payload, "experience"))
+    saveEdu: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "education")),
+    saveExp: (uid, payload) => dispatch(actions.saveEduExp(uid, payload, "experience"))
   };
 };
 

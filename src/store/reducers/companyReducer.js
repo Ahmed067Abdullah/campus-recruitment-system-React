@@ -14,9 +14,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_COMPANY:
+    const {  vacancies } = action.payload;
       return {
         ...initialState,
-        ...action.payload
+        ...action.payload,
+        vacancies: vacancies ? vacancies : []
       };
     case actionTypes.SIGNOUT:
       return initialState;

@@ -33,7 +33,7 @@ const styles = theme => ({
   head: {
     color: "#1f4f16",
     fontWeight: "bold",
-    fontSize : 14
+    fontSize: 14
   }
 });
 
@@ -71,6 +71,8 @@ const experienceTable = props => {
           </TableHead>
 
           <TableBody>
+            
+            {/* render editable table for owner, static for rest */}
             {owner ? (
               <EditableExperienceTableBody
                 experience={experience}
@@ -103,7 +105,7 @@ const experienceTable = props => {
       </Paper>
     </Aux>
   ) : (
-    <p>No Experience to Show</p>
+    <p className="no-vac-msg">No Experience to Show</p>
   );
 };
 

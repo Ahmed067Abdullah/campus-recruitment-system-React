@@ -102,9 +102,9 @@ class ExperienceForm extends Component {
               }
               label="I currently work there"
             />
-            {currently ? (
-              ""
-            ) : (
+
+            {/* if not currently then show to field */}
+            {currently ? "" : (
               <TextField
                 id="date"
                 label="To"

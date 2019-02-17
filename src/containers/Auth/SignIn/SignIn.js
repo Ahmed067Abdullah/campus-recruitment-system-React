@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 import { connect } from "react-redux";
+import * as actions from "../../../store/actions/authActions";
 
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
@@ -10,7 +12,6 @@ import Card from "../../../hoc/Card";
 import Spinner from "./../../../components/Spinner/Spinner";
 
 import validations from "../../../validation/Validation";
-import * as actions from "../../../store/actions/authActions";
 
 import "./SignIn.css";
 
@@ -90,6 +91,7 @@ class SignIn extends Component {
                   Sign In
                 </Button>
               </ValidatorForm>
+              
               <p>
                 Don't Have an Account?{" "}
                 <Link to="/signup" className="auth-type">

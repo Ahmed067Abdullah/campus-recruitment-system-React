@@ -37,6 +37,8 @@ class CreateForm extends Component {
           ]}
         />
         <br />
+        
+        {/* render conflicting fields */}
         {type === "students" ? (
           <Aux>
             <TextValidator

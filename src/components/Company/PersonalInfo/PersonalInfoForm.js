@@ -40,6 +40,7 @@ class PersonalInfoForm extends Component {
       introduction,
       address
     } = info;
+    
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">

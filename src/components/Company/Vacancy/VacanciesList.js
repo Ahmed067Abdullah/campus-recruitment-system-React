@@ -4,6 +4,8 @@ import { ContextMenuTrigger } from "react-contextmenu";
 
 import Card from "../../../hoc/Card";
 import ContextMenu from "../../ContextMenu/ContextMenu";
+
+// helper functions
 import navigationHandler from "../../../common/navigationHandler";
 import { getTime, getDate } from "../../../common/timeHelperFunctions";
 
@@ -11,7 +13,15 @@ import "./VacancyList.css";
 import "../../../common/ContextMenu.css";
 
 const vacanciesList = props => {
-  const { deleteVacancy, editVacancy, vacancies, owner, admin } = props;
+  const {
+    deleteVacancy,
+    editVacancy,
+    vacancies,
+    owner,
+    admin,
+    profile
+  } = props;
+
   if (vacancies.length > 0) {
     const vacancyInfoArray = vacancies.map(vacancy => [
       { key: "Posted By", value: vacancy.postedBy },
@@ -26,10 +36,11 @@ const vacanciesList = props => {
     return vacancyInfoArray.map((vacancyInfo, index) => {
       return (
         <div className="my-vacancies" key={index}>
+          {/* don't navigate if owner, admin or visitor clicks on card */}
           <Link
             to={`/profile/${vacancies[index].postedById}`}
             style={{ textDecoration: "none" }}
-            onClick={e => navigationHandler(e, admin || owner)}
+            onClick={e => navigationHandler(e, admin || owner || profile)}
           >
             <Card>
               <ContextMenuTrigger id={`vacancy-${index}`}>
@@ -45,6 +56,7 @@ const vacanciesList = props => {
             </Card>
           </Link>
 
+          {/* render menu only if owner */}
           {owner ? (
             <ContextMenu
               type="vacancy"
@@ -52,9 +64,7 @@ const vacanciesList = props => {
               onEdit={editVacancy}
               onDelete={deleteVacancy}
             />
-          ) : (
-            ""
-          )}
+          ) : "" }
         </div>
       );
     });

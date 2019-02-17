@@ -14,8 +14,7 @@ class Navbar extends Component {
       // to render different tabs for diff type of users
       let tabs = [];
       if (status === 1) tabs = ["students", "companies", "vacancies", "logout"];
-      else if (status === 2)
-        tabs = ["profile", "companies", "vacancies", "logout"];
+      else if (status === 2) tabs = ["profile", "companies", "vacancies", "logout"];
       else if (status === 3) tabs = ["profile", "students", "logout"];
       else if (status === 4) tabs = ["logout"];
 
@@ -24,6 +23,8 @@ class Navbar extends Component {
           <p className="navbar-brand  nav-item-color nav-bar-heading">
             Recruitment Portal
           </p>
+
+          {/* render hamburger only if authenticated */}
           {tabs.length > 0 ? (
             <button
               className="navbar-toggler toggle-button"
@@ -33,16 +34,17 @@ class Navbar extends Component {
               aria-controls="navbarNav"
               aria-expanded="false"
               aria-label="Toggle navigation"
-            > 
+            >
               <div className="hamburger" />
               <div className="hamburger" />
               <div className="hamburger" />
             </button>
-          ) : (
-            ""
-          )}
+          ) : ""}
+
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
+            
+              {/* rendering tabs */}
               {tabs.map(tab => (
                 <li className="nav-item" key={tab}>
                   <NavLink

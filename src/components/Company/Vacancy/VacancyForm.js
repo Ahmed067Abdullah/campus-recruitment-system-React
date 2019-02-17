@@ -32,6 +32,7 @@ class VacancyForm extends Component {
   render() {
     const { vacancy, classes } = this.props;
     const { skills, gpa, salary, description, lastDate } = vacancy;
+
     return (
       <div style={{ marginTop: 50 }}>
         <div className="card-container">

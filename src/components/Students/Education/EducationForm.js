@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { withStyles } from "@material-ui/core/styles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 import validations from "../../../validation/Validation";
@@ -102,9 +102,9 @@ class EducationForm extends Component {
               }
               label="I currently study there"
             />
-            {currently ? (
-              ""
-            ) : (
+
+            {/* if not currently then show to field */}
+            {currently ? "" : (
               <TextField
                 id="date"
                 label="To"

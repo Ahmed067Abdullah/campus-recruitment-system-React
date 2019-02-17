@@ -63,6 +63,7 @@ const educationTable = props => {
           </TableHead>
 
           <TableBody>
+            {/* render editable table for owner, static for rest */}
             {owner ? (
               <EditableEducationTableBody
                 education={education}
@@ -95,7 +96,7 @@ const educationTable = props => {
       </Paper>
     </Aux>
   ) : (
-    <p>No Education to Show</p>
+    <p className="no-vac-msg">No Education to Show</p>
   );
 };
 

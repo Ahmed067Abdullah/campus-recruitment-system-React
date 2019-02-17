@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
-import navigationHandler from "../../../common/navigationHandler";
-import BlockIcon from "../../../components/BlockIcon/BlockIcon";
-import Spinner from "./../../../components/Spinner/Spinner";
+import { connect } from "react-redux";
 import * as actions from "../../../store/actions/studentsActions";
 import { blockAccount } from "../../../store/actions/authActions";
+
+import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
+import BlockIcon from "../../../components/BlockIcon/BlockIcon";
+import Spinner from "./../../../components/Spinner/Spinner";
+
+// helper functions
 import { getAge } from "../../../common/timeHelperFunctions";
+import navigationHandler from "../../../common/navigationHandler";
 
 import "./Students.css";
 
@@ -48,11 +51,15 @@ class Students extends Component {
               const id = students.students[index].id;
               return (
                 <div className="stds-list-info-container" key={index}>
+
+                  {/* don't navigate if owner, admin or visitor clicks on card */}
                   <Link
                     to={`/profile/${id}`}
                     onClick={e => navigationHandler(e, admin)}
                     style={{ textDecoration: "none" }}
                   >
+
+                    {/* show block icon for admin only */}
                     {admin ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
                     <PersonalInfo info={studentInfo} />
                   </Link>

@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 import * as actions from "../../../store/actions/companiesActions";
 import { blockAccount } from "../../../store/actions/authActions";
+
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
 import BlockIcon from "../../../components/BlockIcon/BlockIcon";
-
 import Spinner from "./../../../components/Spinner/Spinner";
 
+// helper functions
 import { getDate } from "../../../common/timeHelperFunctions";
 import navigationHandler from "../../../common/navigationHandler";
 
@@ -26,7 +27,6 @@ class Companies extends Component {
   render() {
     const { auth, companies } = this.props;
     const { loading, admin } = auth;
-
     const compnayInfoArray = companies.companies.map(company => [
       { key: "Name", value: company.name },
       { key: "Operating Since", value: getDate(company.operatingSince) },
@@ -41,21 +41,24 @@ class Companies extends Component {
         value: company.vacancies ? company.vacancies.length : "0"
       }
     ]);
+    
     return !loading ? (
       <div className="lol">
         <h1 className="main-heading-companies">Registered Companies</h1>
-
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {compnayInfoArray.length > 0 ? (
             compnayInfoArray.map((companyInfo, index) => {
               const id = companies.companies[index].id;
               return (
                 <div className="cmps-list-info-container" key={index}>
+                  
+                  {/* don't navigate if owner, admin or visitor clicks on card */}
                   <Link
                     to={`/profile/${id}`}
                     style={{ textDecoration: "none" }}
                     onClick={e => navigationHandler(e, admin)}
                   >
+                    {/* show block icon for admin only */}
                     {admin ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
                     <PersonalInfo info={companyInfo} />
                   </Link>
