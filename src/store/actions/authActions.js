@@ -7,6 +7,9 @@ const loginSuccessful = (dispatch, uid, name, status) => {
   const user = { uid, name, status };
   localStorage.setItem("crs", JSON.stringify(user));
   dispatch(dispatcher(actionTypes.SIGNIN_SUCCESSFUL, user));
+  if (user.uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
+    dispatch(dispatcher(actionTypes.SET_ADMIN));
+  }
 };
 
 const loginFailed = dispatch => {
@@ -128,8 +131,8 @@ export const signout = () => dispatch => {
   localStorage.removeItem("crs");
 };
 
-export const blockAccount = (type, uid) => dispatch => {
+export const manipulateAccount = (type, uid,flag) => dispatch => {
   database()
     .ref(`/${type}/${uid}/disabled`)
-    .set(true);
+    .set(flag);
 };

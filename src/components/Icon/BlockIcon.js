@@ -1,9 +1,9 @@
 import React from "react";
 
-const deleteIcon = props => (
+const blockIcon = props => (
   <span className="block-icon" onClick={() => props.onBlock(props.id)}>
-    <i className="fas fa-ban" />
+    <i className="fas fa-lock" />
   </span>
 );
 
-export default deleteIcon;
+export default blockIcon;

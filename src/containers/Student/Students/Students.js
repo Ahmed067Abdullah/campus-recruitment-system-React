@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/studentsActions";
-import { blockAccount } from "../../../store/actions/authActions";
+import { manipulateAccount } from "../../../store/actions/authActions";
 
 import PersonalInfo from "../../../components/Students/PersonalInfo/PersonalInfo";
-import BlockIcon from "../../../components/BlockIcon/BlockIcon";
+import BlockIcon from "../../../components/Icon/BlockIcon";
+import UnblockIcon from "../../../components/Icon/Unblock";
 import Spinner from "./../../../components/Spinner/Spinner";
 
 // helper functions
@@ -17,11 +18,17 @@ import "./Students.css";
 
 class Students extends Component {
   componentDidMount() {
-    this.props.getStudents();
+
+    const { auth, getStudents } = this.props;
+    getStudents(auth.admin);
   }
 
   onBlock = uid => {
     this.props.blockAccount(uid);
+  };
+
+  onUnblock = uid => {
+    this.props.unblockAccount(uid);
   };
 
   render() {
@@ -41,6 +48,7 @@ class Students extends Component {
       { key: "Github Handle", value: student.github },
       { key: "LinkedIn Handle", value: student.linkedin }
     ]);
+    
     return !loading ? (
       <div className="lol">
         <h1 className="main-heading-companies">Registered Students</h1>
@@ -48,7 +56,7 @@ class Students extends Component {
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {studentsInfoArray.length > 0 ? (
             studentsInfoArray.map((studentInfo, index) => {
-              const id = students.students[index].id;
+              const {id, disabled} = students.students[index];
               return (
                 <div className="stds-list-info-container" key={index}>
 
@@ -60,7 +68,8 @@ class Students extends Component {
                   >
 
                     {/* show block icon for admin only */}
-                    {admin ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
+                    {admin && disabled ? <UnblockIcon onUnblock={this.onUnblock} id={id} /> : ""}
+                    {admin && !disabled ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
                     <PersonalInfo info={studentInfo} />
                   </Link>
                 </div>
@@ -88,8 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStudents: () => dispatch(actions.getStudents()),
-    blockAccount: uid => dispatch(blockAccount("students", uid))
+    getStudents: flag => dispatch(actions.getStudents(flag)),
+    blockAccount: uid => dispatch(manipulateAccount("students", uid,true)),
+    unblockAccount: uid => dispatch(manipulateAccount("students", uid,false))
   };
 };
 

@@ -10,16 +10,18 @@ import getRoutes from "./routes";
 import "./App.css";
 
 class App extends Component {
-  
+  componentDidMount() {
+    this.checkLoggedIn();
+  }
+
   checkLoggedIn = () => {
     const user = JSON.parse(localStorage.getItem("crs"));
-    if (user.uid) {
+    if (user) {
       this.props.setSignedIn(user);
     }
   };
 
   render() {
-    this.checkLoggedIn();
     let routes = getRoutes(this.props.status);
     return (
       <Router>

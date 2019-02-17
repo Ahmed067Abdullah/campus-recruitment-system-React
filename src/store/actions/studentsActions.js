@@ -25,16 +25,21 @@ export const saveEduExp = (uid, payload, field) => dispatch => {
     .set(payload);
 };
 
-export const getStudents = () => dispatch => {
+export const getStudents = flag => dispatch => {
   dispatch(dispatcher(actionTypes.START_LOADING));
   database()
     .ref(`/students/`)
     .on("value", snapshot => {
       const studentsObj = snapshot.val();
       let students = [];
-      for (let key in studentsObj) {
-        if (studentsObj[key].disabled) continue;
-        students.push({ id: key, ...studentsObj[key] });
+      if (flag) {
+        for (let key in studentsObj)
+          students.push({ id: key, ...studentsObj[key] });
+      } else {
+        for (let key in studentsObj) {
+          if (studentsObj[key].disabled) continue;
+          students.push({ id: key, ...studentsObj[key] });
+        }
       }
       dispatch(dispatcher(actionTypes.SET_STUDENTS, students));
       dispatch(dispatcher(actionTypes.STOP_LOADING));

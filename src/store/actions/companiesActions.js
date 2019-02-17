@@ -33,7 +33,7 @@ export const getVacancies = () => dispatch => {
       const vacanciesObj = snapshot.val();
       let vacancies = [];
       for (let key in vacanciesObj) {
-        if(vacanciesObj[key].disabled) continue;
+        if (vacanciesObj[key].disabled) continue;
         const vacs = vacanciesObj[key].vacancies;
         for (let vac in vacs)
           vacancies.push({
@@ -47,16 +47,21 @@ export const getVacancies = () => dispatch => {
     });
 };
 
-export const getCompanies = () => dispatch => {
+export const getCompanies = flag => dispatch => {
   dispatch(dispatcher(actionTypes.START_LOADING));
   database()
     .ref(`/companies/`)
     .on("value", snapshot => {
       const companiesObj = snapshot.val();
       let companies = [];
-      for (let key in companiesObj){
-        if(companiesObj[key].disabled) continue;
-        companies.push({ id: key, ...companiesObj[key] });
+      if (flag) {
+        for (let key in companiesObj) 
+          companies.push({ id: key, ...companiesObj[key] });
+      } else {
+        for (let key in companiesObj) {
+          if (companiesObj[key].disabled) continue;
+          companies.push({ id: key, ...companiesObj[key] });
+        }
       }
       dispatch(dispatcher(actionTypes.SET_COMPANIES, companies));
       dispatch(dispatcher(actionTypes.STOP_LOADING));
