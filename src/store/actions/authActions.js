@@ -3,13 +3,15 @@ import * as actionTypes from "./actionTypes";
 import dispatcher from "../dispater";
 
 // helper functions
-const loginSuccessful = (dispatch, uid, name, status) => {
-  const user = { uid, name, status };
+const loginSuccessful = (dispatch, uid, name, status, type) => {
+  const user = { uid, name, status, type };
   localStorage.setItem("crs", JSON.stringify(user));
   dispatch(dispatcher(actionTypes.SIGNIN_SUCCESSFUL, user));
-  dispatch(checkForBlocked(user));
+
   if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
     dispatch(dispatcher(actionTypes.SET_ADMIN));
+  } else {
+    dispatch(checkForBlocked(user));
   }
 };
 
@@ -23,8 +25,8 @@ export const changeInput = payload =>
   dispatcher(actionTypes.CHANGE_INPUT, payload);
 
 export const setSignedIn = user => dispatch => {
-  const { uid, name, status } = user;
-  loginSuccessful(dispatch, uid, name, status);
+  const { uid, name, status, type } = user;
+  loginSuccessful(dispatch, uid, name, status, type);
 };
 
 export const signup = history => (dispatch, getState) => {
@@ -57,7 +59,8 @@ export const signup = history => (dispatch, getState) => {
         .ref(`${type}/${uid}`)
         .set(newUser)
         .then(res => {
-          loginSuccessful(dispatch, uid, name, type === "students" ? 2 : 3);
+          const status = type === "students" ? 2 : 3;
+          loginSuccessful(dispatch, uid, name, status, status);
           history.replace("/profile");
         });
     })
@@ -91,8 +94,9 @@ export const signin = history => (dispatch, getState) => {
           .then(res => {
             if (res.val()) {
               let status = 2;
+              let type = 2;
               if (res.val().disabled) status = 4;
-              loginSuccessful(dispatch, uid, res.val().name, status);
+              loginSuccessful(dispatch, uid, res.val().name, status, type);
               history.replace("/profile");
             } else {
               database()
@@ -101,8 +105,15 @@ export const signin = history => (dispatch, getState) => {
                 .then(res => {
                   if (res.val()) {
                     let status = 3;
+                    let type = 3;
                     if (res.val().disabled) status = 4;
-                    loginSuccessful(dispatch, uid, res.val().name, status);
+                    loginSuccessful(
+                      dispatch,
+                      uid,
+                      res.val().name,
+                      status,
+                      type
+                    );
                     history.replace("/profile");
                   }
                 })
@@ -135,18 +146,24 @@ export const signout = () => dispatch => {
 export const manipulateAccount = (type, uid, flag) => dispatch => {
   database()
     .ref(`/${type}/${uid}/disabled`)
-    .set(flag);
+    .set(flag)
+    .catch(alert("Some Error Occurred"));
 };
 
-export const checkForBlocked = user => dispatch => {
-  const { status, uid } = user;
-  const type = status === 2 ? "students" : "companies";
+export const checkForBlocked = user => (dispatch, getState) => {
+  const { uid, type } = user;
+  const typeStr = type === 2 ? "students" : "companies";
 
   database()
-    .ref(`/${type}/${uid}/disabled`)
+    .ref(`/${typeStr}/${uid}/disabled`)
     .on("value", snapshot => {
-      const flag = snapshot.val();
-      if (flag) dispatch(dispatcher(actionTypes.SET_BLOCKED, { status: 4 }));
-      else dispatch(dispatcher(actionTypes.SET_BLOCKED, { status }));
+      const { isSignedIn } = getState().auth;
+
+      if (isSignedIn) {
+        localStorage.setItem("crs", JSON.stringify(user));
+        const flag = snapshot.val();
+        if (flag) dispatch(dispatcher(actionTypes.SET_BLOCKED, { status: 4 }));
+        else dispatch(dispatcher(actionTypes.SET_BLOCKED, { status: type }));
+      }
     });
 };

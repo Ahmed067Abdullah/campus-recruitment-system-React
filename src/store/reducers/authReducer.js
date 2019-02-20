@@ -16,7 +16,8 @@ const initialState = {
   admin: false,
   errorSignup: "",
   errorSignin: "",
-  passwordSignin: ""
+  passwordSignin: "",
+  isSignedIn : false
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,7 +57,8 @@ const reducer = (state = initialState, action) => {
         name,
         errorSignin: "",
         errorSignup: "",
-        loading: false
+        loading: false,
+        isSignedIn : true
       };
     case actionTypes.SET_ADMIN:
       return {
