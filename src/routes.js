@@ -34,6 +34,7 @@ const getRoutes = status => {
         <Route path="/vacancies" component={Vacancies} />
         <Route path="/companies" component={Companies} />
         <Route path="/logout" component={Logout} />
+        <Redirect to="/students" />
       </Switch>
     );
   }

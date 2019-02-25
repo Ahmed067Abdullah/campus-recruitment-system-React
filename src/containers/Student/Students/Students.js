@@ -18,7 +18,6 @@ import "./Students.css";
 
 class Students extends Component {
   componentDidMount() {
-
     const { auth, getStudents } = this.props;
     getStudents(auth.admin);
   }
@@ -48,7 +47,7 @@ class Students extends Component {
       { key: "Github Handle", value: student.github },
       { key: "LinkedIn Handle", value: student.linkedin }
     ]);
-    
+
     return !loading ? (
       <div className="lol">
         <h1 className="main-heading-companies">Registered Students</h1>
@@ -56,20 +55,26 @@ class Students extends Component {
         <div className="company-vacancies-container" style={{ width: "100%" }}>
           {studentsInfoArray.length > 0 ? (
             studentsInfoArray.map((studentInfo, index) => {
-              const {id, disabled} = students.students[index];
+              const { id, disabled } = students.students[index];
               return (
                 <div className="stds-list-info-container" key={index}>
-
                   {/* don't navigate if owner, admin or visitor clicks on card */}
                   <Link
                     to={`/profile/${id}`}
                     onClick={e => navigationHandler(e, admin)}
                     style={{ textDecoration: "none" }}
                   >
-
                     {/* show block icon for admin only */}
-                    {admin && disabled ? <UnblockIcon onUnblock={this.onUnblock} id={id} /> : ""}
-                    {admin && !disabled ? <BlockIcon onBlock={this.onBlock} id={id} /> : ""}
+                    {admin && disabled ? (
+                      <UnblockIcon onUnblock={this.onUnblock} id={id} />
+                    ) : (
+                      ""
+                    )}
+                    {admin && !disabled ? (
+                      <BlockIcon onBlock={this.onBlock} id={id} />
+                    ) : (
+                      ""
+                    )}
                     <PersonalInfo info={studentInfo} />
                   </Link>
                 </div>
@@ -98,8 +103,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getStudents: flag => dispatch(actions.getStudents(flag)),
-    blockAccount: uid => dispatch(manipulateAccount("students", uid,true)),
-    unblockAccount: uid => dispatch(manipulateAccount("students", uid,false))
+    blockAccount: uid => dispatch(manipulateAccount("students", uid, true)),
+    unblockAccount: uid => dispatch(manipulateAccount("students", uid, false))
   };
 };
 

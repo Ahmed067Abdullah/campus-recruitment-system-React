@@ -2,17 +2,17 @@ import { database, auth } from "firebase";
 import * as actionTypes from "./actionTypes";
 import dispatcher from "../dispater";
 
+import adminId from "../../config/AdminId";
+
 // helper functions
 const loginSuccessful = (dispatch, uid, name, status, type) => {
   const user = { uid, name, status, type };
   localStorage.setItem("crs", JSON.stringify(user));
+  
+  if (uid === adminId) dispatch(dispatcher(actionTypes.SET_ADMIN));
+  else dispatch(checkForBlocked(user));
+  
   dispatch(dispatcher(actionTypes.SIGNIN_SUCCESSFUL, user));
-
-  if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
-    dispatch(dispatcher(actionTypes.SET_ADMIN));
-  } else {
-    dispatch(checkForBlocked(user));
-  }
 };
 
 const loginFailed = dispatch => {
@@ -85,7 +85,6 @@ export const signin = history => (dispatch, getState) => {
       const uid = res.user.uid;
       if (uid === "TAaiLOe1CvYB9ohfQtYMWremVHB2") {
         loginSuccessful(dispatch, uid, "Admin", 1);
-        dispatch(dispatcher(actionTypes.SET_ADMIN));
         history.replace("/students");
       } else {
         database()
@@ -146,8 +145,7 @@ export const signout = () => dispatch => {
 export const manipulateAccount = (type, uid, flag) => dispatch => {
   database()
     .ref(`/${type}/${uid}/disabled`)
-    .set(flag)
-    .catch(alert("Some Error Occurred"));
+    .set(flag);
 };
 
 export const checkForBlocked = user => (dispatch, getState) => {
@@ -157,9 +155,8 @@ export const checkForBlocked = user => (dispatch, getState) => {
   database()
     .ref(`/${typeStr}/${uid}/disabled`)
     .on("value", snapshot => {
-      const { isSignedIn } = getState().auth;
-
-      if (isSignedIn) {
+      const { isSignedIn, admin } = getState().auth;
+      if (isSignedIn && !admin) {
         localStorage.setItem("crs", JSON.stringify(user));
         const flag = snapshot.val();
         if (flag) dispatch(dispatcher(actionTypes.SET_BLOCKED, { status: 4 }));
